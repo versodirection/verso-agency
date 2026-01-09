@@ -4,7 +4,7 @@ import { Code, Rocket, Palette, Smartphone, Check } from "lucide-react";
 export const siteConfig = {
   name: "VERSO AGENCY",
   description: "Nous créons le futur du web pour des entreprises ambitieuses.",
-  email: "verso.direction@gmail.com",
+  email: "contact@verso-agency.fr",
 };
 
 export const services = [

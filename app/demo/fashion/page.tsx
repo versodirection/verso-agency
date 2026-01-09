@@ -10,129 +10,141 @@ import Link from "next/link";
 
 // --- DATA PRODUITS ---
 const products = [
-  {
-    id: 1,
-    name: "GLOSSY PUFFER",
-    price: 89.90,
-    category: "JACKETS",
-    image: "/products/03411510800-e1.jpg", 
-    sizes: ["XS", "S", "M", "L"],
-    tag: "HOT",
-    ref: "REF. 8712/001",
-    description: "Doudoune courte à finition brillante ultra-légère. Col montant et manches longues finies par élastique. Poches avant passepoilées.",
-    composition: "Extérieur: 100% Nylon / Rembourrage: 100% Polyester recyclé"
-  },
-  {
-    id: 2,
-    name: "PASTEL DENIM",
-    price: 49.90,
-    category: "BOTTOMS",
-    image: "/products/01300900620-e1.jpg",
-    sizes: ["34", "36", "38", "40"],
-    tag: "NEW",
-    ref: "REF. 4432/102",
-    description: "Jean taille haute coupe droite. Effet délavé rose pastel. Cinq poches, fermeture par zip et bouton métallique.",
-    composition: "100% Coton organique"
-  },
-  {
-    id: 3,
-    name: "KNIT HALTER",
-    price: 29.90,
-    category: "TOPS",
-    image: "/products/hautzara.jpg",
-    sizes: ["XS", "S", "M"],
-    tag: null,
-    ref: "REF. 0021/329",
-    description: "Top en maille côtelée avec encolure américaine. Dos nageur et finition sans coutures apparentes.",
-    composition: "Viscose 80%, Polyamide 20%"
-  },
-  {
-    id: 4,
-    name: "WOOL OVERCOAT",
-    price: 159.00,
-    category: "JACKETS",
-    image: "/products/02949150800-e1.jpg",
-    sizes: ["S", "M", "L", "XL"],
-    tag: "PREMIUM",
-    ref: "REF. 9921/404",
-    description: "Manteau long confectionné en mélange de laine Manteco. Col à revers et manches longues. Fermeture croisée.",
-    composition: "75% Laine, 25% Polyamide"
-  },
-  {
-    id: 5,
-    name: "STRIPED PANTS",
-    price: 59.90,
-    category: "BOTTOMS",
-    image: "/products/01300310400-e1.jpg",
-    sizes: ["30", "32", "34", "36"],
-    tag: null,
-    ref: "REF. 7721/112",
-    description: "Pantalon style carpenter à rayures hickory. Coupe large, poches plaquées au dos et boucle marteau.",
-    composition: "100% Coton Heavyweight"
-  },
-  {
-    id: 6,
-    name: "HALF-ZIP KNIT",
-    price: 69.90,
-    category: "TOPS",
-    image: "/products/05536312737-e1.jpg",
-    sizes: ["S", "M", "L"],
-    tag: "COZY",
-    ref: "REF. 3321/992",
-    description: "Pull en maille douce avec col montant zippé. Coupe relax et finitions bord-côte épaisses.",
-    composition: "Laine mérinos 50%, Acrylique 50%"
-  },
-  {
-    id: 7,
-    name: "SCARF SHIRT",
-    price: 45.90,
-    category: "TOPS",
-    image: "/products/05813054803-e1.jpg",
-    sizes: ["XS", "S", "M", "L"],
-    tag: "ARTY",
-    ref: "REF. 1102/331",
-    description: "Chemise fluide avec détail foulard intégré au col. Tissu satiné mat et boutons dissimulés.",
-    composition: "100% Viscose Ecovero"
-  },
-  {
-    id: 8,
-    name: "TAILORED STRIPE",
-    price: 59.90,
-    category: "BOTTOMS",
-    image: "/products/05792052017-e1.jpg",
-    sizes: ["36", "38", "40", "42"],
-    tag: null,
-    ref: "REF. 8821/002",
-    description: "Pantalon de costume à rayures tennis. Pinces sur le devant et poches latérales.",
-    composition: "Polyester recyclé 60%, Viscose 40%"
-  },
-  {
-    id: 9,
-    name: "CLASSIC LOAFER",
-    price: 89.90,
-    category: "SHOES",
-    image: "/products/13535610700-e1.jpg",
-    sizes: ["40", "41", "42", "43", "44"],
-    tag: "LEATHER",
-    ref: "REF. 2201/552",
-    description: "Mocassins en cuir brillant. Détail barrette sur le devant. Semelle épaisse crantée.",
-    composition: "100% Cuir bovin"
-  },
-  {
-    id: 10,
-    name: "SUEDE BOAT",
-    price: 79.90,
-    category: "SHOES",
-    image: "/products/12512610700-e1.jpg",
-    sizes: ["39", "40", "41", "42", "43"],
-    tag: null,
-    ref: "REF. 1102/441",
-    description: "Chaussures bateau en croûte de cuir. Lacets en cuir et semelle gomme contrastante.",
-    composition: "100% Cuir suédé"
-  }
-];
+    {
+      id: 1,
+      name: "URBAN CHECK OVERSHIRT",
+      price: 65.00,
+      category: "TOPS",
+      image: "/products/shirt-check.jpg", 
+      sizes: ["M", "L", "XL"],
+      tag: "STREET",
+      ref: "REF. 8712/001",
+      description: "Surchemise à carreaux style urbain. Coupe décontractée idéale pour le layering. Tissu flanelle doux.",
+      composition: "100% Coton"
+    },
+    {
+      id: 2,
+      name: "SATIN SUNSET DRESS",
+      price: 120.00,
+      category: "DRESSES",
+      image: "/products/dress-orange.jpg",
+      sizes: ["XS", "S", "M"],
+      tag: "HOT",
+      ref: "REF. 4432/102",
+      description: "Robe de soirée en satin fluide. Teinte orange brûlé captant la lumière. Dos nu élégant.",
+      composition: "100% Satin de viscose"
+    },
+    {
+      id: 3,
+      name: "VINTAGE LEATHER JACKET",
+      price: 189.90,
+      category: "JACKETS",
+      image: "/products/jacket-cuir.jpg",
+      sizes: ["S", "M", "L", "XL"],
+      tag: "CLASSIC",
+      ref: "REF. 0021/329",
+      description: "Veste style cuir patiné. Coupe trucker vintage. Indémodable et robuste.",
+      composition: "100% Cuir Végan"
+    },
+    {
+      id: 4,
+      name: "SEQUIN PARTY PANTS",
+      price: 85.00,
+      category: "BOTTOMS",
+      image: "/products/pant-party.jpg",
+      sizes: ["34", "36", "38"],
+      tag: "NIGHT",
+      ref: "REF. 9921/404",
+      description: "Pantalon à sequins texturé. Coupe fluide pour capter la lumière en mouvement.",
+      composition: "Polyester / Sequins"
+    },
+    {
+      id: 5,
+      name: "GLITTER NIGHT DRESS",
+      price: 95.00,
+      category: "DRESSES",
+      image: "/products/dress-party.jpg",
+      sizes: ["S", "M", "L"],
+      tag: "NEW",
+      ref: "REF. 7721/112",
+      description: "Robe courte scintillante. Parfaite pour les soirées. Coupe ajustée.",
+      composition: "Mélange Lurex"
+    },
+    {
+      id: 6,
+      name: "NOIR FEDORA SET",
+      price: 55.00,
+      category: "ACCESSORIES", 
+      image: "/products/hat-black.jpg",
+      sizes: ["One Size"],
+      tag: null,
+      ref: "REF. 3321/992",
+      description: "Chapeau Fedora noir en feutre. L'accessoire ultime pour terminer une silhouette.",
+      composition: "100% Feutre de laine"
+    },
+    {
+      id: 7,
+      name: "GREY SCALE BLAZER",
+      price: 110.00,
+      category: "JACKETS",
+      image: "/products/blaser.jpg", // J'ai gardé ton orthographe "blaser"
+      sizes: ["48", "50", "52", "54"],
+      tag: "WORK",
+      ref: "REF. 1102/331",
+      description: "Blazer gris structuré. Coupe moderne ajustée. Idéal pour un look business casual.",
+      composition: "60% Laine, 40% Polyester"
+    },
+    {
+      id: 8,
+      name: "PLEATED PINK CHINO",
+      price: 49.90,
+      category: "BOTTOMS",
+      image: "/products/pants-pink.jpg",
+      sizes: ["30", "32", "34"],
+      tag: "SUMMER",
+      ref: "REF. 8821/002",
+      description: "Pantalon chino à pinces couleur vieux rose. Coupe confortable et élégante.",
+      composition: "Coton léger"
+    },
+    {
+      id: 9,
+      name: "ARTISTIC VELVET TOP",
+      price: 45.00,
+      category: "TOPS",
+      image: "/products/top-velvet.jpg",
+      sizes: ["S", "M", "L"],
+      tag: "ARTY",
+      ref: "REF. 2201/552",
+      description: "Haut texturé sombre. Une pièce forte au design minimaliste et artistique.",
+      composition: "Velours de soie"
+    },
+    {
+      id: 10,
+      name: "MODERN DUO SUIT",
+      price: 250.00,
+      category: "SUITS",
+      image: "/products/suit.jpg",
+      sizes: ["48", "50", "52"],
+      tag: "PREMIUM",
+      ref: "REF. 5501/DUO",
+      description: "Ensemble tailleur moderne. Coupe unisexe et lignes épurées.",
+      composition: "Laine Froide"
+    },
+    {
+      id: 11,
+      name: "SUEDE VEST BROWN",
+      price: 69.90,
+      category: "TOPS",
+      image: "/products/vest-brown.jpg",
+      sizes: ["M", "L"],
+      tag: "VINTAGE",
+      ref: "REF. 1102/441",
+      description: "Gilet sans manches en suédine marron. Inspiration vintage workwear.",
+      composition: "Similicuir suédé"
+    }
+  ];
 
-const categories = ["ALL", "JACKETS", "TOPS", "BOTTOMS", "SHOES"];
+  const categories = ["ALL", "JACKETS", "TOPS", "BOTTOMS", "DRESSES", "SUITS"];
 
 export default function NexusUltimatePink() {
   // États Globaux
@@ -144,6 +156,8 @@ export default function NexusUltimatePink() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<any | null>(null);
+
+  const [selectedSize, setSelectedSize] = useState("");
 
   // Données utilisateur
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -196,6 +210,12 @@ export default function NexusUltimatePink() {
           document.body.style.overflow = 'unset';
       }
   }, [selectedProduct, cartOpen, searchOpen, accountOpen]);
+
+  useEffect(() => {
+    if(selectedProduct && selectedProduct.sizes.length > 0) {
+        setSelectedSize(selectedProduct.sizes[0]);
+    }
+  }, [selectedProduct]);
 
   return (
     <div className="min-h-screen bg-[#EBE9E4] text-[#2C2420] font-sans selection:bg-[#FF0055] selection:text-white overflow-x-hidden">
@@ -437,8 +457,14 @@ export default function NexusUltimatePink() {
                                     {selectedProduct.sizes.map((size: string) => (
                                         <button 
                                             key={size}
-                                            onClick={() => addToCart(selectedProduct, size)}
-                                            className="w-12 h-12 rounded-xl border-2 border-[#2C2420] flex items-center justify-center text-sm font-bold hover:bg-[#2C2420] hover:text-[#FF0055] transition-all uppercase focus:bg-[#2C2420] focus:text-[#FF0055]"
+                                            // ICI : On sélectionne juste la taille, on n'ajoute pas au panier
+                                            onClick={() => setSelectedSize(size)}
+                                            className={`w-12 h-12 rounded-xl border-2 flex items-center justify-center text-sm font-bold transition-all uppercase
+                                                ${selectedSize === size 
+                                                    ? "bg-[#2C2420] text-[#FF0055] border-[#2C2420]" // Style Actif
+                                                    : "border-[#2C2420] text-[#2C2420] hover:bg-[#2C2420] hover:text-[#FF0055]" // Style Inactif
+                                                }
+                                            `}
                                         >
                                             {size}
                                         </button>
@@ -452,7 +478,8 @@ export default function NexusUltimatePink() {
                                 {selectedProduct.price.toFixed(2)}€
                             </div>
                             <button 
-                                onClick={() => addToCart(selectedProduct, selectedProduct.sizes[0])}
+                                // ICI : C'est ce bouton qui déclenche l'ajout au panier avec la bonne taille
+                                onClick={() => addToCart(selectedProduct, selectedSize)}
                                 className="flex-1 bg-[#2C2420] text-[#EBE9E4] py-4 rounded-xl font-black uppercase tracking-widest hover:bg-[#FF0055] hover:text-white transition-all shadow-xl flex items-center justify-center gap-2"
                             >
                                 Add to Bag <ArrowRight size={18}/>
@@ -471,20 +498,56 @@ export default function NexusUltimatePink() {
         {searchOpen && (
             <motion.div 
                 initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[100] bg-[#2C2420]/95 backdrop-blur-xl flex flex-col items-center justify-center p-8"
+                className="fixed inset-0 z-[100] bg-[#2C2420]/95 backdrop-blur-xl flex flex-col items-center pt-24 px-8"
             >
                 <button onClick={() => setSearchOpen(false)} className="absolute top-8 right-8 text-[#EBE9E4] hover:rotate-90 transition-transform">
                     <X size={32} />
                 </button>
-                <h3 className="text-[#FF0055] font-mono text-xs uppercase mb-4 tracking-widest">Global Search</h3>
-                <input 
-                    autoFocus
-                    type="text" 
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    placeholder="TYPE TO SEARCH..." 
-                    className="bg-transparent border-b-2 border-[#EBE9E4]/20 text-[#EBE9E4] text-4xl md:text-6xl font-black uppercase text-center focus:border-[#FF0055] outline-none w-full max-w-4xl py-4 transition-colors placeholder:text-[#EBE9E4]/10"
-                />
+                
+                <div className="w-full max-w-4xl flex flex-col items-center">
+                    <h3 className="text-[#FF0055] font-mono text-xs uppercase mb-4 tracking-widest">Global Search</h3>
+                    
+                    {/* INPUT DE RECHERCHE */}
+                    <input 
+                        autoFocus
+                        type="text" 
+                        value={searchQuery}
+                        onChange={(e) => setSearchQuery(e.target.value)}
+                        placeholder="TYPE TO SEARCH..." 
+                        className="bg-transparent border-b-2 border-[#EBE9E4]/20 text-[#EBE9E4] text-3xl md:text-6xl font-black uppercase text-center focus:border-[#FF0055] outline-none w-full py-4 transition-colors placeholder:text-[#EBE9E4]/10 mb-12"
+                    />
+
+                    {/* RÉSULTATS EN LIVE */}
+                    <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 max-h-[50vh] overflow-y-auto pr-2 pb-20">
+                        {searchQuery.length > 0 && products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())).map(product => (
+                            <motion.div 
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                key={product.id}
+                                onClick={() => {
+                                    setSelectedProduct(product); // Ouvre la fiche produit
+                                    setSearchOpen(false); // Ferme la recherche
+                                    setSearchQuery(""); // Vide la recherche
+                                }}
+                                className="flex items-center gap-4 bg-white/5 hover:bg-white/10 p-4 rounded-xl cursor-pointer border border-white/5 transition-colors group"
+                            >
+                                <img src={product.image} alt={product.name} className="w-16 h-20 object-cover rounded-lg" />
+                                <div>
+                                    <h4 className="text-[#EBE9E4] font-bold uppercase text-sm group-hover:text-[#FF0055] transition-colors">{product.name}</h4>
+                                    <p className="text-gray-400 text-xs font-mono">{product.price.toFixed(2)}€</p>
+                                </div>
+                                <ArrowRight className="ml-auto text-gray-500 group-hover:text-[#FF0055] transition-colors" size={16}/>
+                            </motion.div>
+                        ))}
+
+                        {/* MESSAGE SI AUCUN RÉSULTAT */}
+                        {searchQuery.length > 0 && products.filter(p => p.name.toLowerCase().includes(searchQuery.toLowerCase())).length === 0 && (
+                            <div className="col-span-full text-center text-gray-500 font-mono text-sm mt-4">
+                                NO MATCHING PRODUCTS FOUND.
+                            </div>
+                        )}
+                    </div>
+                </div>
             </motion.div>
         )}
       </AnimatePresence>

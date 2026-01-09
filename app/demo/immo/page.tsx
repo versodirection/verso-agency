@@ -7,19 +7,31 @@ import { useState, useEffect, useLayoutEffect } from "react"; // AJOUT DE useLay
 
 // --- DATA PROJETS ---
 const projects = [
+
   {
     id: 1,
-    title: "GLASS PAVILION",
+    title: "SKY MANSION",
+    location: "Dubai, UAE",
+    category: "Urban",
+    year: "2024",
+    price: "18,000,000 $",
+    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2500&auto=format&fit=crop",
+    desc: "L'ultime frontière du luxe sur Palm Jumeirah. Plage privée et héliport.",
+    weather: { temp: "38°C", condition: "Soleil", time: "08:41 PM" }
+  },
+  {
+    id: 2,
+    title: "LUXUARY DESERT VILLA",
     location: "Montecito, CA",
     category: "Desert",
     year: "2025",
     price: "12,500,000 $",
-    image: "https://images.unsplash.com/photo-1512915922686-57c11dde9b6b?q=80&w=2500&auto=format&fit=crop",
-    desc: "Une prouesse d'invisibilité. Des murs de verre de 4 mètres de haut qui s'effacent pour ne laisser que le désert.",
+    image: "/houses/villa1.jpg",
+    desc: "Une prouesse d'invisibilité. Conçue pour se fondre dans le paysage désertique.",
     weather: { temp: "24°C", condition: "Soleil", time: "09:41 AM" }
   },
   {
-    id: 2,
+    id: 3,
     title: "DUNE HOUSE",
     location: "Cap Ferret, FR",
     category: "Sea",
@@ -30,10 +42,10 @@ const projects = [
     weather: { temp: "19°C", condition: "Vent", time: "06:41 PM" }
   },
   {
-    id: 3,
+    id: 4,
     title: "ALPINE LOFT",
     location: "Zermatt, CH",
-    category: "Mountain",
+    category: "Sea",
     year: "2024",
     price: "5,200,000 CHF",
     image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2500&auto=format&fit=crop",
@@ -41,7 +53,7 @@ const projects = [
     weather: { temp: "-4°C", condition: "Neige", time: "06:41 PM" }
   },
   {
-    id: 4,
+    id: 5,
     title: "PENTHOUSE 56",
     location: "New York, USA",
     category: "Urban",
@@ -52,18 +64,18 @@ const projects = [
     weather: { temp: "12°C", condition: "Nuageux", time: "12:41 PM" }
   },
   {
-    id: 5,
-    title: "VILLA K",
+    id: 6,
+    title: "SPA & POOL VILLA",
     location: "Mykonos, Greece",
     category: "Sea",
     year: "2024",
     price: "4,200,000 €",
-    image: "https://images.unsplash.com/photo-1533105079780-92b9be482077?q=80&w=2500&auto=format&fit=crop",
-    desc: "Sculptée dans la roche. Une piscine à débordement qui se confond avec la mer Égée.",
+    image : "/houses/villapiscine.jpg",
+    desc: "Sculptée dans la roche. Une piscine intérieur magnifique. ",
     weather: { temp: "28°C", condition: "Soleil", time: "07:41 PM" }
   },
   {
-    id: 6,
+    id: 7,
     title: "DESERT LOTUS",
     location: "Amangiri, Utah",
     category: "Desert",
@@ -73,23 +85,12 @@ const projects = [
     desc: "Brutalisme minéral au cœur des canyons. Une architecture qui défie les éléments.",
     weather: { temp: "32°C", condition: "Soleil", time: "10:41 AM" }
   },
-  {
-    id: 7,
-    title: "SKY MANSION",
-    location: "Dubai, UAE",
-    category: "Urban",
-    year: "2024",
-    price: "18,000,000 $",
-    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2500&auto=format&fit=crop",
-    desc: "L'ultime frontière du luxe sur Palm Jumeirah. Plage privée et héliport.",
-    weather: { temp: "38°C", condition: "Soleil", time: "08:41 PM" }
-  }
 ];
 
 // --- DATA ARCHITECTES ---
 const architects = [
-    { name: "Kengo Kuma", style: "Organic Minimalism", image: "https://images.unsplash.com/photo-1536236610857-0402ae56cc77?q=80&w=800&auto=format&fit=crop" },
-    { name: "Tadao Ando", style: "Concrete & Light", image: "https://images.unsplash.com/photo-1506096568460-7080f56fb567?q=80&w=800&auto=format&fit=crop" },
+    { name: "Kengo Kuma", style: "Organic Minimalism", image: "https://images.pexels.com/photos/417273/pexels-photo-417273.jpeg" },
+    { name: "Tadao Ando", style: "Concrete & Light", image: "https://images.pexels.com/photos/327482/pexels-photo-327482.jpeg" },
     { name: "Zaha Hadid Architects", style: "Parametric Fluidity", image: "https://images.unsplash.com/photo-1481026469463-66327c86e544?q=80&w=800&auto=format&fit=crop" },
     { name: "Bjarke Ingels (BIG)", style: "Hedonistic Sustainability", image: "https://images.unsplash.com/photo-1486718448742-163732cd1544?q=80&w=800&auto=format&fit=crop" }
 ];

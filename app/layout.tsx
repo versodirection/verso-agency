@@ -6,7 +6,8 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "VERSO Agency",
-  description: "Agence Web Premium",
+  description: "Agence Web & Digitale",
+  // SUPPRIME TOUTE LA PARTIE "icons: { ... }"
 };
 
 export default function RootLayout({

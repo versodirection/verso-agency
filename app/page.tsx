@@ -9,6 +9,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Float, MeshDistortMaterial, Environment } from "@react-three/drei";
 import * as THREE from "three";
 import { ReactLenis } from "@studio-freight/react-lenis";
+import QuoteCalculator from "./components/QuoteCalculator";
 
 // --- 1. UTILS ---
 const wrap = (min: number, max: number, v: number) => {
@@ -153,6 +154,10 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
 
+  const [isQuoteOpen, setIsQuoteOpen] = useState(false);
+
+  const [formMessage, setFormMessage] = useState("");
+
   const scrollTo = (id: string) => { 
       setMenuOpen(false);
       const el = document.getElementById(id); 
@@ -225,16 +230,20 @@ export default function Home() {
         {loading && <Preloader onComplete={handleIntroComplete} />}
       </AnimatePresence>
 
-      <main className="min-h-screen selection:bg-indigo-500 selection:text-white overflow-hidden md:cursor-none bg-black">
+
+      <main className={`min-h-screen selection:bg-indigo-500 selection:text-white overflow-hidden bg-black ${isQuoteOpen ? 'cursor-auto' : 'md:cursor-none'}`}>
         <Grain />
-        <motion.div 
-            variants={cursorVariants} 
-            animate={cursorVariant} 
-            className="hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] items-center justify-center" 
-            style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}
-        >
-            {cursorVariant === 'hover' && <div className="w-2 h-2 bg-white rounded-full" />}
-        </motion.div>
+        {/* On ajoute !isQuoteOpen && (...) autour du curseur */}
+        {!isQuoteOpen && (
+            <motion.div 
+                variants={cursorVariants} 
+                animate={cursorVariant} 
+                className="hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] items-center justify-center" 
+                style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}
+            >
+                {cursorVariant === 'hover' && <div className="w-2 h-2 bg-white rounded-full" />}
+            </motion.div>
+        )}
 
         <motion.nav 
             initial={showAnimations ? { y: -100 } : { y: 0 }} 
@@ -382,7 +391,22 @@ export default function Home() {
                     <div className="text-4xl font-bold mb-4 tracking-tight">{plan.price}</div>
                     <p className="text-neutral-400 mb-8 text-sm h-10">{plan.description}</p>
                     <ul className="space-y-4 mb-8 flex-1">{plan.features.map((feature: string, i: number) => (<li key={i} className="flex items-start gap-3 text-sm text-neutral-300"><Check className="w-5 h-5 text-indigo-500 shrink-0" />{feature}</li>))}</ul>
-                    <button onClick={() => scrollTo('contact')} className={`w-full py-4 rounded-xl font-bold transition ${plan.highlight ? "bg-indigo-600 hover:bg-indigo-700 text-white" : "bg-white text-black hover:bg-gray-200"}`}>Choisir {plan.title}</button>
+                    <button 
+                        onClick={() => {
+                            if (plan.title === "Sur Mesure") {
+                                // Ouvre le calculateur (on ne change rien ici)
+                                setIsQuoteOpen(true);
+                            } else {
+                                // 👇 C'est ici que la magie opère :
+                                setFormMessage(`Bonjour, je suis intéressé par le pack ${plan.title}. Pouvons-nous en discuter ?`);
+                                scrollTo('contact');
+                            }
+                        }} 
+                        className={`w-full py-4 rounded-xl font-bold transition ${plan.highlight ? "bg-indigo-600 hover:bg-indigo-700 text-white" : "bg-white text-black hover:bg-gray-200"}`}
+                    >
+                        {plan.title === "Sur Mesure" ? "Simuler un devis" : `Choisir ${plan.title}`}
+                    </button>
+
                   </div>
                 </TiltCard>
               ))}
@@ -409,7 +433,19 @@ export default function Home() {
                   <div className="space-y-2"><label className="text-sm font-medium text-neutral-400">Nom</label><input type="text" name="lastname" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 transition cursor-none" placeholder="Doe" /></div>
                 </div>
                 <div className="space-y-2"><label className="text-sm font-medium text-neutral-400">Email</label><input type="email" name="email" className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 transition cursor-none" placeholder="john@company.com" required /></div>
-                <div className="space-y-2"><label className="text-sm font-medium text-neutral-400">Message</label><textarea name="message" rows={4} className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 transition resize-none cursor-none" placeholder="Parlez-nous de votre projet..." required></textarea></div>
+                <div className="space-y-2"><label className="text-sm font-medium text-neutral-400">Message</label>
+                <textarea 
+                    name="message" 
+                    rows={4} 
+                    // 👇 On connecte la valeur ici
+                    value={formMessage}
+                    onChange={(e) => setFormMessage(e.target.value)} // Permet à l'utilisateur de modifier le texte s'il veut
+                    className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 transition resize-none cursor-none" 
+                    placeholder="Parlez-nous de votre projet..." 
+                    required>
+                </textarea>
+                
+                </div>
                 
                 <Magnetic>
                     <button 
@@ -460,6 +496,9 @@ export default function Home() {
                 </div>
             </div>
         </footer>
+        <AnimatePresence>
+            {isQuoteOpen && <QuoteCalculator onClose={() => setIsQuoteOpen(false)} />}
+        </AnimatePresence>
       </main>
     </ReactLenis>
   );

@@ -38,11 +38,11 @@ export default function MentionsLegales() {
       <motion.div
         variants={cursorVariants}
         animate={cursorVariant}
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] flex items-center justify-center"
+        className="hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] items-center justify-center"
         style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}
-      >
+    >
         {cursorVariant === 'hover' && <div className="w-2 h-2 bg-white rounded-full" />}
-      </motion.div>
+    </motion.div>
 
       {/* NAVBAR SIMPLE */}
       <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 h-20 flex items-center px-6">

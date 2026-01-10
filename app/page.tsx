@@ -225,9 +225,14 @@ export default function Home() {
         {loading && <Preloader onComplete={handleIntroComplete} />}
       </AnimatePresence>
 
-      <main className="min-h-screen selection:bg-indigo-500 selection:text-white overflow-hidden cursor-none bg-black">
+      <main className="min-h-screen selection:bg-indigo-500 selection:text-white overflow-hidden md:cursor-none bg-black">
         <Grain />
-        <motion.div variants={cursorVariants} animate={cursorVariant} className="fixed top-0 left-0 rounded-full pointer-events-none z-[9999] flex items-center justify-center" style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}>
+        <motion.div 
+            variants={cursorVariants} 
+            animate={cursorVariant} 
+            className="hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] items-center justify-center" 
+            style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}
+        >
             {cursorVariant === 'hover' && <div className="w-2 h-2 bg-white rounded-full" />}
         </motion.div>
 

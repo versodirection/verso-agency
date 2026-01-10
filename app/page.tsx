@@ -264,18 +264,22 @@ export default function Home() {
                     className="fixed inset-0 bg-black z-[55] flex flex-col items-center justify-center gap-8 md:hidden"
                 >
                     <Grain />
-                    {['Services', 'Demos', 'Pricing'].map((item) => (
+                    
+                    {/* 👇 CORRECTION : On a remis les bons noms (Tarifs) et une couleur visible (text-white) */}
+                    {['Services', 'Demos', 'Tarifs'].map((item) => (
                         <button 
                             key={item}
-                            onClick={() => scrollTo(item.toLowerCase())}
-                            className="text-5xl font-black uppercase tracking-tighter text-transparent text-stroke hover:text-white transition-all duration-300"
+                            onClick={() => scrollTo(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
+                            className="text-4xl font-black uppercase tracking-tighter text-neutral-400 hover:text-white transition-all duration-300"
                         >
                             {item}
                         </button>
                     ))}
+
                     <div className="w-12 h-1 bg-indigo-500 rounded-full my-4" />
+                    
                     <button onClick={() => scrollTo('contact')} className="text-xl font-bold bg-white text-black px-8 py-4 rounded-full">
-                        Start Project
+                        Démarrer un projet
                     </button>
                 </motion.div>
             )}

@@ -159,10 +159,13 @@ export default function Home() {
   const [formMessage, setFormMessage] = useState("");
 
   const scrollTo = (id: string) => { 
-      setMenuOpen(false);
+    setMenuOpen(false);
+    // 👇 On attend 100ms que le texte s'affiche avant de lancer le scroll
+    setTimeout(() => {
       const el = document.getElementById(id); 
       if (el) el.scrollIntoView({ behavior: "smooth" }); 
-  };
+    }, 100);
+};
 
   useEffect(() => {
     if (window.location.hash) {

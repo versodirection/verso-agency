@@ -149,8 +149,27 @@ const NexusCore = () => {
 };
 
 export default function Home() {
-  const [loading, setLoading] = useState(true);
-  const [showAnimations, setShowAnimations] = useState(true);
+  
+  // 👇 CORRECTION ICI : On vérifie le sessionStorage DÈS L'INITIALISATION
+  const [loading, setLoading] = useState(() => {
+    // Si on est sur le navigateur (client), on regarde tout de suite si l'intro est déjà vue
+    if (typeof window !== 'undefined') {
+        const hasSeen = sessionStorage.getItem("nexus-intro-seen");
+        // Si "hasSeen" existe, alors loading doit être FALSE (pas de chargement)
+        // Sinon, loading est TRUE
+        return !hasSeen;
+    }
+    return true; // Par défaut sur le serveur
+  });
+
+  // Idem pour les animations de texte, on ne les veut pas si on revient d'une démo
+  const [showAnimations, setShowAnimations] = useState(() => {
+    if (typeof window !== 'undefined') {
+        return !sessionStorage.getItem("nexus-intro-seen");
+    }
+    return true;
+  });
+
   const [cursorVariant, setCursorVariant] = useState("default");
   
   const [menuOpen, setMenuOpen] = useState(false);
@@ -162,17 +181,16 @@ export default function Home() {
 
   const scrollTo = (id: string) => { 
     setMenuOpen(false);
-    // 👇 On attend 100ms que le texte s'affiche avant de lancer le scroll
     setTimeout(() => {
       const el = document.getElementById(id); 
       if (el) el.scrollIntoView({ behavior: "smooth" }); 
     }, 100);
-};
+  };
 
-const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
-  e.preventDefault();
-  scrollTo(id);
-};
+  const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
+    e.preventDefault();
+    scrollTo(id);
+  };
 
   useEffect(() => {
     if (window.location.hash) {
@@ -184,19 +202,18 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
     }
   }, []);
 
+  // On garde le useLayoutEffect pour la sécurité, mais le travail principal est fait dans le useState
   useLayoutEffect(() => {
     const hasSeenIntro = sessionStorage.getItem("nexus-intro-seen");
-    
-    // Si l'intro a DÉJÀ été vue, on coupe tout immédiatement
     if (hasSeenIntro) {
       setLoading(false);
       setShowAnimations(false);
     } 
-    // Sinon, on laisse le loading à true (c'est déjà le cas par défaut)
   }, []);
 
   const handleIntroComplete = () => {
     setLoading(false);
+    setShowAnimations(false); // On désactive aussi les anims de texte une fois l'intro finie
     sessionStorage.setItem("nexus-intro-seen", "true"); 
   };
 
@@ -246,7 +263,6 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
 
       <main className={`min-h-screen selection:bg-indigo-500 selection:text-white overflow-hidden bg-black ${isQuoteOpen ? 'cursor-auto' : 'md:cursor-none'}`}>
         <Grain />
-        {/* On ajoute !isQuoteOpen && (...) autour du curseur */}
         {!isQuoteOpen && (
             <motion.div 
                 variants={cursorVariants} 
@@ -292,7 +308,6 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
                 >
                     <Grain />
                     
-                    {/* 👇 CORRECTION : On a remis les bons noms (Tarifs) et une couleur visible (text-white) */}
                     {['Services', 'Demos', 'Tarifs'].map((item) => {
                         const targetId = item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
                         return (
@@ -316,7 +331,6 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
             )}
         </AnimatePresence>
 
-        {/* HERO COMPACT : On a réduit la hauteur min à 85vh pour voir le contenu suivant */}
         <section id="hero" className="relative pt-32 pb-12 px-6 flex flex-col items-center justify-center text-center min-h-[85vh]">
           <div className="absolute inset-0 z-0 opacity-80 pointer-events-none"><Canvas camera={{ position: [0, 0, 6], fov: 45 }}><ambientLight intensity={0.5} /><pointLight position={[10, 10, 10]} intensity={1.5} color="#4f46e5" /><pointLight position={[-10, -10, -10]} intensity={0.5} color="#a855f7" /><Suspense fallback={null}><NexusCore /><Environment preset="city" /></Suspense></Canvas></div>
           <motion.div 
@@ -343,7 +357,6 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
             <VelocityScroll text="STRATEGY — DESIGN — DEVELOPMENT — EXPERIENCE" />
         </section>
 
-        {/* ESPACEMENTS RÉDUITS (py-32 -> py-20) */}
         <section id="services" className="py-20 px-6 bg-neutral-950 relative z-10">
           <div className="max-w-7xl mx-auto">
             <div className="mb-20">
@@ -362,7 +375,6 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
           </div>
         </section>
 
-        {/* DEMOS : CORRECTION DÉFINITIVE - ON UTILISE LES LIENS DU FICHIER DATA */}
         <section id="demos" className="py-20 px-6">
           <div className="max-w-7xl mx-auto">
             <div className="mb-20">
@@ -372,36 +384,22 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
             <div className="grid md:grid-cols-3 gap-8">
               {demos.map((demo: any, index: number) => (
                 <TiltCard key={index} className="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10">
-                  {/* ON UTILISE DIRECTEMENT demo.link QUI VIENT DE TON FICHIER CONTENT.TS */}
                   <Link 
                     href={demo.link} 
                     className="block w-full h-full cursor-none" 
                     onMouseEnter={cursorEnter} 
                     onMouseLeave={cursorLeave}
                   >
-
-                    {/* 🟢 CORRECTION : Image optimisée avec description pour Google */}
                     <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                         <Image 
                             src={demo.image} 
-                            alt={`Projet ${demo.title} - ${demo.category}`} // Google lira : "Projet Gustavo - Restaurant"
-                            fill 
-                            className="object-cover"
-                            sizes="(max-width: 768px) 100vw, 33vw"
-                        />
-                    </div>
-                    {/* 👇 NOUVEAU BLOC IMAGE */}
-                    <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                        <Image 
-                            src={demo.image} 
-                            alt={`${demo.title} - ${demo.category}`}
+                            alt={`Projet ${demo.title} - ${demo.category}`} 
                             fill 
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 33vw"
                         />
                     </div>
                     <div className="absolute bottom-0 left-0 p-8 w-full">
-                        {/* ON UTILISE LES VRAIS TEXTES DE TON FICHIER CONTENT.TS */}
                         <span className="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2 block">{demo.category}</span>
                         <h3 className="text-2xl font-bold text-white group-hover:translate-x-2 transition-transform">{demo.title}</h3>
                     </div>
@@ -430,10 +428,8 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
                     <button 
                         onClick={() => {
                             if (plan.title === "Sur Mesure") {
-                                // Ouvre le calculateur (on ne change rien ici)
                                 setIsQuoteOpen(true);
                             } else {
-                                // 👇 C'est ici que la magie opère :
                                 setFormMessage(`Bonjour, je suis intéressé par le pack ${plan.title}. Pouvons-nous en discuter ?`);
                                 scrollTo('contact');
                             }
@@ -473,9 +469,8 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
                 <textarea 
                     name="message" 
                     rows={4} 
-                    // 👇 On connecte la valeur ici
                     value={formMessage}
-                    onChange={(e) => setFormMessage(e.target.value)} // Permet à l'utilisateur de modifier le texte s'il veut
+                    onChange={(e) => setFormMessage(e.target.value)} 
                     className="w-full bg-black/50 border border-white/10 rounded-xl px-4 py-3 focus:outline-none focus:border-indigo-500 transition resize-none cursor-none" 
                     placeholder="Parlez-nous de votre projet..." 
                     required>
@@ -505,27 +500,23 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
           </div>
         </section>
 
-        {/* --- FOOTER FINAL (SANS LIENS SOCIAUX) --- */}
         <footer className="bg-neutral-950 py-10 border-t border-white/5 relative overflow-hidden">
             <Grain />
             <div className="max-w-7xl mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
                     
-                    {/* COL 1: LOGO (GAUCHE) */}
                     <div className="md:text-left">
                         <div onClick={() => scrollTo('hero')} className="text-2xl font-bold tracking-tighter text-white cursor-pointer hover:opacity-80 transition inline-block">
                             VERSO<span className="text-indigo-500">.</span>
                         </div>
                     </div>
 
-                    {/* COL 2: LÉGAL & COPY (CENTRE) */}
                     <div className="flex flex-col md:flex-row justify-center items-center gap-4 text-xs text-neutral-600 font-mono uppercase tracking-widest order-3 md:order-2">
                         <Link href="/mentions-legales" className="hover:text-white transition">Mentions Légales</Link>
                         <span className="hidden md:block">•</span>
                         <p>©2025 VERSO Agency.</p>
                     </div>
 
-                    {/* COL 3: VIDE (Pour l'équilibre) */}
                     <div className="hidden md:block order-2 md:order-3">
                     </div>
 

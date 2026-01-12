@@ -149,8 +149,8 @@ const NexusCore = () => {
 };
 
 export default function Home() {
-  const [loading, setLoading] = useState(false);
-  const [showAnimations, setShowAnimations] = useState(false); 
+  const [loading, setLoading] = useState(true);
+  const [showAnimations, setShowAnimations] = useState(true);
   const [cursorVariant, setCursorVariant] = useState("default");
   
   const [menuOpen, setMenuOpen] = useState(false);
@@ -186,10 +186,13 @@ const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: st
 
   useLayoutEffect(() => {
     const hasSeenIntro = sessionStorage.getItem("nexus-intro-seen");
-    if (!hasSeenIntro) {
-      setLoading(true);
-      setShowAnimations(true);
-    }
+    
+    // Si l'intro a DÉJÀ été vue, on coupe tout immédiatement
+    if (hasSeenIntro) {
+      setLoading(false);
+      setShowAnimations(false);
+    } 
+    // Sinon, on laisse le loading à true (c'est déjà le cas par défaut)
   }, []);
 
   const handleIntroComplete = () => {

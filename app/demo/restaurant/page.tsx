@@ -1,8 +1,9 @@
 "use client";
 
 import { motion, useScroll, useTransform, AnimatePresence, useSpring, useMotionValue } from "framer-motion";
-import { ArrowLeft, X, Wine, Quote, Star, ChefHat } from "lucide-react";
+import { ArrowLeft, X, Wine, Quote } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image"; // 👈 IMPORT
 import { useState, useRef, useEffect } from "react";
 
 // --- DATA ---
@@ -28,30 +29,17 @@ const testimonials = [
     { text: "L'accord parfait.", author: "Antoine G." }
 ];
 
-// DATA VINS
 const wineList = {
-    red: [
-        { name: "Barolo Monfortino", year: "2013", region: "Piemonte", price: "850€" },
-        { name: "Solaia Antinori", year: "2016", region: "Toscana", price: "420€" },
-        { name: "Amarone della Valpolicella", year: "2015", region: "Veneto", price: "180€" }
-    ],
-    white: [
-        { name: "Gaja Gaia & Rey", year: "2018", region: "Piemonte", price: "320€" },
-        { name: "Cervaro della Sala", year: "2019", region: "Umbria", price: "140€" }
-    ]
+    red: [{ name: "Barolo Monfortino", year: "2013", region: "Piemonte", price: "850€" }, { name: "Solaia Antinori", year: "2016", region: "Toscana", price: "420€" }, { name: "Amarone della Valpolicella", year: "2015", region: "Veneto", price: "180€" }],
+    white: [{ name: "Gaja Gaia & Rey", year: "2018", region: "Piemonte", price: "320€" }, { name: "Cervaro della Sala", year: "2019", region: "Umbria", price: "140€" }]
 };
 
 export default function RestaurantDemo() {
-  // --- REFS ---
   const containerRef = useRef(null);
-  
-  // Refs Sections Scroll
   const terroirRef = useRef(null); 
   const terroirMoveRef = useRef<HTMLDivElement>(null); 
   const testimonialRef = useRef(null);
   const testimonialMoveRef = useRef<HTMLDivElement>(null);
-
-  // --- STATES ---
   const [galleryWidth, setGalleryWidth] = useState(0);
   const [testimonialWidth, setTestimonialWidth] = useState(0);
   const [viewportWidth, setViewportWidth] = useState(0);
@@ -59,10 +47,8 @@ export default function RestaurantDemo() {
   const [hoveredMenuIndex, setHoveredMenuIndex] = useState<number | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isWineModalOpen, setIsWineModalOpen] = useState(false);
-
   const activeMenuItem = hoveredMenuIndex !== null ? menuItems[hoveredMenuIndex] : null;
 
-  // --- SOURIS ---
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
   const cursorX = useSpring(mouseX, { stiffness: 150, damping: 15 });
@@ -76,22 +62,12 @@ export default function RestaurantDemo() {
         if (terroirMoveRef.current) setGalleryWidth(terroirMoveRef.current.scrollWidth);
         if (testimonialMoveRef.current) setTestimonialWidth(testimonialMoveRef.current.scrollWidth);
     };
-
-    const timer = setTimeout(() => {
-        handleResize();
-        setLoading(false);
-    }, 500);
-
+    const timer = setTimeout(() => { handleResize(); setLoading(false); }, 500);
     window.addEventListener("resize", handleResize);
     window.addEventListener("mousemove", (e) => { mouseX.set(e.clientX); mouseY.set(e.clientY); });
-
-    return () => {
-        window.removeEventListener("resize", handleResize);
-        clearTimeout(timer);
-    };
+    return () => { window.removeEventListener("resize", handleResize); clearTimeout(timer); };
   }, []);
 
-  // --- SCROLL ---
   const { scrollYProgress } = useScroll({ target: containerRef });
   const { scrollYProgress: terroirProgress } = useScroll({ target: terroirRef, offset: ["start start", "end end"] });
   const xGallery = useTransform(terroirProgress, [0, 1], ["0px", `-${galleryWidth - viewportWidth}px`]);
@@ -102,31 +78,19 @@ export default function RestaurantDemo() {
 
   return (
     <main ref={containerRef} className="bg-[#050505] text-[#e5e5e5] font-serif selection:bg-[#d4af37] selection:text-black cursor-none">
-      
-      {/* --- CURSEUR CORRIGÉ (Z-INDEX 9999) --- */}
-      <motion.div 
-        className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block" 
-        style={{ x: cursorX, y: cursorY, translateX: "-50%", translateY: "-50%" }}
-      >
+      <motion.div className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block" style={{ x: cursorX, y: cursorY, translateX: "-50%", translateY: "-50%" }}>
         <div className="w-3 h-3 bg-[#d4af37] rounded-full shadow-[0_0_20px_rgba(212,175,55,0.5)]" />
-        <motion.div 
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#d4af37] opacity-50"
-            animate={{ width: hoveredMenuIndex !== null ? 80 : 40, height: hoveredMenuIndex !== null ? 80 : 40 }}
-            transition={{ type: "spring", stiffness: 300, damping: 20 }}
-        />
+        <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#d4af37] opacity-50" animate={{ width: hoveredMenuIndex !== null ? 80 : 40, height: hoveredMenuIndex !== null ? 80 : 40 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} />
       </motion.div>
 
-      {/* HEADER */}
       <Link href="/#demos" className="fixed top-8 left-8 z-50 group">
-        <div className="bg-black/40 backdrop-blur-md border border-white/10 text-white px-6 py-2 rounded-full text-xs font-sans font-bold group-hover:bg-[#d4af37] group-hover:text-black transition-all flex items-center gap-2">
-            <ArrowLeft size={14} /> VERSO.
-        </div>
+        <div className="bg-black/40 backdrop-blur-md border border-white/10 text-white px-6 py-2 rounded-full text-xs font-sans font-bold group-hover:bg-[#d4af37] group-hover:text-black transition-all flex items-center gap-2"><ArrowLeft size={14} /> VERSO.</div>
       </Link>
 
-      {/* HERO */}
       <section className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden">
         <motion.div style={{ y: yHero, opacity: opacityHero }} className="absolute inset-0 z-0">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=2000')] bg-cover bg-center opacity-40" />
+            {/* 👇 BACKGROUND OPTIMISÉ */}
+            <Image src="https://images.unsplash.com/photo-1544148103-0773bf10d330?q=80&w=2000" alt="Hero Background" fill className="object-cover opacity-40" priority sizes="100vw" />
             <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-transparent to-[#050505]" />
         </motion.div>
         <div className="relative z-10 px-6">
@@ -135,17 +99,18 @@ export default function RestaurantDemo() {
         </div>
       </section>
 
-      {/* PHILOSOPHIE */}
       <section className="py-40 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-20 items-center">
         <div>
             <div className="text-[#d4af37] font-sans text-xs tracking-[0.3em] uppercase mb-4">Philosophie</div>
             <h2 className="text-5xl md:text-7xl leading-[1.1] text-white">Cuisiner, c'est <span className="text-[#d4af37] italic">aimer</span>.</h2>
             <p className="mt-10 text-xl text-neutral-400 font-sans font-light leading-relaxed">Chez Gustavo, nous ne servons pas simplement des plats. Nous racontons l'histoire d'une Italie oubliée.</p>
         </div>
-        <div className="h-[600px] w-full bg-[url('https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1000')] bg-cover bg-center grayscale hover:grayscale-0 transition duration-700" />
+        <div className="h-[600px] w-full relative grayscale hover:grayscale-0 transition duration-700">
+             {/* 👇 IMAGE OPTIMISÉE */}
+             <Image src="https://images.unsplash.com/photo-1600891964092-4316c288032e?q=80&w=1000" alt="Chef" fill className="object-cover" />
+        </div>
       </section>
 
-      {/* SCROLL 1 : IMAGES (GAUCHE) */}
       <div ref={terroirRef} className="relative h-[300vh]">
          <div className="sticky top-0 h-screen flex items-center overflow-hidden bg-[#050505]">
             <motion.div ref={terroirMoveRef} style={{ x: xGallery }} className="flex gap-20 pl-20 items-center w-max">
@@ -155,8 +120,9 @@ export default function RestaurantDemo() {
                     <p className="mt-6 text-neutral-400 font-sans font-light">De la Toscane à la Sicile.</p>
                 </div>
                 {galleryImages.map((src, i) => (
-                    <div key={i} className="shrink-0 w-[600px] h-[400px] grayscale hover:grayscale-0 transition duration-700">
-                        <img src={src} className="w-full h-full object-cover" />
+                    <div key={i} className="shrink-0 w-[600px] h-[400px] relative grayscale hover:grayscale-0 transition duration-700">
+                        {/* 👇 IMAGE OPTIMISÉE */}
+                        <Image src={src} alt={`Gallery ${i}`} fill className="object-cover" />
                     </div>
                 ))}
                 <div className="shrink-0 w-[400px] flex items-center justify-center">
@@ -166,7 +132,6 @@ export default function RestaurantDemo() {
          </div>
       </div>
 
-      {/* MENU */}
       <section className="py-40 bg-[#050505] relative z-20">
         <div className="max-w-6xl mx-auto px-6">
             <div className="text-center mb-24"><span className="text-[#d4af37] font-sans text-xs tracking-[0.3em] uppercase">La Carte</span><h3 className="text-6xl md:text-8xl italic text-white mt-4 opacity-10">Signatures</h3></div>
@@ -181,12 +146,23 @@ export default function RestaurantDemo() {
         </div>
         <motion.div className="fixed top-0 left-0 w-[300px] h-[400px] pointer-events-none z-10 overflow-hidden rounded-lg opacity-0 hidden md:block mix-blend-screen" style={{ x: menuImageX, y: menuImageY, top: "-200px", left: "50px", opacity: hoveredMenuIndex !== null ? 0.8 : 0, rotate: -5 }}>
             <AnimatePresence mode="wait">
-                {activeMenuItem && <motion.img key={activeMenuItem.name} src={activeMenuItem.img} initial={{ opacity: 0, scale: 1.2 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 1.2 }} transition={{ duration: 0.4 }} className="w-full h-full object-cover grayscale contrast-125" />}
+                {activeMenuItem && (
+                    <motion.div 
+                        key={activeMenuItem.name}
+                        initial={{ opacity: 0, scale: 1.2 }} 
+                        animate={{ opacity: 1, scale: 1 }} 
+                        exit={{ opacity: 0, scale: 1.2 }} 
+                        transition={{ duration: 0.4 }}
+                        className="relative w-full h-full"
+                    >
+                        {/* 👇 IMAGE OPTIMISÉE */}
+                        <Image src={activeMenuItem.img} alt={activeMenuItem.name} fill className="object-cover grayscale contrast-125" />
+                    </motion.div>
+                )}
             </AnimatePresence>
         </motion.div>
       </section>
 
-      {/* SCROLL 2 : TÉMOIGNAGES (DROITE) */}
       <div ref={testimonialRef} className="relative h-[250vh]">
          <div className="sticky top-0 h-screen flex flex-col justify-center overflow-hidden bg-[#0a0a0a]">
             <div className="max-w-6xl mx-auto w-full px-6 mb-12">
@@ -209,10 +185,10 @@ export default function RestaurantDemo() {
          </div>
       </div>
 
-      {/* SOMMELIER */}
       <section className="py-40 px-6 max-w-6xl mx-auto grid md:grid-cols-2 gap-24 items-center">
          <div className="order-2 md:order-1 relative h-[600px] bg-[#0c0c0c] flex items-center justify-center border border-white/10">
-            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?q=80&w=1000')] bg-cover bg-center opacity-20" />
+            {/* 👇 IMAGE OPTIMISÉE */}
+            <Image src="https://images.unsplash.com/photo-1516594915697-87eb3b1c14ea?q=80&w=1000" alt="Cave" fill className="object-cover opacity-20" />
             <div className="relative z-10 p-12 text-center border border-[#d4af37]/20 bg-black/50 backdrop-blur-md">
                  <Wine className="w-12 h-12 text-[#d4af37] mx-auto mb-6" />
                  <h4 className="text-3xl font-serif text-white mb-2">La Cave</h4>
@@ -223,19 +199,13 @@ export default function RestaurantDemo() {
              <span className="text-[#d4af37] font-sans text-xs tracking-[0.3em] uppercase">Sommelier</span>
              <h2 className="text-5xl md:text-7xl leading-[1.1] text-white mt-6 mb-10">L'Accord <br/><span className="italic text-neutral-500">Parfait.</span></h2>
              <p className="text-xl text-neutral-400 font-sans font-light leading-relaxed">Une sélection rigoureuse des meilleurs vignobles italiens.</p>
-             
-             {/* --- BOUTON ACTIF --- */}
-             <button 
-                onClick={() => setIsWineModalOpen(true)}
-                className="mt-12 group cursor-pointer w-fit text-left focus:outline-none"
-             >
+             <button onClick={() => setIsWineModalOpen(true)} className="mt-12 group cursor-pointer w-fit text-left focus:outline-none">
                 <div className="text-white uppercase text-xs tracking-[0.2em] mb-2 group-hover:text-[#d4af37] transition">Découvrir la carte des vins</div>
                 <div className="h-[1px] w-full bg-white/20 group-hover:bg-[#d4af37] transition duration-500 scale-x-50 origin-left group-hover:scale-x-100" />
              </button>
          </div>
       </section>
 
-      {/* FOOTER CTA */}
       <section className="h-[80vh] flex flex-col justify-center items-center text-center px-6 relative overflow-hidden bg-[#050505]">
         <div className="relative z-10">
             <h2 className="text-6xl md:text-9xl font-medium tracking-tighter text-white mb-12">Votre Table<br/><span className="text-[#d4af37] italic">Vous Attend.</span></h2>
@@ -243,7 +213,6 @@ export default function RestaurantDemo() {
         </div>
       </section>
 
-      {/* MODALE RÉSERVATION */}
       <AnimatePresence>
         {isModalOpen && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] flex items-center justify-center bg-black/90 backdrop-blur-sm p-4 cursor-auto">
@@ -263,70 +232,23 @@ export default function RestaurantDemo() {
         )}
       </AnimatePresence>
 
-      {/* --- NOUVELLE MODALE : CARTE DES VINS --- */}
       <AnimatePresence>
         {isWineModalOpen && (
-            <motion.div 
-                initial={{ y: "100%" }} 
-                animate={{ y: 0 }} 
-                exit={{ y: "100%" }} 
-                transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                className="fixed inset-0 z-[250] bg-[#0a0a0a] overflow-y-auto cursor-auto"
-            >
+            <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }} transition={{ type: "spring", damping: 25, stiffness: 200 }} className="fixed inset-0 z-[250] bg-[#0a0a0a] overflow-y-auto cursor-auto">
                 <div className="min-h-screen p-8 md:p-24 relative">
-                    <button onClick={() => setIsWineModalOpen(false)} className="fixed top-8 right-8 z-[260] p-4 bg-white/10 rounded-full hover:bg-white hover:text-black transition">
-                        <X size={24} />
-                    </button>
-                    
+                    <button onClick={() => setIsWineModalOpen(false)} className="fixed top-8 right-8 z-[260] p-4 bg-white/10 rounded-full hover:bg-white hover:text-black transition"><X size={24} /></button>
                     <div className="max-w-4xl mx-auto">
-                        <div className="text-center mb-20">
-                            <span className="text-[#d4af37] font-sans text-xs tracking-[0.4em] uppercase">Sommelier</span>
-                            <h2 className="text-6xl md:text-8xl font-serif text-white italic mt-4">La Cave</h2>
-                        </div>
-
+                        <div className="text-center mb-20"><span className="text-[#d4af37] font-sans text-xs tracking-[0.4em] uppercase">Sommelier</span><h2 className="text-6xl md:text-8xl font-serif text-white italic mt-4">La Cave</h2></div>
                         <div className="space-y-20">
-                            {/* Vins Rouges */}
-                            <div>
-                                <h3 className="text-2xl font-sans uppercase tracking-widest text-white/50 mb-8 border-b border-white/10 pb-4">Rossi</h3>
-                                <div className="space-y-8">
-                                    {wineList.red.map((wine, i) => (
-                                        <div key={i} className="flex justify-between items-end group cursor-pointer hover:opacity-100 opacity-60 transition-opacity">
-                                            <div>
-                                                <h4 className="text-3xl font-serif text-white group-hover:text-[#d4af37] transition-colors">{wine.name}</h4>
-                                                <p className="text-neutral-500 font-sans text-sm mt-1">{wine.region} · {wine.year}</p>
-                                            </div>
-                                            <div className="text-xl font-serif text-[#d4af37]">{wine.price}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Vins Blancs */}
-                            <div>
-                                <h3 className="text-2xl font-sans uppercase tracking-widest text-white/50 mb-8 border-b border-white/10 pb-4">Bianchi</h3>
-                                <div className="space-y-8">
-                                    {wineList.white.map((wine, i) => (
-                                        <div key={i} className="flex justify-between items-end group cursor-pointer hover:opacity-100 opacity-60 transition-opacity">
-                                            <div>
-                                                <h4 className="text-3xl font-serif text-white group-hover:text-[#d4af37] transition-colors">{wine.name}</h4>
-                                                <p className="text-neutral-500 font-sans text-sm mt-1">{wine.region} · {wine.year}</p>
-                                            </div>
-                                            <div className="text-xl font-serif text-[#d4af37]">{wine.price}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
+                            <div><h3 className="text-2xl font-sans uppercase tracking-widest text-white/50 mb-8 border-b border-white/10 pb-4">Rossi</h3><div className="space-y-8">{wineList.red.map((wine, i) => (<div key={i} className="flex justify-between items-end group cursor-pointer hover:opacity-100 opacity-60 transition-opacity"><div><h4 className="text-3xl font-serif text-white group-hover:text-[#d4af37] transition-colors">{wine.name}</h4><p className="text-neutral-500 font-sans text-sm mt-1">{wine.region} · {wine.year}</p></div><div className="text-xl font-serif text-[#d4af37]">{wine.price}</div></div>))}</div></div>
+                            <div><h3 className="text-2xl font-sans uppercase tracking-widest text-white/50 mb-8 border-b border-white/10 pb-4">Bianchi</h3><div className="space-y-8">{wineList.white.map((wine, i) => (<div key={i} className="flex justify-between items-end group cursor-pointer hover:opacity-100 opacity-60 transition-opacity"><div><h4 className="text-3xl font-serif text-white group-hover:text-[#d4af37] transition-colors">{wine.name}</h4><p className="text-neutral-500 font-sans text-sm mt-1">{wine.region} · {wine.year}</p></div><div className="text-xl font-serif text-[#d4af37]">{wine.price}</div></div>))}</div></div>
                         </div>
-                        
-                        <div className="mt-32 text-center">
-                            <p className="text-neutral-500 italic">"Le vin est la poésie de la terre."</p>
-                        </div>
+                        <div className="mt-32 text-center"><p className="text-neutral-500 italic">"Le vin est la poésie de la terre."</p></div>
                     </div>
                 </div>
             </motion.div>
         )}
       </AnimatePresence>
-
     </main>
   );
 }

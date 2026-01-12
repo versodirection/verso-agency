@@ -1,93 +1,22 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowLeft, ArrowUpRight, X, Menu, Search, Heart, Sun, Thermometer, Check, User, Mail, Phone, Calendar, Loader2, Download, Shield, Briefcase, Gem, Feather } from "lucide-react";
+import { ArrowLeft, ArrowUpRight, X, Menu, Heart, Download, Shield, Briefcase, Gem, Feather, Check, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect, useLayoutEffect } from "react"; // AJOUT DE useLayoutEffect
+import Image from "next/image"; // 👈 IMPORT
+import { useState, useLayoutEffect } from "react";
 
-// --- DATA PROJETS ---
+// --- DATA PROJETS (Tes données) ---
 const projects = [
-
-  {
-    id: 1,
-    title: "SKY MANSION",
-    location: "Dubai, UAE",
-    category: "Urban",
-    year: "2024",
-    price: "18,000,000 $",
-    image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2500&auto=format&fit=crop",
-    desc: "L'ultime frontière du luxe sur Palm Jumeirah. Plage privée et héliport.",
-    weather: { temp: "38°C", condition: "Soleil", time: "08:41 PM" }
-  },
-  {
-    id: 2,
-    title: "LUXUARY DESERT VILLA",
-    location: "Montecito, CA",
-    category: "Desert",
-    year: "2025",
-    price: "12,500,000 $",
-    image: "/houses/villa1.jpg",
-    desc: "Une prouesse d'invisibilité. Conçue pour se fondre dans le paysage désertique.",
-    weather: { temp: "24°C", condition: "Soleil", time: "09:41 AM" }
-  },
-  {
-    id: 3,
-    title: "DUNE HOUSE",
-    location: "Cap Ferret, FR",
-    category: "Sea",
-    year: "2023",
-    price: "3,100,000 €",
-    image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=2500&auto=format&fit=crop",
-    desc: "Invisible depuis la plage, cette structure en bois brûlé (Shou Sugi Ban) se fond dans la topographie dunaire.",
-    weather: { temp: "19°C", condition: "Vent", time: "06:41 PM" }
-  },
-  {
-    id: 4,
-    title: "ALPINE LOFT",
-    location: "Zermatt, CH",
-    category: "Sea",
-    year: "2024",
-    price: "5,200,000 CHF",
-    image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2500&auto=format&fit=crop",
-    desc: "Le luxe au sommet. Des volumes vertigineux de 6 mètres sous plafond face au Cervin.",
-    weather: { temp: "-4°C", condition: "Neige", time: "06:41 PM" }
-  },
-  {
-    id: 5,
-    title: "PENTHOUSE 56",
-    location: "New York, USA",
-    category: "Urban",
-    year: "2023",
-    price: "8,900,000 $",
-    image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2500&auto=format&fit=crop",
-    desc: "Une oasis de calme au-dessus de la ville qui ne dort jamais. Marbre Calacatta et domotique invisible.",
-    weather: { temp: "12°C", condition: "Nuageux", time: "12:41 PM" }
-  },
-  {
-    id: 6,
-    title: "SPA & POOL VILLA",
-    location: "Mykonos, Greece",
-    category: "Sea",
-    year: "2024",
-    price: "4,200,000 €",
-    image : "/houses/villapiscine.jpg",
-    desc: "Sculptée dans la roche. Une piscine intérieur magnifique. ",
-    weather: { temp: "28°C", condition: "Soleil", time: "07:41 PM" }
-  },
-  {
-    id: 7,
-    title: "DESERT LOTUS",
-    location: "Amangiri, Utah",
-    category: "Desert",
-    year: "2025",
-    price: "6,800,000 $",
-    image: "https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=2500&auto=format&fit=crop",
-    desc: "Brutalisme minéral au cœur des canyons. Une architecture qui défie les éléments.",
-    weather: { temp: "32°C", condition: "Soleil", time: "10:41 AM" }
-  },
+  { id: 1, title: "SKY MANSION", location: "Dubai, UAE", category: "Urban", year: "2024", price: "18,000,000 $", image: "https://images.unsplash.com/photo-1600210492486-724fe5c67fb0?q=80&w=2500&auto=format&fit=crop", desc: "L'ultime frontière du luxe sur Palm Jumeirah. Plage privée et héliport.", weather: { temp: "38°C", condition: "Soleil", time: "08:41 PM" } },
+  { id: 2, title: "LUXUARY DESERT VILLA", location: "Montecito, CA", category: "Desert", year: "2025", price: "12,500,000 $", image: "/houses/villa1.jpg", desc: "Une prouesse d'invisibilité. Conçue pour se fondre dans le paysage désertique.", weather: { temp: "24°C", condition: "Soleil", time: "09:41 AM" } },
+  { id: 3, title: "DUNE HOUSE", location: "Cap Ferret, FR", category: "Sea", year: "2023", price: "3,100,000 €", image: "https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?q=80&w=2500&auto=format&fit=crop", desc: "Invisible depuis la plage, cette structure en bois brûlé (Shou Sugi Ban) se fond dans la topographie dunaire.", weather: { temp: "19°C", condition: "Vent", time: "06:41 PM" } },
+  { id: 4, title: "ALPINE LOFT", location: "Zermatt, CH", category: "Sea", year: "2024", price: "5,200,000 CHF", image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?q=80&w=2500&auto=format&fit=crop", desc: "Le luxe au sommet. Des volumes vertigineux de 6 mètres sous plafond face au Cervin.", weather: { temp: "-4°C", condition: "Neige", time: "06:41 PM" } },
+  { id: 5, title: "PENTHOUSE 56", location: "New York, USA", category: "Urban", year: "2023", price: "8,900,000 $", image: "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=2500&auto=format&fit=crop", desc: "Une oasis de calme au-dessus de la ville qui ne dort jamais. Marbre Calacatta et domotique invisible.", weather: { temp: "12°C", condition: "Nuageux", time: "12:41 PM" } },
+  { id: 6, title: "SPA & POOL VILLA", location: "Mykonos, Greece", category: "Sea", year: "2024", price: "4,200,000 €", image : "/houses/villapiscine.jpg", desc: "Sculptée dans la roche. Une piscine intérieur magnifique. ", weather: { temp: "28°C", condition: "Soleil", time: "07:41 PM" } },
+  { id: 7, title: "DESERT LOTUS", location: "Amangiri, Utah", category: "Desert", year: "2025", price: "6,800,000 $", image: "https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=2500&auto=format&fit=crop", desc: "Brutalisme minéral au cœur des canyons. Une architecture qui défie les éléments.", weather: { temp: "32°C", condition: "Soleil", time: "10:41 AM" } },
 ];
 
-// --- DATA ARCHITECTES ---
 const architects = [
     { name: "Kengo Kuma", style: "Organic Minimalism", image: "https://images.pexels.com/photos/417273/pexels-photo-417273.jpeg" },
     { name: "Tadao Ando", style: "Concrete & Light", image: "https://images.pexels.com/photos/327482/pexels-photo-327482.jpeg" },
@@ -95,7 +24,6 @@ const architects = [
     { name: "Bjarke Ingels (BIG)", style: "Hedonistic Sustainability", image: "https://images.unsplash.com/photo-1486718448742-163732cd1544?q=80&w=800&auto=format&fit=crop" }
 ];
 
-// --- DATA SERVICES ---
 const services = [
     { title: "Off-Market Access", icon: <Shield />, desc: "Accès exclusif aux biens confidentiels non listés publiquement." },
     { title: "Asset Management", icon: <Briefcase />, desc: "Gestion patrimoniale et optimisation fiscale internationale." },
@@ -103,7 +31,6 @@ const services = [
     { title: "Private Aviation", icon: <Feather />, desc: "Partenariat exclusif avec NetJets pour vos déplacements." }
 ];
 
-// --- DATA JOURNAL ---
 const journal = [
     { title: "L'Art de Vivre en 2025", category: "Trends", date: "Oct 12" },
     { title: "Investir à Tokyo : Le Guide", category: "Market", date: "Sep 28" },
@@ -113,81 +40,29 @@ const journal = [
 const filters = ["All", "Sea", "Mountain", "Urban", "Desert"];
 
 export default function RealEstateDemo() {
-  // CORRECTION : FORCE LE SCROLL EN HAUT AU DÉMARRAGE
-  useLayoutEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  useLayoutEffect(() => { window.scrollTo(0, 0); }, []);
 
   const [activeProject, setActiveProject] = useState(projects[0]);
   const [showIntro, setShowIntro] = useState(true);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  
-  // --- GESTION DES VUES ---
   const [activeView, setActiveView] = useState<"collection" | "architects" | "services" | "journal" | "contact" | "detail">("collection");
-  
   const [activeFilter, setActiveFilter] = useState("All");
   const [favorites, setFavorites] = useState<number[]>([]);
-  
-  // États Fonctionnels
   const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success">("idle");
   const [downloadStatus, setDownloadStatus] = useState<"idle" | "loading" | "success">("idle");
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
-  // Filtrage
-  const filteredProjects = activeFilter === "All" 
-    ? projects 
-    : projects.filter(p => p.category === activeFilter);
+  const filteredProjects = activeFilter === "All" ? projects : projects.filter(p => p.category === activeFilter);
 
-  // Toast Helper
-  const showToast = (msg: string) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
-
-  // --- NAVIGATION MENU ---
-  const handleMenuNavigation = (view: "collection" | "architects" | "services" | "journal" | "contact") => {
-      setIsMenuOpen(false);
-      setTimeout(() => {
-          setActiveView(view);
-      }, 400); 
-  };
-  
-  // Fonction de retour à la collection
-  const closeOverlay = () => {
-      setActiveView("collection");
-  };
-
-  // --- HANDLERS ACTIONS ---
-  const handleContactSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setFormStatus("loading");
-    setTimeout(() => setFormStatus("success"), 2000);
-  };
-
-  const handleDownloadPDF = () => {
-    setDownloadStatus("loading");
-    setTimeout(() => {
-        setDownloadStatus("success");
-        showToast("Dossier téléchargé");
-        setTimeout(() => setDownloadStatus("idle"), 2500);
-    }, 1500);
-  };
-
-  const toggleFavorite = (e: any, id: number) => {
-    e.stopPropagation();
-    if (favorites.includes(id)) {
-        setFavorites(favorites.filter(fav => fav !== id));
-        showToast("Retiré des favoris");
-    } else {
-        setFavorites([...favorites, id]);
-        showToast("Ajouté aux favoris");
-    }
-  };
+  const showToast = (msg: string) => { setToastMessage(msg); setTimeout(() => setToastMessage(null), 3000); };
+  const handleMenuNavigation = (view: any) => { setIsMenuOpen(false); setTimeout(() => { setActiveView(view); }, 400); };
+  const closeOverlay = () => { setActiveView("collection"); };
+  const handleContactSubmit = (e: React.FormEvent) => { e.preventDefault(); setFormStatus("loading"); setTimeout(() => setFormStatus("success"), 2000); };
+  const handleDownloadPDF = () => { setDownloadStatus("loading"); setTimeout(() => { setDownloadStatus("success"); showToast("Dossier téléchargé"); setTimeout(() => setDownloadStatus("idle"), 2500); }, 1500); };
+  const toggleFavorite = (e: any, id: number) => { e.stopPropagation(); if (favorites.includes(id)) { setFavorites(favorites.filter(fav => fav !== id)); showToast("Retiré des favoris"); } else { setFavorites([...favorites, id]); showToast("Ajouté aux favoris"); } };
 
   return (
     <main className="relative h-screen w-full overflow-hidden bg-black text-white font-sans selection:bg-white selection:text-black">
-      
-      {/* --- TOAST --- */}
       <AnimatePresence>
         {toastMessage && (
             <motion.div initial={{ opacity: 0, y: -50 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -50 }} className="fixed top-8 left-0 right-0 mx-auto w-fit z-[400] bg-white text-black px-6 py-3 rounded-full text-xs font-bold uppercase tracking-widest shadow-2xl flex items-center gap-3">
@@ -196,18 +71,10 @@ export default function RealEstateDemo() {
         )}
       </AnimatePresence>
 
-      {/* --- MENU OVERLAY --- */}
       <AnimatePresence>
         {isMenuOpen && (
-            <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center"
-            >
-                <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 p-4 bg-white/10 rounded-full hover:bg-white hover:text-black transition">
-                    <X size={24}/>
-                </button>
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center">
+                <button onClick={() => setIsMenuOpen(false)} className="absolute top-8 right-8 p-4 bg-white/10 rounded-full hover:bg-white hover:text-black transition"><X size={24}/></button>
                 <div className="text-center space-y-8">
                     <motion.button onClick={() => handleMenuNavigation("collection")} className="block w-full text-5xl md:text-7xl font-bold tracking-tighter hover:text-[#d4af37] transition duration-300">Collection</motion.button>
                     <motion.button onClick={() => handleMenuNavigation("architects")} className="block w-full text-5xl md:text-7xl font-bold tracking-tighter hover:text-[#d4af37] transition duration-300">Architectes</motion.button>
@@ -219,26 +86,13 @@ export default function RealEstateDemo() {
         )}
       </AnimatePresence>
 
-      {/* --- INTRO SCREEN AVEC BOUTON QUITTER --- */}
       <AnimatePresence>
         {showIntro && (
-            <motion.div
-                initial={{ opacity: 1 }}
-                exit={{ y: "-100%", transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } }}
-                className="fixed inset-0 z-[300] bg-[#050505] flex flex-col justify-between p-8 md:p-20"
-            >
-               {/* --- AJOUT ICI : BOUTON DE SORTIE --- */}
-               <Link 
-                  href="/#demos" 
-                  className="absolute top-8 left-8 flex items-center gap-2 text-white/40 hover:text-white transition group"
-               >
-                  <div className="p-2 border border-white/20 rounded-full group-hover:border-white">
-                    <ArrowLeft size={16} />
-                  </div>
+            <motion.div initial={{ opacity: 1 }} exit={{ y: "-100%", transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } }} className="fixed inset-0 z-[300] bg-[#050505] flex flex-col justify-between p-8 md:p-20">
+               <Link href="/#demos" className="absolute top-8 left-8 flex items-center gap-2 text-white/40 hover:text-white transition group">
+                  <div className="p-2 border border-white/20 rounded-full group-hover:border-white"><ArrowLeft size={16} /></div>
                   <span className="text-xs font-bold uppercase tracking-widest">VERSO<span className="text-indigo-500">.</span></span>
                </Link>
-               {/* ---------------------------------- */}
-
                <div className="flex flex-col items-center justify-center text-center h-full">
                     <motion.h1 initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 1.5 }} className="text-[12vw] font-black tracking-tighter text-white">ARKITEK</motion.h1>
                     <button onClick={() => setShowIntro(false)} className="mt-8 text-xs font-bold uppercase tracking-widest border-b border-white pb-1 hover:opacity-50 transition">Entrer</button>
@@ -247,7 +101,7 @@ export default function RealEstateDemo() {
         )}
       </AnimatePresence>
 
-      {/* BACKGROUND */}
+      {/* BACKGROUND OPTIMISÉ */}
       <div className="absolute inset-0 z-0">
         <AnimatePresence mode="popLayout">
           {activeProject && (
@@ -257,16 +111,16 @@ export default function RealEstateDemo() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0 }}
                 transition={{ duration: 1.2 }}
-                className="absolute inset-0 bg-cover bg-center"
-                style={{ backgroundImage: `url(${activeProject.image})` }}
+                className="absolute inset-0"
               >
+                {/* 👇 IMAGE OPTIMISÉE */}
+                <Image src={activeProject.image} alt={activeProject.title} fill className="object-cover" priority sizes="100vw" />
                 <div className="absolute inset-0 bg-black/40" />
               </motion.div>
           )}
         </AnimatePresence>
       </div>
 
-      {/* HEADER */}
       <header className="absolute top-0 left-0 w-full z-40 p-8 flex justify-between items-center pointer-events-none">
         <div className="pointer-events-auto flex items-center gap-6">
              <Link href="/#demos" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition backdrop-blur-md"><ArrowLeft size={16} /></Link>
@@ -285,19 +139,13 @@ export default function RealEstateDemo() {
         </div>
       </header>
 
-      {/* CONTENU PRINCIPAL */}
       {activeView === "collection" && (
           <>
             <div className="relative z-10 h-full flex flex-col justify-center px-8 md:px-24 pointer-events-none">
                 <div className="h-[60vh] overflow-y-auto no-scrollbar mask-gradient pr-10 pointer-events-auto">
                     <div className="flex flex-col items-start gap-2 py-10">
                         {filteredProjects.map((project) => (
-                            <motion.div 
-                                key={project.id}
-                                onMouseEnter={() => setActiveProject(project)}
-                                onClick={() => setActiveView("detail")}
-                                className="group relative cursor-pointer w-full flex items-center justify-between"
-                            >
+                            <motion.div key={project.id} onMouseEnter={() => setActiveProject(project)} onClick={() => setActiveView("detail")} className="group relative cursor-pointer w-full flex items-center justify-between">
                                 <h2 className={`text-5xl md:text-8xl font-bold tracking-tighter transition-all duration-700 ${activeProject.id === project.id ? "text-white translate-x-4 opacity-100" : "text-transparent stroke-text opacity-30 hover:opacity-60"}`} style={{ WebkitTextStroke: activeProject.id !== project.id ? "1px rgba(255,255,255,0.5)" : "none" }}>{project.title}</h2>
                                 <button onClick={(e) => toggleFavorite(e, project.id)} className={`p-3 rounded-full border border-white/20 transition-all ${activeProject.id === project.id ? "opacity-100" : "opacity-0"} ${favorites.includes(project.id) ? "bg-red-500 border-red-500" : ""}`}><Heart size={20} /></button>
                             </motion.div>
@@ -310,12 +158,25 @@ export default function RealEstateDemo() {
           </>
       )}
 
-      {/* AUTRES VUES (PARTNERS, SERVICES, JOURNAL, CONTACT, DETAIL) */}
       <AnimatePresence>
         {activeView === "architects" && (
             <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }} transition={{ type: "spring", damping: 25 }} className="fixed inset-0 z-[50] bg-[#111] text-white overflow-y-auto">
                 <button onClick={closeOverlay} className="fixed top-8 right-8 z-50 p-4 bg-white/10 backdrop-blur text-white rounded-full hover:bg-white hover:text-black transition duration-300"><X size={24} /></button>
-                <div className="p-8 md:p-24 max-w-7xl mx-auto"><h2 className="text-6xl md:text-9xl font-bold tracking-tighter mb-16">Partners.</h2><div className="grid md:grid-cols-2 gap-12">{architects.map((arch, i) => (<div key={i} className="group cursor-pointer"><div className="h-[400px] overflow-hidden mb-6 relative"><img src={arch.image} className="w-full h-full object-cover transition duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" alt={arch.name}/><div className="absolute bottom-4 left-4 bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-widest">{arch.style}</div></div><h3 className="text-4xl font-bold">{arch.name}</h3></div>))}</div></div>
+                <div className="p-8 md:p-24 max-w-7xl mx-auto">
+                    <h2 className="text-6xl md:text-9xl font-bold tracking-tighter mb-16">Partners.</h2>
+                    <div className="grid md:grid-cols-2 gap-12">
+                        {architects.map((arch, i) => (
+                            <div key={i} className="group cursor-pointer">
+                                <div className="h-[400px] w-full relative overflow-hidden mb-6">
+                                    {/* 👇 IMAGE OPTIMISÉE */}
+                                    <Image src={arch.image} alt={arch.name} fill className="object-cover transition duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0" />
+                                    <div className="absolute bottom-4 left-4 bg-white text-black px-3 py-1 text-xs font-bold uppercase tracking-widest z-10">{arch.style}</div>
+                                </div>
+                                <h3 className="text-4xl font-bold">{arch.name}</h3>
+                            </div>
+                        ))}
+                    </div>
+                </div>
             </motion.div>
         )}
       </AnimatePresence>
@@ -355,8 +216,13 @@ export default function RealEstateDemo() {
         {activeView === "detail" && (
             <motion.div initial={{ y: "100%" }} animate={{ y: 0 }} exit={{ y: "100%" }} transition={{ type: "spring", damping: 25 }} className="fixed inset-0 z-[50] bg-[#0a0a0a] text-white overflow-y-auto">
                 <button onClick={closeOverlay} className="fixed top-8 right-8 z-50 p-4 bg-white/10 backdrop-blur rounded-full hover:bg-white hover:text-black"><X size={24}/></button>
-                <div className="relative h-[80vh] w-full"><div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${activeProject.image})` }} /><div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-90" /><div className="absolute bottom-0 left-0 p-8 md:p-24"><h1 className="text-6xl md:text-[8rem] font-bold tracking-tighter mb-8">{activeProject.title}</h1></div></div>
-                <div className="max-w-7xl mx-auto px-8 md:px-24 pb-32 grid md:grid-cols-12 gap-16"><div className="md:col-span-8"><p className="text-2xl md:text-3xl font-light text-white/80 mb-12">"{activeProject.desc}"</p><div className="grid grid-cols-2 gap-4"><div className="h-64 bg-neutral-900 rounded-sm w-full bg-cover bg-center opacity-60 hover:opacity-100 transition" style={{ backgroundImage: `url(${activeProject.image})`, filter: "hue-rotate(90deg)" }} /><div className="h-64 bg-neutral-900 rounded-sm w-full bg-cover bg-center opacity-60 hover:opacity-100 transition" style={{ backgroundImage: `url(${activeProject.image})`, filter: "sepia(50%)" }} /></div></div><div className="md:col-span-4 space-y-8 sticky top-12 h-fit"><button onClick={() => setActiveView("contact")} className="w-full bg-[#d4af37] text-black py-6 text-sm font-bold uppercase tracking-[0.2em] hover:bg-white transition duration-500">Solliciter une visite</button><button onClick={handleDownloadPDF} className="w-full border border-white/20 text-white py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-black transition flex justify-center gap-2">{downloadStatus === "loading" ? <Loader2 className="animate-spin" size={16}/> : <Download size={16}/>} Télécharger PDF</button></div></div>
+                <div className="relative h-[80vh] w-full">
+                    {/* 👇 IMAGE OPTIMISÉE */}
+                    <Image src={activeProject.image} alt={activeProject.title} fill className="object-cover" priority sizes="100vw"/>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-90" />
+                    <div className="absolute bottom-0 left-0 p-8 md:p-24"><h1 className="text-6xl md:text-[8rem] font-bold tracking-tighter mb-8">{activeProject.title}</h1></div>
+                </div>
+                <div className="max-w-7xl mx-auto px-8 md:px-24 pb-32 grid md:grid-cols-12 gap-16"><div className="md:col-span-8"><p className="text-2xl md:text-3xl font-light text-white/80 mb-12">"{activeProject.desc}"</p><div className="grid grid-cols-2 gap-4"><div className="h-64 bg-neutral-900 rounded-sm w-full relative overflow-hidden"><Image src={activeProject.image} fill className="object-cover opacity-60 hover:opacity-100 transition" alt="detail 1" style={{filter: "hue-rotate(90deg)"}} /></div><div className="h-64 bg-neutral-900 rounded-sm w-full relative overflow-hidden"><Image src={activeProject.image} fill className="object-cover opacity-60 hover:opacity-100 transition" alt="detail 2" style={{filter: "sepia(50%)"}} /></div></div></div><div className="md:col-span-4 space-y-8 sticky top-12 h-fit"><button onClick={() => setActiveView("contact")} className="w-full bg-[#d4af37] text-black py-6 text-sm font-bold uppercase tracking-[0.2em] hover:bg-white transition duration-500">Solliciter une visite</button><button onClick={handleDownloadPDF} className="w-full border border-white/20 text-white py-4 text-xs font-bold uppercase tracking-[0.2em] hover:bg-white hover:text-black transition flex justify-center gap-2">{downloadStatus === "loading" ? <Loader2 className="animate-spin" size={16}/> : <Download size={16}/>} Télécharger PDF</button></div></div>
             </motion.div>
         )}
       </AnimatePresence>

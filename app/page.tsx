@@ -10,6 +10,8 @@ import { Float, MeshDistortMaterial, Environment } from "@react-three/drei";
 import * as THREE from "three";
 import { ReactLenis } from "@studio-freight/react-lenis";
 import QuoteCalculator from "./components/QuoteCalculator";
+import Image from "next/image";
+
 
 // --- 1. UTILS ---
 const wrap = (min: number, max: number, v: number) => {
@@ -122,7 +124,7 @@ const Preloader = ({ onComplete }: { onComplete: () => void }) => {
       <motion.div initial={{ y: 0 }} exit={{ y: "-100%", transition: { duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.1 } }} className="w-full h-[50vh] bg-[#050505] relative border-b border-white/5" />
       <motion.div initial={{ y: 0 }} exit={{ y: "100%", transition: { duration: 1.2, ease: [0.76, 0, 0.24, 1], delay: 0.1 } }} className="w-full h-[50vh] bg-[#050505] relative border-t border-white/5" />
       <motion.div exit={{ opacity: 0, scale: 0.9, transition: { duration: 0.5 } }} className="absolute inset-0 flex flex-col items-center justify-center z-20 gap-6">
-        <div className="overflow-hidden"><motion.h1 initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-white text-sm md:text-base font-mono tracking-[0.5em] uppercase pl-2">VERSO Agency</motion.h1></div>
+        <div className="overflow-hidden"><motion.p initial={{ y: 20, opacity: 0 }} animate={{ y: 0, opacity: 1 }} className="text-white text-sm md:text-base font-mono tracking-[0.5em] uppercase pl-2">VERSO Agency</motion.p></div>
         <div className="w-48 h-[1px] bg-white/10 relative overflow-hidden"><motion.div className="absolute inset-0 bg-indigo-500 shadow-[0_0_10px_#6366f1]" initial={{ width: 0 }} animate={{ width: `${progress}%` }} /></div>
       </motion.div>
     </div>
@@ -165,6 +167,11 @@ export default function Home() {
       const el = document.getElementById(id); 
       if (el) el.scrollIntoView({ behavior: "smooth" }); 
     }, 100);
+};
+
+const handleScroll = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, id: string) => {
+  e.preventDefault();
+  scrollTo(id);
 };
 
   useEffect(() => {
@@ -283,15 +290,19 @@ export default function Home() {
                     <Grain />
                     
                     {/* 👇 CORRECTION : On a remis les bons noms (Tarifs) et une couleur visible (text-white) */}
-                    {['Services', 'Demos', 'Tarifs'].map((item) => (
-                        <button 
-                            key={item}
-                            onClick={() => scrollTo(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))}
-                            className="text-4xl font-black uppercase tracking-tighter text-neutral-400 hover:text-white transition-all duration-300"
-                        >
-                            {item}
-                        </button>
-                    ))}
+                    {['Services', 'Demos', 'Tarifs'].map((item) => {
+                        const targetId = item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+                        return (
+                            <Link 
+                                key={item}
+                                href={`#${targetId}`}
+                                onClick={(e) => handleScroll(e, targetId)}
+                                className="text-4xl font-black uppercase tracking-tighter text-neutral-400 hover:text-white transition-all duration-300"
+                            >
+                                {item}
+                            </Link>
+                        );
+                    })}
 
                     <div className="w-12 h-1 bg-indigo-500 rounded-full my-4" />
                     
@@ -365,8 +376,27 @@ export default function Home() {
                     onMouseEnter={cursorEnter} 
                     onMouseLeave={cursorLeave}
                   >
-                    <div className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-110" style={{ backgroundImage: `url(${demo.image})` }} />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent opacity-60 group-hover:opacity-80 transition-opacity" />
+
+                    {/* 🟢 CORRECTION : Image optimisée avec description pour Google */}
+                    <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                        <Image 
+                            src={demo.image} 
+                            alt={`Projet ${demo.title} - ${demo.category}`} // Google lira : "Projet Gustavo - Restaurant"
+                            fill 
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                    </div>
+                    {/* 👇 NOUVEAU BLOC IMAGE */}
+                    <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
+                        <Image 
+                            src={demo.image} 
+                            alt={`${demo.title} - ${demo.category}`}
+                            fill 
+                            className="object-cover"
+                            sizes="(max-width: 768px) 100vw, 33vw"
+                        />
+                    </div>
                     <div className="absolute bottom-0 left-0 p-8 w-full">
                         {/* ON UTILISE LES VRAIS TEXTES DE TON FICHIER CONTENT.TS */}
                         <span className="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2 block">{demo.category}</span>

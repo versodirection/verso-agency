@@ -4,7 +4,7 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// 👇 TA CONFIGURATION SEO (ETAPE 1)
+// 👇 TA CONFIGURATION SEO
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.verso-agency.fr'),
   title: {
@@ -36,7 +36,6 @@ export const metadata: Metadata = {
   },
 };
 
-// 👇 LA PARTIE QUI MANQUAIT (L'affichage de la page)
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -44,7 +43,61 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        {children}
+
+        {/* 👇 SECRET SEO : LE PASSEPORT GOOGLE (JSON-LD) */}
+        {/* Ce script dit à Google que tu es un business local actif autour de Toulouse */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness",
+              "name": "VERSO Agency",
+              "image": "https://www.verso-agency.fr/icon.png",
+              "@id": "https://www.verso-agency.fr",
+              "url": "https://www.verso-agency.fr",
+              "telephone": "+33660481692",
+              "email": "contact@verso-agency.fr",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "8 cours du barry",
+                "addressLocality": "Pechbonnieu",
+                "postalCode": "31140",
+                "addressCountry": "FR"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 43.697, 
+                "longitude": 1.467
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday"
+                ],
+                "opens": "09:00",
+                "closes": "18:00"
+              },
+              "priceRange": "$$",
+              "serviceArea": {
+                "@type": "GeoCircle",
+                "geoMidpoint": {
+                  "@type": "GeoCoordinates",
+                  "latitude": 43.6047, // Centre de Toulouse
+                  "longitude": 1.4442
+                },
+                "geoRadius": "30000" // Rayon de 30km (Couvre tout Toulouse et banlieue)
+              }
+            })
+          }}
+        />
+      </body>
     </html>
   );
 }

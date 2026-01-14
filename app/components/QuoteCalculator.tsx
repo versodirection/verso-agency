@@ -1,25 +1,25 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react"; // Ajout de useEffect
+import { motion, useSpring } from "framer-motion"; // Ajout de useSpring
 import { 
   X, Check, ArrowRight, ArrowLeft, Loader2, 
-  Layout, ShoppingBag, Rocket, RefreshCcw, // Icônes Types
-  File, Layers, Library, Globe, // Icônes Pages
-  Zap, Palette, // Icônes Design
-  Search, Newspaper, Calendar, Mail // Icônes Extras
+  Layout, ShoppingBag, Rocket, RefreshCcw, 
+  File, Layers, Library, Globe, 
+  Zap, Palette, 
+  Search, Newspaper, Calendar, Mail 
 } from "lucide-react";
 
-// 🛠️ CONFIGURATION AVEC TES PRIX ET ICÔNES LUCIDE
+// 🛠️ CONFIGURATION AVEC TES PRIX DOUBLÉS
 const questions = [
   {
     id: "type",
     title: "Quel type de projet ?",
     options: [
-      { label: "Site Vitrine (Présentation)", value: 850, icon: <Layout className="w-6 h-6" /> },
-      { label: "E-Commerce (Shopify)", value: 2000, icon: <ShoppingBag className="w-6 h-6" /> },
+      { label: "Site Vitrine (Présentation)", value: 900, icon: <Layout className="w-6 h-6" /> },
+      { label: "E-Commerce (Shopify)", value: 2400, icon: <ShoppingBag className="w-6 h-6" /> },
       { label: "Application Web / SaaS", value: 4000, icon: <Rocket className="w-6 h-6" /> },
-      { label: "Refonte de site existant", value: 1250, icon: <RefreshCcw className="w-6 h-6" /> },
+      { label: "Refonte de site existant", value: 1200, icon: <RefreshCcw className="w-6 h-6" /> },
     ]
   },
   {
@@ -29,7 +29,7 @@ const questions = [
       { label: "Site One-Page (1 page)", value: 0, icon: <File className="w-6 h-6" /> },
       { label: "Petit Site (2 à 5 pages)", value: 400, icon: <Layers className="w-6 h-6" /> },
       { label: "Site Complet (5 à 10 pages)", value: 800, icon: <Library className="w-6 h-6" /> },
-      { label: "Gros Site (10+ pages)", value: 1500, icon: <Globe className="w-6 h-6" /> },
+      { label: "Gros Site (10+ pages)", value: 1600, icon: <Globe className="w-6 h-6" /> },
     ]
   },
   {
@@ -37,7 +37,7 @@ const questions = [
     title: "Niveau de Design & Animations",
     options: [
       { label: "Standard (Propre & Efficace)", value: 0, icon: <Zap className="w-6 h-6" /> },
-      { label: "Premium (Animations avancées)", value: 400, icon: <Palette className="w-6 h-6" /> },
+      { label: "Premium (Animations avancées)", value: 600, icon: <Palette className="w-6 h-6" /> },
     ]
   },
   {
@@ -58,6 +58,20 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
   const [selections, setSelections] = useState<any>({});
   const [total, setTotal] = useState(0);
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success'>('idle');
+
+  // --- LOGIQUE CURSEUR ---
+  const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
+  const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
+
+  useEffect(() => {
+    const moveCursor = (e: MouseEvent) => {
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+    };
+    window.addEventListener("mousemove", moveCursor);
+    return () => window.removeEventListener("mousemove", moveCursor);
+  }, []);
+  // -----------------------
 
   const handleSelect = (questionId: string, value: number, optionLabel: string, isMulti: boolean) => {
     let newSelections = { ...selections };
@@ -98,7 +112,7 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
 
     const summary = Object.keys(selections).map(key => {
         const sel = selections[key];
-        if (Array.isArray(sel)) return `${key}: ${sel.map(s => s.label).join(', ')}`;
+        if (Array.isArray(sel)) return `${key}: ${sel.map((s:any) => s.label).join(', ')}`;
         return `${key}: ${sel.label}`;
     }).join('\n');
 
@@ -128,11 +142,22 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
   const isLastStep = step === questions.length;
 
   return (
-    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+    // AJOUT DE 'cursor-none' ICI 👇
+    <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm cursor-none">
+      
+      {/* --- LE CURSEUR --- */}
+      <motion.div 
+        className="fixed top-0 left-0 pointer-events-none z-[11000] hidden md:flex items-center justify-center" 
+        style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}
+      >
+        <div className="w-5 h-5 bg-white rounded-full mix-blend-difference" />
+      </motion.div>
+      {/* ------------------ */}
+
       <motion.div 
         initial={{ scale: 0.95, opacity: 0 }} 
         animate={{ scale: 1, opacity: 1 }} 
-        className="bg-[#0f0f0f] border border-white/10 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh]"
+        className="bg-[#0f0f0f] border border-white/10 w-full max-w-2xl rounded-3xl overflow-hidden shadow-2xl flex flex-col max-h-[90vh] relative z-[10001]"
       >
         {/* HEADER */}
         <div className="p-6 border-b border-white/5 flex justify-between items-center bg-neutral-900">

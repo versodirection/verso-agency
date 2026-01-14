@@ -16,10 +16,10 @@ const questions = [
     id: "type",
     title: "Quel type de projet ?",
     options: [
-      { label: "Site Vitrine (Présentation)", value: 450, icon: <Layout className="w-6 h-6" /> },
-      { label: "E-Commerce (Shopify)", value: 1200, icon: <ShoppingBag className="w-6 h-6" /> },
-      { label: "Application Web / SaaS", value: 2500, icon: <Rocket className="w-6 h-6" /> },
-      { label: "Refonte de site existant", value: 600, icon: <RefreshCcw className="w-6 h-6" /> },
+      { label: "Site Vitrine (Présentation)", value: 850, icon: <Layout className="w-6 h-6" /> },
+      { label: "E-Commerce (Shopify)", value: 2000, icon: <ShoppingBag className="w-6 h-6" /> },
+      { label: "Application Web / SaaS", value: 4000, icon: <Rocket className="w-6 h-6" /> },
+      { label: "Refonte de site existant", value: 1250, icon: <RefreshCcw className="w-6 h-6" /> },
     ]
   },
   {
@@ -27,9 +27,9 @@ const questions = [
     title: "Volume de pages",
     options: [
       { label: "Site One-Page (1 page)", value: 0, icon: <File className="w-6 h-6" /> },
-      { label: "Petit Site (2 à 5 pages)", value: 200, icon: <Layers className="w-6 h-6" /> },
-      { label: "Site Complet (5 à 10 pages)", value: 400, icon: <Library className="w-6 h-6" /> },
-      { label: "Gros Site (10+ pages)", value: 800, icon: <Globe className="w-6 h-6" /> },
+      { label: "Petit Site (2 à 5 pages)", value: 400, icon: <Layers className="w-6 h-6" /> },
+      { label: "Site Complet (5 à 10 pages)", value: 800, icon: <Library className="w-6 h-6" /> },
+      { label: "Gros Site (10+ pages)", value: 1500, icon: <Globe className="w-6 h-6" /> },
     ]
   },
   {
@@ -37,7 +37,7 @@ const questions = [
     title: "Niveau de Design & Animations",
     options: [
       { label: "Standard (Propre & Efficace)", value: 0, icon: <Zap className="w-6 h-6" /> },
-      { label: "Premium (Animations avancées)", value: 300, icon: <Palette className="w-6 h-6" /> },
+      { label: "Premium (Animations avancées)", value: 400, icon: <Palette className="w-6 h-6" /> },
     ]
   },
   {
@@ -45,10 +45,10 @@ const questions = [
     title: "Fonctionnalités bonus (Optionnel)",
     multi: true,
     options: [
-      { label: "Rédaction SEO & Textes", value: 250, icon: <Search className="w-6 h-6" /> },
-      { label: "Module Blog / Actualités", value: 200, icon: <Newspaper className="w-6 h-6" /> },
-      { label: "Système de Réservation", value: 250, icon: <Calendar className="w-6 h-6" /> },
-      { label: "Newsletter / Capture Email", value: 100, icon: <Mail className="w-6 h-6" /> },
+      { label: "Rédaction SEO & Textes", value: 500, icon: <Search className="w-6 h-6" /> },
+      { label: "Module Blog / Actualités", value: 400, icon: <Newspaper className="w-6 h-6" /> },
+      { label: "Système de Réservation", value: 500, icon: <Calendar className="w-6 h-6" /> },
+      { label: "Newsletter / Capture Email", value: 200, icon: <Mail className="w-6 h-6" /> },
     ]
   }
 ];

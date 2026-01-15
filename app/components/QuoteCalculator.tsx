@@ -18,7 +18,7 @@ const questions = [
     options: [
       { label: "Site Vitrine (Présentation)", value: 900, icon: <Layout className="w-6 h-6" /> },
       { label: "E-Commerce (Shopify)", value: 2400, icon: <ShoppingBag className="w-6 h-6" /> },
-      { label: "Application Web / SaaS", value: 4000, icon: <Rocket className="w-6 h-6" /> },
+      { label: "Application Web / SaaS", value: 5000, icon: <Rocket className="w-6 h-6" /> },
       { label: "Refonte de site existant", value: 1200, icon: <RefreshCcw className="w-6 h-6" /> },
     ]
   },

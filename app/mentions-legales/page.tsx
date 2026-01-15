@@ -76,6 +76,12 @@ export default function MentionsLegales() {
             {/* TES ASSOCIÉS (A compléter) */}
 
             <div>
+                <p><strong className="text-white">Membre 3 :</strong> M. Victor Da Costa Lima</p>
+                <p>Adresse : [Son Adresse]</p>
+                <p>SIRET : 98865449700029</p>
+            </div>
+
+            <div>
                 <p><strong className="text-white">Membre 4 :</strong> M. Soren Brancourt</p>
                 <p>Adresse : [Son Adresse]</p>
                 <p>SIRET : En cours d'immatriculation</p>
@@ -83,12 +89,6 @@ export default function MentionsLegales() {
 
             <div>
                 <p><strong className="text-white">Membre 2 :</strong> M. Regesh Rajakanthan</p>
-                <p>Adresse : [Son Adresse]</p>
-                <p>SIRET : En cours d'immatriculation</p>
-            </div>
-
-            <div>
-                <p><strong className="text-white">Membre 3 :</strong> M. Victor Da Costa Lima</p>
                 <p>Adresse : [Son Adresse]</p>
                 <p>SIRET : En cours d'immatriculation</p>
             </div>

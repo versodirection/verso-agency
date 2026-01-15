@@ -70,10 +70,17 @@ export default function MentionsLegales() {
             <div>
                 <p><strong className="text-white">Membre 1 (Responsable Publication) :</strong> M. Joan Diaz</p>
                 <p>Adresse : 8 cours du barry, 31140, Pechbonnieu</p>
-                <p>SIRET : En cours d'immatriculation</p>
+                <p>SIRET : 99985652900014</p>
             </div>
             
             {/* TES ASSOCIÉS (A compléter) */}
+
+            <div>
+                <p><strong className="text-white">Membre 4 :</strong> M. Soren Brancourt</p>
+                <p>Adresse : [Son Adresse]</p>
+                <p>SIRET : En cours d'immatriculation</p>
+            </div>
+
             <div>
                 <p><strong className="text-white">Membre 2 :</strong> M. Regesh Rajakanthan</p>
                 <p>Adresse : [Son Adresse]</p>
@@ -82,12 +89,6 @@ export default function MentionsLegales() {
 
             <div>
                 <p><strong className="text-white">Membre 3 :</strong> M. Victor Da Costa Lima</p>
-                <p>Adresse : [Son Adresse]</p>
-                <p>SIRET : En cours d'immatriculation</p>
-            </div>
-
-            <div>
-                <p><strong className="text-white">Membre 4 :</strong> M. Soren Brancourt</p>
                 <p>Adresse : [Son Adresse]</p>
                 <p>SIRET : En cours d'immatriculation</p>
             </div>

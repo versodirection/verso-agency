@@ -75,7 +75,7 @@ export default function MentionsLegales() {
             
             {/* TES ASSOCIÉS (A compléter) */}
             <div>
-                <p><strong className="text-white">Membre 2 :</strong> M. Regesh Rajakantan</p>
+                <p><strong className="text-white">Membre 2 :</strong> M. Regesh Rajakanthan</p>
                 <p>Adresse : [Son Adresse]</p>
                 <p>SIRET : En cours d'immatriculation</p>
             </div>

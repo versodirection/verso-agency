@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react"; // Ajout de useEffect
-import { motion, useSpring } from "framer-motion"; // Ajout de useSpring
+import { useState, useEffect } from "react"; 
+import { motion, useMotionValue } from "framer-motion"; // 👇 MODIF : useMotionValue
 import { 
   X, Check, ArrowRight, ArrowLeft, Loader2, 
   Layout, ShoppingBag, Rocket, RefreshCcw, 
@@ -10,7 +10,7 @@ import {
   Search, Newspaper, Calendar, Mail 
 } from "lucide-react";
 
-// 🛠️ CONFIGURATION AVEC TES PRIX DOUBLÉS
+// ... (Ton tableau "questions" reste identique, je ne le remets pas pour économiser de la place, il ne change pas)
 const questions = [
   {
     id: "type",
@@ -60,8 +60,9 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success'>('idle');
 
   // --- LOGIQUE CURSEUR ---
-  const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
-  const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
+  // 👇 MODIF : Remplacement useSpring par useMotionValue
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
@@ -142,7 +143,6 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
   const isLastStep = step === questions.length;
 
   return (
-    // AJOUT DE 'cursor-none' ICI 👇
     <div className="fixed inset-0 z-[10000] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm cursor-none">
       
       {/* --- LE CURSEUR --- */}
@@ -199,7 +199,6 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
                                         }
                                     `}
                                 >
-                                    {/* Icône avec changement de couleur dynamique */}
                                     <span className={`transition-colors ${isSelected ? "text-white" : "text-indigo-400 group-hover:text-indigo-300"}`}>
                                         {option.icon}
                                     </span>

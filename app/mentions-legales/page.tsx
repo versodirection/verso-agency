@@ -2,18 +2,21 @@
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import { motion, useSpring } from "framer-motion";
+// 👇 MODIF : On remplace useSpring par useMotionValue pour la réactivité immédiate
+import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
-// 👇 AJOUT IMPORT
 import { ReactLenis } from "@studio-freight/react-lenis";
 
 export default function MentionsLegales() {
-  const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
-  const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
+  // 👇 MODIF : useMotionValue = Zéro latence. (On met -100 pour qu'il soit hors écran au chargement)
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
   const [cursorVariant, setCursorVariant] = useState("default");
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
+      // Met à jour la position INSTANTANÉMENT sans calcul de physique
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
     };
@@ -25,21 +28,37 @@ export default function MentionsLegales() {
   const cursorLeave = () => setCursorVariant("default");
 
   const cursorVariants = {
-    default: { width: 20, height: 20, backgroundColor: "#fff", mixBlendMode: "difference" as any },
-    hover: { width: 80, height: 80, backgroundColor: "#fff", mixBlendMode: "difference" as any }
+    default: { 
+      width: 20, 
+      height: 20, 
+      backgroundColor: "#fff", 
+      mixBlendMode: "difference" as any 
+    },
+    hover: { 
+      width: 80, 
+      height: 80, 
+      backgroundColor: "#fff", 
+      mixBlendMode: "difference" as any 
+    }
   };
 
   return (
-    // 👇 AJOUT DU WRAPPER LENIS (Copier-coller de l'accueil)
     <ReactLenis root options={{ lerp: 0.1, duration: 1.5, smoothWheel: true }}>
       
       <main className="min-h-screen bg-black text-neutral-200 font-sans selection:bg-indigo-500 selection:text-white pt-24 pb-20 px-6 cursor-none">
         
+        {/* LE CURSEUR */}
         <motion.div
           variants={cursorVariants}
           animate={cursorVariant}
+          // transition={{ type: "tween", ease: "backOut", duration: 0.2 }} // Optionnel : transition douce juste pour le changement de taille (pas la position)
           className="hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] items-center justify-center"
-          style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}
+          style={{ 
+            translateX: "-50%", 
+            translateY: "-50%", 
+            x: cursorX, // Position brute
+            y: cursorY  // Position brute
+          }}
         >
           {cursorVariant === 'hover' && <div className="w-2 h-2 bg-white rounded-full" />}
         </motion.div>
@@ -140,7 +159,6 @@ export default function MentionsLegales() {
 
         </div>
       </main>
-    
-    </ReactLenis> // 👈 ON FERME LE WRAPPER ICI
+    </ReactLenis>
   );
 }

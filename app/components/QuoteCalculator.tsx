@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react"; 
-import { motion, useMotionValue } from "framer-motion"; // 👇 MODIF : useMotionValue
+import { motion, useMotionValue } from "framer-motion";
 import { 
   X, Check, ArrowRight, ArrowLeft, Loader2, 
   Layout, ShoppingBag, Rocket, RefreshCcw, 
@@ -10,16 +10,16 @@ import {
   Search, Newspaper, Calendar, Mail 
 } from "lucide-react";
 
-// ... (Ton tableau "questions" reste identique, je ne le remets pas pour économiser de la place, il ne change pas)
+// 🛠️ CONFIGURATION PRIX (Ajustés pour être cohérents avec les Packs)
 const questions = [
   {
     id: "type",
     title: "Quel type de projet ?",
     options: [
-      { label: "Site Vitrine (Présentation)", value: 900, icon: <Layout className="w-6 h-6" /> },
-      { label: "E-Commerce (Shopify)", value: 2400, icon: <ShoppingBag className="w-6 h-6" /> },
-      { label: "Application Web / SaaS", value: 5000, icon: <Rocket className="w-6 h-6" /> },
-      { label: "Refonte de site existant", value: 1200, icon: <RefreshCcw className="w-6 h-6" /> },
+      { label: "Site Vitrine (Présentation)", value: 980, icon: <Layout className="w-6 h-6" /> }, // Aligné sur Pack Starter
+      { label: "E-Commerce (Shopify)", value: 2900, icon: <ShoppingBag className="w-6 h-6" /> }, // Plus premium
+      { label: "Application Web / SaaS", value: 5500, icon: <Rocket className="w-6 h-6" /> },
+      { label: "Refonte de site existant", value: 1500, icon: <RefreshCcw className="w-6 h-6" /> },
     ]
   },
   {
@@ -27,9 +27,9 @@ const questions = [
     title: "Volume de pages",
     options: [
       { label: "Site One-Page (1 page)", value: 0, icon: <File className="w-6 h-6" /> },
-      { label: "Petit Site (2 à 5 pages)", value: 400, icon: <Layers className="w-6 h-6" /> },
-      { label: "Site Complet (5 à 10 pages)", value: 800, icon: <Library className="w-6 h-6" /> },
-      { label: "Gros Site (10+ pages)", value: 1600, icon: <Globe className="w-6 h-6" /> },
+      { label: "Petit Site (2 à 5 pages)", value: 500, icon: <Layers className="w-6 h-6" /> }, // Augmenté pour valoriser le Pack Pro
+      { label: "Site Complet (5 à 10 pages)", value: 900, icon: <Library className="w-6 h-6" /> },
+      { label: "Gros Site (10+ pages)", value: 1800, icon: <Globe className="w-6 h-6" /> },
     ]
   },
   {
@@ -37,7 +37,7 @@ const questions = [
     title: "Niveau de Design & Animations",
     options: [
       { label: "Standard (Propre & Efficace)", value: 0, icon: <Zap className="w-6 h-6" /> },
-      { label: "Premium (Animations avancées)", value: 600, icon: <Palette className="w-6 h-6" /> },
+      { label: "Premium (Animations avancées)", value: 800, icon: <Palette className="w-6 h-6" /> },
     ]
   },
   {
@@ -45,10 +45,10 @@ const questions = [
     title: "Fonctionnalités bonus (Optionnel)",
     multi: true,
     options: [
-      { label: "Rédaction SEO & Textes", value: 500, icon: <Search className="w-6 h-6" /> },
-      { label: "Module Blog / Actualités", value: 400, icon: <Newspaper className="w-6 h-6" /> },
+      { label: "Rédaction SEO & Textes", value: 600, icon: <Search className="w-6 h-6" /> },
+      { label: "Module Blog / Actualités", value: 600, icon: <Newspaper className="w-6 h-6" /> },
       { label: "Système de Réservation", value: 500, icon: <Calendar className="w-6 h-6" /> },
-      { label: "Newsletter / Capture Email", value: 200, icon: <Mail className="w-6 h-6" /> },
+      { label: "Newsletter / Capture Email", value: 300, icon: <Mail className="w-6 h-6" /> },
     ]
   }
 ];
@@ -60,7 +60,6 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success'>('idle');
 
   // --- LOGIQUE CURSEUR ---
-  // 👇 MODIF : Remplacement useSpring par useMotionValue
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
 

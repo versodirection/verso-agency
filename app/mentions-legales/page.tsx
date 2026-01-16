@@ -97,22 +97,24 @@ export default function MentionsLegales() {
               </div>
               
               <div>
-                  <p><strong className="text-white">Membre 3 :</strong> M. Victor Da Costa Lima</p>
+                  <p><strong className="text-white">Membre 2 :</strong> M. Victor Da Costa Lima</p>
                   <p>Adresse : 8 rue du 19 mars 1962, 31790, Saint-Jory</p>
                   <p>SIRET : 98865449700029</p>
               </div>
 
               <div>
-                  <p><strong className="text-white">Membre 4 :</strong> M. Soren Brancourt</p>
+                  <p><strong className="text-white">Membre 3 :</strong> M. Soren Brancourt</p>
                   <p>Adresse : 4 Rue Jacques Labatut 16, 31000, Toulouse</p>
                   <p>SIRET : En cours d'immatriculation</p>
               </div>
 
               <div>
-                  <p><strong className="text-white">Membre 2 :</strong> M. Regesh Rajakanthan</p>
+                  <p><strong className="text-white">Membre 4 :</strong> M. Regesh Rajakanthan</p>
                   <p>Adresse : 8 rue Augustin Dassier, 31200, Toulouse</p>
                   <p>SIRET : En cours d'immatriculation</p>
               </div>
+
+    
 
               <hr className="border-white/10" />
 

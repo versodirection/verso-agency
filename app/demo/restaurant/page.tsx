@@ -6,7 +6,7 @@ import Link from "next/link";
 import Image from "next/image"; // 👈 IMPORT
 import { useState, useRef, useEffect } from "react";
 
-// --- DATA ---
+// ... (Les données menuItems, galleryImages etc restent identiques, je coupe pour gagner de la place)
 const menuItems = [
   { name: "Tartufo Nero", price: "34", desc: "Tagliatelles, truffe noire du Périgord.", img: "https://images.unsplash.com/photo-1555939594-58d7cb561ad1?q=80&w=800&auto=format&fit=crop" },
   { name: "Risotto Oro", price: "28", desc: "Riz Carnaroli, safran d'Iran, feuille d'or 24k.", img: "https://images.unsplash.com/photo-1595295333158-4742f28fbd85?q=80&w=800&auto=format&fit=crop" },
@@ -49,10 +49,11 @@ export default function RestaurantDemo() {
   const [isWineModalOpen, setIsWineModalOpen] = useState(false);
   const activeMenuItem = hoveredMenuIndex !== null ? menuItems[hoveredMenuIndex] : null;
 
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-  const cursorX = useSpring(mouseX, { stiffness: 150, damping: 15 });
-  const cursorY = useSpring(mouseY, { stiffness: 150, damping: 15 });
+  // 👇 MODIF : Gestion curseur sans latence
+  const mouseX = useMotionValue(-100);
+  const mouseY = useMotionValue(-100);
+  
+  // On garde un léger effet de flottement uniquement pour l'image du menu qui apparaît, c'est plus joli
   const menuImageX = useSpring(mouseX, { stiffness: 50, damping: 20 });
   const menuImageY = useSpring(mouseY, { stiffness: 50, damping: 20 });
 
@@ -64,7 +65,10 @@ export default function RestaurantDemo() {
     };
     const timer = setTimeout(() => { handleResize(); setLoading(false); }, 500);
     window.addEventListener("resize", handleResize);
-    window.addEventListener("mousemove", (e) => { mouseX.set(e.clientX); mouseY.set(e.clientY); });
+    window.addEventListener("mousemove", (e) => { 
+        mouseX.set(e.clientX); 
+        mouseY.set(e.clientY); 
+    });
     return () => { window.removeEventListener("resize", handleResize); clearTimeout(timer); };
   }, []);
 
@@ -78,7 +82,9 @@ export default function RestaurantDemo() {
 
   return (
     <main ref={containerRef} className="bg-[#050505] text-[#e5e5e5] font-serif selection:bg-[#d4af37] selection:text-black cursor-none">
-      <motion.div className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block" style={{ x: cursorX, y: cursorY, translateX: "-50%", translateY: "-50%" }}>
+      
+      {/* 👇 MODIF : Curseur instantané ici aussi */}
+      <motion.div className="fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block" style={{ x: mouseX, y: mouseY, translateX: "-50%", translateY: "-50%" }}>
         <div className="w-3 h-3 bg-[#d4af37] rounded-full shadow-[0_0_20px_rgba(212,175,55,0.5)]" />
         <motion.div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-[#d4af37] opacity-50" animate={{ width: hoveredMenuIndex !== null ? 80 : 40, height: hoveredMenuIndex !== null ? 80 : 40 }} transition={{ type: "spring", stiffness: 300, damping: 20 }} />
       </motion.div>

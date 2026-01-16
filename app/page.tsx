@@ -150,19 +150,14 @@ const NexusCore = () => {
 
 export default function Home() {
   
-  // 👇 CORRECTION ICI : On vérifie le sessionStorage DÈS L'INITIALISATION
   const [loading, setLoading] = useState(() => {
-    // Si on est sur le navigateur (client), on regarde tout de suite si l'intro est déjà vue
     if (typeof window !== 'undefined') {
         const hasSeen = sessionStorage.getItem("nexus-intro-seen");
-        // Si "hasSeen" existe, alors loading doit être FALSE (pas de chargement)
-        // Sinon, loading est TRUE
         return !hasSeen;
     }
-    return true; // Par défaut sur le serveur
+    return true; 
   });
 
-  // Idem pour les animations de texte, on ne les veut pas si on revient d'une démo
   const [showAnimations, setShowAnimations] = useState(() => {
     if (typeof window !== 'undefined') {
         return !sessionStorage.getItem("nexus-intro-seen");
@@ -202,7 +197,6 @@ export default function Home() {
     }
   }, []);
 
-  // On garde le useLayoutEffect pour la sécurité, mais le travail principal est fait dans le useState
   useLayoutEffect(() => {
     const hasSeenIntro = sessionStorage.getItem("nexus-intro-seen");
     if (hasSeenIntro) {
@@ -213,7 +207,7 @@ export default function Home() {
 
   const handleIntroComplete = () => {
     setLoading(false);
-    setShowAnimations(false); // On désactive aussi les anims de texte une fois l'intro finie
+    setShowAnimations(false);
     sessionStorage.setItem("nexus-intro-seen", "true"); 
   };
 
@@ -243,12 +237,19 @@ export default function Home() {
     }
   };
 
-  const cursorX = useSpring(0, { stiffness: 500, damping: 28 });
-  const cursorY = useSpring(0, { stiffness: 500, damping: 28 });
+  // 👇 MODIF : Remplacement de useSpring par useMotionValue (Instant)
+  const cursorX = useMotionValue(-100);
+  const cursorY = useMotionValue(-100);
+  
   useEffect(() => {
-    const moveCursor = (e: MouseEvent) => { cursorX.set(e.clientX); cursorY.set(e.clientY); };
-    window.addEventListener("mousemove", moveCursor); return () => window.removeEventListener("mousemove", moveCursor);
+    const moveCursor = (e: MouseEvent) => { 
+        cursorX.set(e.clientX); 
+        cursorY.set(e.clientY); 
+    };
+    window.addEventListener("mousemove", moveCursor); 
+    return () => window.removeEventListener("mousemove", moveCursor);
   }, []);
+
   const cursorEnter = () => setCursorVariant("hover");
   const cursorLeave = () => setCursorVariant("default");
   const cursorVariants = { default: { width: 20, height: 20, backgroundColor: "#fff", mixBlendMode: "difference" as any }, hover: { width: 80, height: 80, backgroundColor: "#fff", mixBlendMode: "difference" as any } };
@@ -268,6 +269,7 @@ export default function Home() {
                 variants={cursorVariants} 
                 animate={cursorVariant} 
                 className="hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] items-center justify-center" 
+                // 👇 MODIF : Suppression du "delay" et utilisation directe des valeurs
                 style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}
             >
                 {cursorVariant === 'hover' && <div className="w-2 h-2 bg-white rounded-full" />}
@@ -280,7 +282,7 @@ export default function Home() {
             transition={{ delay: showAnimations ? 0.8 : 0, duration: 0.8 }} 
             className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 transition-all duration-300"
         >
-            <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div className="w-full max-w-[95%] 2xl:max-w-[1920px] mx-auto px-6 h-20 flex items-center justify-between">
                 <div className="text-2xl font-bold tracking-tighter cursor-pointer z-[60]" onClick={() => scrollTo('hero')} onMouseEnter={cursorEnter} onMouseLeave={cursorLeave}>VERSO<span className="text-indigo-500">.</span></div>
                 
                 <div className="hidden md:flex items-center gap-8">
@@ -337,7 +339,7 @@ export default function Home() {
             initial={showAnimations ? "hidden" : "visible"} 
             animate="visible" 
             variants={{ hidden: { opacity: 0, scale: 0.95 }, visible: { opacity: 1, scale: 1, transition: { delay: showAnimations ? 0.5 : 0, duration: 1 } } }} 
-            className="max-w-5xl mx-auto relative z-10"
+            className="max-w-7xl mx-auto relative z-10"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-indigo-300 mb-8 backdrop-blur-sm"><span className="relative flex h-2 w-2"><span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span><span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500"></span></span>Disponible pour nouveaux projets</div>
             
@@ -358,12 +360,12 @@ export default function Home() {
         </section>
 
         <section id="services" className="py-20 px-6 bg-neutral-950 relative z-10">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto">
             <div className="mb-20">
               <MaskText enabled={showAnimations}><h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Expertise Technique.</h2></MaskText>
               <p className="text-neutral-400 text-xl max-w-xl">Du code sur-mesure pour des performances inégalées.</p>
             </div>
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="grid md:grid-cols-2 2xl:grid-cols-4 gap-6">
               {services.map((service: any, index: number) => (
                 <TiltCard key={index} className="group p-10 rounded-3xl bg-neutral-900 border border-white/5 hover:border-indigo-500/30 transition-colors cursor-none">
                   <div onMouseEnter={cursorEnter} onMouseLeave={cursorLeave}>
@@ -376,12 +378,12 @@ export default function Home() {
         </section>
 
         <section id="demos" className="py-20 px-6">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto">
             <div className="mb-20">
               <MaskText enabled={showAnimations}><h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Showcase.</h2></MaskText>
               <p className="text-neutral-400 text-xl max-w-xl">Des interfaces immersives qui marquent les esprits.</p>
             </div>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-8 2xl:gap-16">
               {demos.map((demo: any, index: number) => (
                 <TiltCard key={index} className="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10">
                   <Link 
@@ -411,7 +413,7 @@ export default function Home() {
         </section>
 
         <section id="tarifs" className="py-20 px-6 bg-neutral-900/30 border-y border-white/5">
-          <div className="max-w-7xl mx-auto">
+          <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto">
             <div className="text-center mb-20">
               <MaskText enabled={showAnimations}><h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Investissement.</h2></MaskText>
               <p className="text-neutral-400 text-xl max-w-xl mx-auto">La qualité a un prix, mais elle rapporte toujours plus.</p>
@@ -447,7 +449,7 @@ export default function Home() {
         </section>
 
         <section id="contact" className="py-20 px-6">
-          <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+          <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto grid md:grid-cols-2 gap-12 items-center">
             <div>
               <MaskText enabled={showAnimations}><h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Projet ambitieux ?</h2></MaskText>
               <p className="text-neutral-400 text-xl mb-12">Discutons de comment propulser votre marque au niveau supérieur.</p>
@@ -502,7 +504,8 @@ export default function Home() {
 
         <footer className="bg-neutral-950 py-10 border-t border-white/5 relative overflow-hidden">
             <Grain />
-            <div className="max-w-7xl mx-auto px-6 relative z-10">
+            {/* 👇 MODIF : Footer élargi */}
+            <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto px-6 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-center text-center">
                     
                     <div className="md:text-left">

@@ -333,7 +333,7 @@ export default function Home() {
             )}
         </AnimatePresence>
 
-        <section id="hero" className="relative pt-32 pb-12 px-6 flex flex-col items-center justify-center text-center min-h-[85vh]">
+        <section id="hero" className="relative pt-32 pb-12 px-6 flex flex-col items-center justify-center text-center min-h-screen">
           <div className="absolute inset-0 z-0 opacity-80 pointer-events-none"><Canvas camera={{ position: [0, 0, 6], fov: 45 }}><ambientLight intensity={0.5} /><pointLight position={[10, 10, 10]} intensity={1.5} color="#4f46e5" /><pointLight position={[-10, -10, -10]} intensity={0.5} color="#a855f7" /><Suspense fallback={null}><NexusCore /><Environment preset="city" /></Suspense></Canvas></div>
           <motion.div 
             initial={showAnimations ? "hidden" : "visible"} 
@@ -355,7 +355,7 @@ export default function Home() {
           </motion.div>
         </section>
 
-        <section className="py-10 bg-black border-y border-white/5 overflow-hidden">
+        <section className="py-2 bg-black border-y border-white/5 overflow-hidden">
             <VelocityScroll text="STRATEGY — DESIGN — DEVELOPMENT — EXPERIENCE" />
         </section>
 

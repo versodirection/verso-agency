@@ -287,7 +287,7 @@ export default function Home() {
                 
                 <div className="hidden md:flex items-center gap-8">
                     {['Services', 'Demos', 'Tarifs'].map((item) => (<button key={item} onClick={() => scrollTo(item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, ""))} onMouseEnter={cursorEnter} onMouseLeave={cursorLeave} className="text-sm font-medium hover:text-indigo-400 transition">{item}</button>))}
-                    <Magnetic><button onClick={() => scrollTo('tarifs')} onMouseEnter={cursorEnter} onMouseLeave={cursorLeave} className="bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-gray-200 transition">Démarrer un projet</button></Magnetic>
+                    <Magnetic><button onClick={() => scrollTo('contact')} onMouseEnter={cursorEnter} onMouseLeave={cursorLeave} className="bg-white text-black px-6 py-2 rounded-full font-bold hover:bg-gray-200 transition">Démarrer un projet</button></Magnetic>
                 </div>
 
                 <button 

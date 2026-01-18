@@ -122,7 +122,7 @@ export default function MentionsLegales() {
               <div>
                   <p><strong className="text-white">Contact Commun :</strong></p>
                   <p>Email : contact@verso-agency.fr</p>
-                  <p>Téléphone : 06 60 48 16 92</p>
+                  <p>Téléphone : +33 7 68 29 66 12</p>
               </div>
 
             </div>

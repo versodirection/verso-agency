@@ -455,7 +455,7 @@ export default function Home() {
               <p className="text-neutral-400 text-xl mb-12">Discutons de comment propulser votre marque au niveau supérieur.</p>
               <div className="space-y-6">
                 <div className="flex items-center gap-4"><div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center"><Mail className="text-indigo-500" /></div><div><p className="text-sm text-neutral-400">Email</p><p className="font-medium">{siteConfig.email}</p></div></div>
-                <div className="flex items-center gap-4"><div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center"><Phone className="text-indigo-500" /></div><div><p className="text-sm text-neutral-400">Téléphone</p><p className="font-medium">+33 6 60 48 16 92</p></div></div>
+                <div className="flex items-center gap-4"><div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center"><Phone className="text-indigo-500" /></div><div><p className="text-sm text-neutral-400">Téléphone</p><p className="font-medium">+33 7 68 29 66 12</p></div></div>
                 <div className="flex items-center gap-4"><div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center"><MapPin className="text-indigo-500" /></div><div><p className="text-sm text-neutral-400">Bureau</p><p className="font-medium">Toulouse, France</p></div></div>
               </div>
             </div>

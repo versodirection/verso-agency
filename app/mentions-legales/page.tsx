@@ -114,6 +114,7 @@ export default function MentionsLegales() {
                   <p>SIRET : En cours d'immatriculation</p>
               </div>
 
+
     
 
               <hr className="border-white/10" />

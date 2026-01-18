@@ -5,6 +5,7 @@ import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 // 👇 TA CONFIGURATION SEO
+// 👇 TA CONFIGURATION SEO
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.verso-agency.fr'),
   title: {
@@ -15,6 +16,13 @@ export const metadata: Metadata = {
   keywords: ["Agence web", "Création site internet", "Développeur web", "Freelance", "React", "Next.js", "Toulouse", "Site vitrine", "E-commerce"],
   authors: [{ name: "VERSO Agency" }],
   creator: "VERSO Agency",
+  
+  // 👇 C'EST ICI QU'IL FAUT AJOUTER LES ICÔNES
+  icons: {
+    icon: '/icon.png',          // L'icône classique (onglet navigateur)
+    apple: '/apple-icon.png',   // L'icône spéciale pour le Dock Mac et iPhone
+  },
+
   openGraph: {
     title: "VERSO Agency | L'ingénierie web sans compromis",
     description: "Nous créons le futur du web pour des entreprises ambitieuses.",

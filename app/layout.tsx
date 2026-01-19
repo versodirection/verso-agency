@@ -63,16 +63,16 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "VERSO Agency",
-              "image": "https://www.verso-agency.fr/icon.png",
+              "image": "https://www.verso-agency.fr/apple-icon.png",
               "@id": "https://www.verso-agency.fr",
               "url": "https://www.verso-agency.fr",
-              "telephone": "+33660481692",
+              "telephone": "++33 7 68 29 66 12",
               "email": "contact@verso-agency.fr",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": "8 cours du barry",
-                "addressLocality": "Pechbonnieu",
-                "postalCode": "31140",
+                "streetAddress": " 4 Rue Jacques Labatut 16",
+                "addressLocality": "Toulouse",
+                "postalCode": "31100",
                 "addressCountry": "FR"
               },
               "geo": {

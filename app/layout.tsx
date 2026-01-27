@@ -9,7 +9,7 @@ const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.verso-agency.fr'),
   title: {
-    default: "VERSO Agency | Création de Sites Web & Applications Sur-Mesure",
+    default: "VERSO Agency | Création de Sites Internet & Applications Web à Toulouse",
     template: "%s | VERSO Agency"
   },
   description: "Agence web experte en création de sites vitrines, e-commerce et applications web performantes. Transformez votre vision en réalité digitale.",

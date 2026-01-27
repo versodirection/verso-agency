@@ -63,13 +63,22 @@ export default function RestaurantDemo() {
         if (terroirMoveRef.current) setGalleryWidth(terroirMoveRef.current.scrollWidth);
         if (testimonialMoveRef.current) setTestimonialWidth(testimonialMoveRef.current.scrollWidth);
     };
+
+    const handleScroll = () => {
+        setHoveredMenuIndex(null);
+    };
     const timer = setTimeout(() => { handleResize(); setLoading(false); }, 500);
     window.addEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
     window.addEventListener("mousemove", (e) => { 
         mouseX.set(e.clientX); 
         mouseY.set(e.clientY); 
     });
-    return () => { window.removeEventListener("resize", handleResize); clearTimeout(timer); };
+    return () => { 
+        window.removeEventListener("resize", handleResize);
+        window.removeEventListener("scroll", handleScroll);
+        clearTimeout(timer); 
+    };
   }, []);
 
   const { scrollYProgress } = useScroll({ target: containerRef });

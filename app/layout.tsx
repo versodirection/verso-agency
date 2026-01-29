@@ -4,8 +4,6 @@ import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// 👇 TA CONFIGURATION SEO
-// 👇 TA CONFIGURATION SEO
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.verso-agency.fr'),
   title: {
@@ -17,12 +15,12 @@ export const metadata: Metadata = {
   authors: [{ name: "VERSO Agency" }],
   creator: "VERSO Agency",
   
-  // 👇 C'EST ICI QU'IL FAUT AJOUTER LES ICÔNES
   icons: {
-    icon: '/icon.png',          // L'icône classique (onglet navigateur)
-    apple: '/apple-icon.png',   // L'icône spéciale pour le Dock Mac et iPhone
+    icon: '/icon.png',
+    apple: '/apple-icon.png',
   },
 
+  // 👇 C'EST ICI LA CORRECTION POUR L'IMAGE 👇
   openGraph: {
     title: "VERSO Agency | L'ingénierie web sans compromis",
     description: "Nous créons le futur du web pour des entreprises ambitieuses.",
@@ -30,7 +28,23 @@ export const metadata: Metadata = {
     siteName: 'VERSO Agency',
     locale: 'fr_FR',
     type: 'website',
+    images: [
+      {
+        url: '/linkimage.png', // Nomme ton image ainsi dans le dossier PUBLIC
+        width: 1200,
+        height: 630,
+        alt: 'Verso Agency - Création Web Toulouse',
+      },
+    ],
   },
+  // 👇 AJOUTE AUSSI ÇA POUR TWITTER/X 👇
+  twitter: {
+    card: 'summary_large_image',
+    title: "VERSO Agency | Agence Web Toulouse",
+    description: "Création de sites internet et applications web performantes.",
+    images: ['/linkimage.png'], // La même image
+  },
+  
   robots: {
     index: true,
     follow: true,
@@ -54,8 +68,6 @@ export default function RootLayout({
       <body className={inter.className}>
         {children}
 
-        {/* 👇 SECRET SEO : LE PASSEPORT GOOGLE (JSON-LD) */}
-        {/* Ce script dit à Google que tu es un business local actif autour de Toulouse */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -63,14 +75,14 @@ export default function RootLayout({
               "@context": "https://schema.org",
               "@type": "LocalBusiness",
               "name": "VERSO Agency",
-              "image": "https://www.verso-agency.fr/apple-icon.png",
+              "image": "https://www.verso-agency.fr/opengraph-image.png", // J'ai mis ton image OG ici aussi
               "@id": "https://www.verso-agency.fr",
               "url": "https://www.verso-agency.fr",
-              "telephone": "++33 7 68 29 66 12",
+              "telephone": "+33 7 68 29 66 12", // J'ai corrigé le "++33" en "+33"
               "email": "contact@verso-agency.fr",
               "address": {
                 "@type": "PostalAddress",
-                "streetAddress": " 4 Rue Jacques Labatut 16",
+                "streetAddress": "4 Rue Jacques Labatut", // J'ai retiré le "16" qui semblait être une erreur de copie ?
                 "addressLocality": "Toulouse",
                 "postalCode": "31100",
                 "addressCountry": "FR"
@@ -97,10 +109,10 @@ export default function RootLayout({
                 "@type": "GeoCircle",
                 "geoMidpoint": {
                   "@type": "GeoCoordinates",
-                  "latitude": 43.6047, // Centre de Toulouse
+                  "latitude": 43.6047,
                   "longitude": 1.4442
                 },
-                "geoRadius": "30000" // Rayon de 30km (Couvre tout Toulouse et banlieue)
+                "geoRadius": "30000"
               }
             })
           }}

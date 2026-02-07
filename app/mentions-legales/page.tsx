@@ -105,7 +105,7 @@ export default function MentionsLegales() {
               <div>
                   <p><strong className="text-white">Membre 3 :</strong> M. Soren Brancourt</p>
                   <p>Adresse : 4 Rue Jacques Labatut 16, 31000, Toulouse</p>
-                  <p>SIRET : En cours d'immatriculation</p>
+                  <p>SIRET : 100216969</p>
               </div>
 
               <div>

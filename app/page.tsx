@@ -231,7 +231,7 @@ export default function Home() {
 
   useEffect(() => {
     setIsHydrated(true);
-    const hasSeen = sessionStorage.getItem("nexus-intro-seen");
+    const hasSeen = localStorage.getItem("verso-intro-seen");
     const shouldShow = !hasSeen;
     setLoading(shouldShow);
     setShowAnimations(shouldShow);
@@ -270,7 +270,7 @@ export default function Home() {
   }, []);
 
   useLayoutEffect(() => {
-    const hasSeenIntro = sessionStorage.getItem("nexus-intro-seen");
+    const hasSeenIntro = localStorage.getItem("verso-intro-seen");
     if (hasSeenIntro) {
       setLoading(false);
       setShowAnimations(false);
@@ -280,7 +280,7 @@ export default function Home() {
   const handleIntroComplete = () => {
     setLoading(false);
     setShowAnimations(false);
-    sessionStorage.setItem("nexus-intro-seen", "true"); 
+    localStorage.setItem("verso-intro-seen", "true"); 
   };
 
   const handleFormSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

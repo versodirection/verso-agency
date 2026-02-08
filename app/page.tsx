@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useScroll, useTransform, useSpring, useMotionValue, useVelocity, useAnimationFrame, AnimatePresence } from "framer-motion"; 
-import { ArrowRight, Check, Mail, Phone, MapPin, ExternalLink, Menu, X, Loader2 } from "lucide-react";
-import { services, siteConfig, demos, pricing } from "./data/content"; 
+import { ArrowRight, Check, Mail, Phone, MapPin, ExternalLink, Menu, X, Loader2, Star } from "lucide-react";
+import { services, siteConfig, demos, pricing, realisations, reviews } from "./data/content"; 
 import Link from "next/link";
 import { useState, useEffect, Suspense, useRef, useLayoutEffect } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
@@ -17,6 +17,24 @@ import Image from "next/image";
 const wrap = (min: number, max: number, v: number) => {
   const rangeSize = max - min;
   return ((((v - min) % rangeSize) + rangeSize) % rangeSize) + min;
+};
+
+const getRelativeDate = (date: Date): string => {
+  const now = new Date();
+  const diffMs = now.getTime() - date.getTime();
+  const diffDays = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+  
+  if (diffDays === 0) return "Aujourd'hui";
+  if (diffDays === 1) return "Il y a 1 jour";
+  if (diffDays < 7) return `Il y a ${diffDays} jours`;
+  
+  const diffWeeks = Math.floor(diffDays / 7);
+  if (diffWeeks === 1) return "Il y a 1 semaine";
+  if (diffWeeks < 4) return `Il y a ${diffWeeks} semaines`;
+  
+  const diffMonths = Math.floor(diffDays / 30);
+  if (diffMonths === 1) return "Il y a 1 mois";
+  return `Il y a ${diffMonths} mois`;
 };
 
 // --- 2. COMPOSANTS UI ---
@@ -148,22 +166,76 @@ const NexusCore = () => {
   return (<Float speed={2} rotationIntensity={1} floatIntensity={2}><mesh ref={mesh} scale={2.8}><icosahedronGeometry args={[1, 15]} /><MeshDistortMaterial color="#4f46e5" attach="material" distort={0.4} speed={2} roughness={0.2} metalness={0.9} /></mesh></Float>);
 };
 
-export default function Home() {
-  
-  const [loading, setLoading] = useState(() => {
-    if (typeof window !== 'undefined') {
-        const hasSeen = sessionStorage.getItem("nexus-intro-seen");
-        return !hasSeen;
-    }
-    return true; 
-  });
+const ReviewCard = ({ review, index }: { review: any, index: number }) => {
+  const [isExpanded, setIsExpanded] = useState(false);
+  const textLines = review.text.split('\n').length;
+  const shouldShowMore = review.text.length > 200;
 
-  const [showAnimations, setShowAnimations] = useState(() => {
-    if (typeof window !== 'undefined') {
-        return !sessionStorage.getItem("nexus-intro-seen");
-    }
-    return true;
-  });
+  return (
+    <motion.div 
+      initial={{opacity: 0, y: 20}}
+      whileInView={{opacity: 1, y: 0}}
+      transition={{delay: index * 0.2}}
+      className="group h-full"
+    >
+      <TiltCard className="p-8 rounded-2xl bg-gradient-to-br from-neutral-800/40 to-neutral-900/60 border border-white/10 hover:border-indigo-500/50 relative overflow-hidden backdrop-blur-sm transition-all duration-300 flex flex-col h-full">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+        <div className="absolute -top-16 -right-16 w-32 h-32 bg-indigo-500/10 rounded-full blur-2xl group-hover:bg-indigo-500/20 transition-all duration-300"></div>
+        <div className="relative z-10 flex flex-col h-full">
+          <div className="flex gap-1 mb-4">
+            {[...Array(review.stars)].map((_, i) => (
+              <motion.div key={i} initial={{scale: 0}} whileInView={{scale: 1}} transition={{delay: 0.3 + i * 0.1}}>
+                <Star key={i} size={18} className="text-yellow-400 fill-yellow-400" />
+              </motion.div>
+            ))}
+          </div>
+          
+          <div className="flex-1">
+            <p className={`text-neutral-200 text-base mb-6 leading-relaxed transition-all duration-300 ${!isExpanded ? 'line-clamp-4' : ''}`}>
+              {review.text}
+            </p>
+          </div>
+
+          {shouldShowMore && (
+            <button
+              onClick={() => setIsExpanded(!isExpanded)}
+              className="text-indigo-400 hover:text-indigo-300 text-sm font-semibold mb-6 transition-colors"
+            >
+              {isExpanded ? 'Afficher moins' : 'Afficher plus'}
+            </button>
+          )}
+
+          <div className="flex items-center gap-4 pt-4 border-t border-white/5 mt-auto">
+            <motion.div 
+              whileHover={{scale: 1.1}}
+              className="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-lg flex-shrink-0"
+            >
+              {review.author.charAt(0)}
+            </motion.div>
+            <div className="flex-1">
+              <p className="font-semibold text-white">{review.author}</p>
+              <p className="text-xs text-neutral-400 uppercase tracking-wider">{review.role}</p>
+              <p className="text-xs text-neutral-500 mt-1">{getRelativeDate(review.reviewDate)}</p>
+            </div>
+          </div>
+        </div>
+      </TiltCard>
+    </motion.div>
+  );
+};
+
+export default function Home() {
+  const [loading, setLoading] = useState(true);
+  const [showAnimations, setShowAnimations] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+    const hasSeen = sessionStorage.getItem("nexus-intro-seen");
+    const shouldShow = !hasSeen;
+    setLoading(shouldShow);
+    setShowAnimations(shouldShow);
+  }, []);
 
   const [cursorVariant, setCursorVariant] = useState("default");
   
@@ -237,7 +309,6 @@ export default function Home() {
     }
   };
 
-  // 👇 MODIF : Remplacement de useSpring par useMotionValue (Instant)
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
@@ -269,7 +340,6 @@ export default function Home() {
                 variants={cursorVariants} 
                 animate={cursorVariant} 
                 className="hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] items-center justify-center" 
-                // 👇 MODIF : Suppression du "delay" et utilisation directe des valeurs
                 style={{ translateX: "-50%", translateY: "-50%", x: cursorX, y: cursorY }}
             >
                 {cursorVariant === 'hover' && <div className="w-2 h-2 bg-white rounded-full" />}
@@ -359,6 +429,36 @@ export default function Home() {
             <VelocityScroll text="STRATEGY — DESIGN — DEVELOPMENT — EXPERIENCE" />
         </section>
 
+        {/* --- NOUVELLE SECTION : RÉALISATIONS (LAPA) --- */}
+        <section className="py-20 px-6 bg-black relative z-10 border-b border-white/5">
+            <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto">
+                <div className="mb-20">
+                    <MaskText enabled={showAnimations}><h2 className="text-3xl md:text-5xl font-bold mb-6 text-white">Réalisations.</h2></MaskText>
+                    <p className="text-neutral-400 text-xl max-w-xl">Du concret. Des résultats.</p>
+                </div>
+                <div className="grid grid-cols-1 gap-12">
+                    {realisations.map((project: any, index: number) => (
+                        <div key={index} className="group relative grid md:grid-cols-2 gap-8 items-center border border-white/10 bg-neutral-900/50 p-6 md:p-12 rounded-3xl hover:border-indigo-500/50 transition-colors">
+                            <div className="relative aspect-video rounded-xl overflow-hidden cursor-none">
+                                 {/* Image du projet avec effet de zoom au survol */}
+                                 <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+                            </div>
+                            <div className="space-y-6">
+                                <div>
+                                    <span className="text-indigo-500 text-sm font-bold uppercase tracking-widest">{project.category}</span>
+                                    <h3 className="text-4xl md:text-5xl font-bold text-white mt-2">{project.title}</h3>
+                                </div>
+                                <p className="text-neutral-300 text-lg leading-relaxed">{project.description}</p>
+                                <Link href={project.link} target="_blank" className="inline-flex items-center gap-2 text-white font-bold hover:text-indigo-400 transition">
+                                    Voir le site en ligne <ExternalLink size={18} />
+                                </Link>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            </div>
+        </section>
+
         <section id="services" className="py-20 px-6 bg-neutral-950 relative z-10">
           <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto">
             <div className="mb-20">
@@ -446,6 +546,27 @@ export default function Home() {
               ))}
             </div>
           </div>
+        </section>
+
+        {/* --- NOUVELLE SECTION : AVIS GOOGLE --- */}
+        <section className="py-20 px-6 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
+            </div>
+            <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto relative z-10">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">Ils nous font confiance</h2>
+                    <div className="flex justify-center gap-2">
+                        {[1, 2, 3, 4, 5].map((s) => <motion.div key={s} initial={{opacity: 0.3}} whileInView={{opacity: 1}} transition={{delay: s * 0.1}}><Star size={24} className="text-yellow-400 fill-yellow-400" /></motion.div>)}
+                    </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    {reviews.map((review: any, index: number) => (
+                        <ReviewCard key={index} review={review} index={index} />
+                    ))}
+                </div>
+            </div>
         </section>
 
         <section id="contact" className="py-20 px-6">

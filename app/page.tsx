@@ -512,6 +512,27 @@ export default function Home() {
           </div>
         </section>
 
+        {/* --- SECTION : AVIS GOOGLE --- */}
+        <section className="py-20 px-6 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
+            </div>
+            <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto relative z-10">
+                <div className="text-center mb-16">
+                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">Ils nous font confiance</h2>
+                    <div className="flex justify-center gap-2">
+                        {[1, 2, 3, 4, 5].map((s) => <motion.div key={s} initial={{opacity: 0.3}} whileInView={{opacity: 1}} transition={{delay: s * 0.1}}><Star size={24} className="text-yellow-400 fill-yellow-400" /></motion.div>)}
+                    </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    {reviews.map((review: any, index: number) => (
+                        <ReviewCard key={index} review={review} index={index} />
+                    ))}
+                </div>
+            </div>
+        </section>
+
         <section id="tarifs" className="py-20 px-6 bg-neutral-900/30 border-y border-white/5">
           <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto">
             <div className="text-center mb-20">
@@ -546,27 +567,6 @@ export default function Home() {
               ))}
             </div>
           </div>
-        </section>
-
-        {/* --- NOUVELLE SECTION : AVIS GOOGLE --- */}
-        <section className="py-20 px-6 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none">
-                <div className="absolute top-0 left-1/4 w-96 h-96 bg-indigo-500/5 rounded-full blur-3xl"></div>
-                <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl"></div>
-            </div>
-            <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto relative z-10">
-                <div className="text-center mb-16">
-                    <h2 className="text-3xl md:text-5xl font-bold mb-4 text-white">Ils nous font confiance</h2>
-                    <div className="flex justify-center gap-2">
-                        {[1, 2, 3, 4, 5].map((s) => <motion.div key={s} initial={{opacity: 0.3}} whileInView={{opacity: 1}} transition={{delay: s * 0.1}}><Star size={24} className="text-yellow-400 fill-yellow-400" /></motion.div>)}
-                    </div>
-                </div>
-                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                    {reviews.map((review: any, index: number) => (
-                        <ReviewCard key={index} review={review} index={index} />
-                    ))}
-                </div>
-            </div>
         </section>
 
         <section id="contact" className="py-20 px-6">

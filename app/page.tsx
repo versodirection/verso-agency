@@ -525,12 +525,37 @@ export default function Home() {
                         {[1, 2, 3, 4, 5].map((s) => <motion.div key={s} initial={{opacity: 0.3}} whileInView={{opacity: 1}} transition={{delay: s * 0.1}}><Star size={24} className="text-yellow-400 fill-yellow-400" /></motion.div>)}
                     </div>
                 </div>
-                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
                     {reviews.map((review: any, index: number) => (
                         <ReviewCard key={index} review={review} index={index} />
                     ))}
                 </div>
+                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto">
+                    <a 
+                        href="https://g.page/r/CQfzKGv0KZsLEBM" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-6 py-3 rounded-lg border border-white/20 text-white hover:bg-white/5 transition"
+                        onMouseEnter={cursorEnter}
+                        onMouseLeave={cursorLeave}
+                    >
+                        <MapPin size={20} />
+                        <span>Lire les autres avis sur Google</span>
+                    </a>
+                    <a 
+                        href="https://g.page/r/CQfzKGv0KZsLEBM/review" 
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 px-6 py-3 rounded-lg bg-yellow-500 text-black font-semibold hover:bg-yellow-400 transition"
+                        onMouseEnter={cursorEnter}
+                        onMouseLeave={cursorLeave}
+                    >
+                        <Star size={20} className="fill-yellow-500" />
+                        <span>RÉDIGER UN AVIS</span>
+                    </a>
+                </div>
             </div>
+          
         </section>
 
         <section id="tarifs" className="py-20 px-6 bg-neutral-900/30 border-y border-white/5">

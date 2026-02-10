@@ -37,7 +37,22 @@ export const realisations = [
     category: "Développement Sur-Mesure",
     image: "/projects/coursdjembetoulouse.png", 
     description: "Application web ultra-rapide (Score Lighthouse 100%). Stack moderne : Next.js 14, Tailwind CSS, Framer Motion et intégration Newsletter via API.",
-    link: "https://coursdjembetoulouse.fr/"
+    link: "https://coursdjembetoulouse.fr/",
+    tech: ["Next.js 14", "Tailwind CSS", "Framer Motion", "TypeScript", "Brevo API"]
+  },
+  {
+    title: "Najo Music",
+    category: "Application Privée",
+    image: "/projects/najomusic.png",
+    description: "Application musicale développée sur mesure pour un musicien. Projet privé à usage personnel — les fonctionnalités et le contenu musical répondent aux besoins spécifiques du client.",
+    tech: ["React", "Firebase", "Web Audio API", "PWA"],
+    demoRequest: true,
+    details: [
+      "Mixage Audio Multi-Pistes & Enregistrement micro (Web Audio API)",
+      "Backend Firebase complet (Auth, Firestore, Storage)",
+      "Mode Hors-Ligne (PWA & Service Workers)",
+      "Visualisation audio & Accordeur chromatique intégré"
+    ]
   }
 ];
 
@@ -45,7 +60,7 @@ export const realisations = [
 export const reviews = [
   {
     author: "Fred Diaz.",
-    role: "Refonte du site de Cours Djembe Toulouse",
+    role: "Création de Najo-Music",
     text: "J'ai fait appel à VERSO pour un site de musique. Étant musicien ma demande était assez complexe. Il me fallait un site \"outil\" me permettant de facilement travailler sur mes morceaux. Ils ont été hyper réactifs et leurs idées ont dépassé les miennes. Du coup il est encore mieux que ce à quoi je m'attendais. Un grand merci à cette équipe jeune et dynamique. Je recommande grandement!",
     stars: 5,
     reviewDate: new Date(2026, 0, 25) // 25 janvier 2026

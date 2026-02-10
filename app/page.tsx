@@ -19,25 +19,26 @@ import {
 
 export default function Home() {
   // --- State ---
-  const [loading, setLoading] = useState(() => {
-    try {
-      return !sessionStorage.getItem("verso-intro-seen");
-    } catch {
-      return true;
-    }
-  });
-  const [showAnimations, setShowAnimations] = useState(() => {
-    try {
-      return !sessionStorage.getItem("verso-intro-seen");
-    } catch {
-      return true;
-    }
-  });
+  const [loading, setLoading] = useState(false);
+  const [showAnimations, setShowAnimations] = useState(false);
   const [cursorVariant, setCursorVariant] = useState("default");
   const [menuOpen, setMenuOpen] = useState(false);
   const [formStatus, setFormStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [isQuoteOpen, setIsQuoteOpen] = useState(false);
   const [formMessage, setFormMessage] = useState("");
+
+  // --- Intro check ---
+  useEffect(() => {
+    try {
+      const hasSeen = sessionStorage.getItem("verso-intro-seen");
+      if (!hasSeen) {
+        setLoading(true);
+        setShowAnimations(true);
+      }
+    } catch {
+      // sessionStorage unavailable (private browsing etc.)
+    }
+  }, []);
 
   // --- Hash scroll ---
   useEffect(() => {

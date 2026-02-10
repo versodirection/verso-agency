@@ -2,13 +2,12 @@
 
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-// 👇 MODIF : On remplace useSpring par useMotionValue pour la réactivité immédiate
 import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
 import { ReactLenis } from "@studio-freight/react-lenis";
 
 export default function MentionsLegales() {
-  // 👇 MODIF : useMotionValue = Zéro latence. (On met -100 pour qu'il soit hors écran au chargement)
+  // Custom cursor
   const cursorX = useMotionValue(-100);
   const cursorY = useMotionValue(-100);
   
@@ -16,13 +15,12 @@ export default function MentionsLegales() {
 
   useEffect(() => {
     const moveCursor = (e: MouseEvent) => {
-      // Met à jour la position INSTANTANÉMENT sans calcul de physique
       cursorX.set(e.clientX);
       cursorY.set(e.clientY);
     };
     window.addEventListener("mousemove", moveCursor);
     return () => window.removeEventListener("mousemove", moveCursor);
-  }, []);
+  }, [cursorX, cursorY]);
 
   const cursorEnter = () => setCursorVariant("hover");
   const cursorLeave = () => setCursorVariant("default");
@@ -32,13 +30,13 @@ export default function MentionsLegales() {
       width: 20, 
       height: 20, 
       backgroundColor: "#fff", 
-      mixBlendMode: "difference" as any 
+      mixBlendMode: "difference" as const 
     },
     hover: { 
       width: 80, 
       height: 80, 
       backgroundColor: "#fff", 
-      mixBlendMode: "difference" as any 
+      mixBlendMode: "difference" as const 
     }
   };
 
@@ -51,13 +49,12 @@ export default function MentionsLegales() {
         <motion.div
           variants={cursorVariants}
           animate={cursorVariant}
-          // transition={{ type: "tween", ease: "backOut", duration: 0.2 }} // Optionnel : transition douce juste pour le changement de taille (pas la position)
           className="hidden md:flex fixed top-0 left-0 rounded-full pointer-events-none z-[9999] items-center justify-center"
           style={{ 
             translateX: "-50%", 
             translateY: "-50%", 
-            x: cursorX, // Position brute
-            y: cursorY  // Position brute
+            x: cursorX,
+            y: cursorY,
           }}
         >
           {cursorVariant === 'hover' && <div className="w-2 h-2 bg-white rounded-full" />}

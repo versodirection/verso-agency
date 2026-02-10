@@ -7,8 +7,26 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       url: baseUrl,
       lastModified: new Date(),
-      changeFrequency: 'yearly',
+      changeFrequency: 'monthly',
       priority: 1,
+    },
+    {
+      url: `${baseUrl}/demo/restaurant`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/demo/immo`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/demo/fashion`,
+      lastModified: new Date(),
+      changeFrequency: 'yearly',
+      priority: 0.7,
     },
     {
       url: `${baseUrl}/mentions-legales`,
@@ -16,6 +34,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'yearly',
       priority: 0.3,
     },
-    // Ajoute d'autres pages ici si tu en crées (ex: /blog, /portfolio)
   ]
 }

@@ -5,6 +5,9 @@ export const siteConfig = {
   name: "VERSO AGENCY",
   description: "Nous créons le futur du web pour des entreprises ambitieuses.",
   email: "contact@verso-agency.fr",
+  phone: "+33 7 68 29 66 12",
+  address: "Toulouse, France",
+  url: "https://www.verso-agency.fr",
 };
 
 export const services = [

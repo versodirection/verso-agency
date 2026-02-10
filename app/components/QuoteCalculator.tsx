@@ -53,9 +53,16 @@ const questions = [
   }
 ];
 
+interface Selection {
+  label: string;
+  value: number;
+}
+
+type Selections = Record<string, Selection | Selection[]>;
+
 export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
   const [step, setStep] = useState(0);
-  const [selections, setSelections] = useState<any>({});
+  const [selections, setSelections] = useState<Selections>({});
   const [total, setTotal] = useState(0);
   const [formStatus, setFormStatus] = useState<'idle' | 'loading' | 'success'>('idle');
 
@@ -78,18 +85,18 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
     let currentTotal = total;
 
     if (isMulti) {
-      const currentList = newSelections[questionId] || [];
-      const exists = currentList.find((item: any) => item.label === optionLabel);
+      const currentList = (newSelections[questionId] as Selection[] | undefined) || [];
+      const exists = currentList.find((item) => item.label === optionLabel);
 
       if (exists) {
-        newSelections[questionId] = currentList.filter((item: any) => item.label !== optionLabel);
+        newSelections[questionId] = currentList.filter((item) => item.label !== optionLabel);
         currentTotal -= value;
       } else {
         newSelections[questionId] = [...currentList, { label: optionLabel, value }];
         currentTotal += value;
       }
     } else {
-      const previousValue = newSelections[questionId]?.value || 0;
+      const previousValue = (newSelections[questionId] as Selection | undefined)?.value || 0;
       currentTotal -= previousValue;
       newSelections[questionId] = { label: optionLabel, value };
       currentTotal += value;
@@ -112,8 +119,8 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
 
     const summary = Object.keys(selections).map(key => {
         const sel = selections[key];
-        if (Array.isArray(sel)) return `${key}: ${sel.map((s:any) => s.label).join(', ')}`;
-        return `${key}: ${sel.label}`;
+        if (Array.isArray(sel)) return `${key}: ${sel.map((s) => s.label).join(', ')}`;
+        return `${key}: ${(sel as Selection).label}`;
     }).join('\n');
 
     const finalData = {
@@ -164,7 +171,7 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
             <h2 className="text-xl font-bold text-white">Estimez votre projet</h2>
             <p className="text-xs text-neutral-400">Prix indicatifs pour lancement</p>
           </div>
-          <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full transition"><X className="text-white" size={20} /></button>
+          <button onClick={onClose} aria-label="Fermer le calculateur" className="p-2 hover:bg-white/10 rounded-full transition"><X className="text-white" size={20} /></button>
         </div>
 
         {/* BODY */}
@@ -183,8 +190,8 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {currentQuestion.options.map((option) => {
                             const isSelected = currentQuestion.multi 
-                                ? selections[currentQuestion.id]?.find((i: any) => i.label === option.label)
-                                : selections[currentQuestion.id]?.label === option.label;
+                                ? (selections[currentQuestion.id] as Selection[] | undefined)?.find((i) => i.label === option.label)
+                                : (selections[currentQuestion.id] as Selection | undefined)?.label === option.label;
 
                             return (
                                 <button
@@ -234,9 +241,9 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
                             <p className="text-neutral-400 text-sm mb-6">Laissez-nous vos coordonnées pour valider cette offre.</p>
                             
                             <div className="space-y-3 text-left">
-                                <div><label className="text-xs uppercase text-neutral-500 font-bold ml-2">Email</label><input required type="email" name="email" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:border-indigo-500 outline-none transition" placeholder="contact@..." /></div>
-                                <div><label className="text-xs uppercase text-neutral-500 font-bold ml-2">Téléphone</label><input type="tel" name="phone" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:border-indigo-500 outline-none transition" placeholder="06..." /></div>
-                                <div><label className="text-xs uppercase text-neutral-500 font-bold ml-2">Message</label><textarea name="message" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:border-indigo-500 outline-none h-20 resize-none transition" placeholder="Détails supplémentaires..." /></div>
+                                <div><label htmlFor="quote-email" className="text-xs uppercase text-neutral-500 font-bold ml-2">Email</label><input id="quote-email" required type="email" name="email" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:border-indigo-500 outline-none transition" placeholder="contact@..." /></div>
+                                <div><label htmlFor="quote-phone" className="text-xs uppercase text-neutral-500 font-bold ml-2">Téléphone</label><input id="quote-phone" type="tel" name="phone" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:border-indigo-500 outline-none transition" placeholder="06..." /></div>
+                                <div><label htmlFor="quote-message" className="text-xs uppercase text-neutral-500 font-bold ml-2">Message</label><textarea id="quote-message" name="message" className="w-full bg-black/50 border border-white/10 rounded-xl p-3 text-white focus:border-indigo-500 outline-none h-20 resize-none transition" placeholder="Détails supplémentaires..." /></div>
                             </div>
 
                             <button type="submit" disabled={formStatus === 'loading'} className="w-full bg-white text-black font-bold py-4 rounded-xl hover:bg-gray-200 transition flex items-center justify-center gap-2 mt-4">

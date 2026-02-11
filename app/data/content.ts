@@ -75,6 +75,13 @@ export const reviews = [
     stars: 5,
     reviewDate: new Date(2026, 1, 5) // 5 février 2026
   }
+  ,{
+    author: "Christian Baladou",
+    role: "Président, Les Ateliers de Percussions Africaines (LAPA)",
+    text: "L'association Les Ateliers de Percussions Africaines (LAPA) a fait appel à VERSO pour la refonte du site coursdejembetoulouse. Le résultat, réalisé dans un délai très bref, dépasse largement nos attentes. Outre le relooking de la palette graphique, de nouveaux choix d'images et de fonds d'écran, l'architecture et l'ergonomie du site ont été notablement améliorées : menus très clairs, fluidité dans les transitions, lien avec le site de l'association LAPA, informations pratiques sur les cours, les stages et les prestations de Team Building, audios pour illustrer la conception des cours et l'ambiance, etc.. Le site est devenu très clair tout en restant riche d'informations et c'est un véritable \"outil\" de communication. Je recommande fortement cette jeune entreprise et sa dynamique équipe. Pour LAPA, le président, Christian BALADOU",
+    stars: 5,
+    reviewDate: new Date(2026, 1, 11) // 11 février 2026
+  }
 ];
 
 export const demos = [

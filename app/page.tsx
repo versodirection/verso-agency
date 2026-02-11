@@ -190,6 +190,31 @@ export default function Home() {
         />
         <Footer scrollTo={scrollTo} />
 
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "LocalBusiness", // Ou "ProfessionalService"
+              "name": "Verso Agency",
+              "image": "https://verso-agency.fr/linkimage.png", // Mets l'URL réelle de ton logo ici
+              "url": "https://verso-agency.fr",
+              "priceRange": "$$",
+              "address": {
+                "@type": "PostalAddress",
+                "addressCountry": "FR"
+              },
+              "aggregateRating": {
+                "@type": "AggregateRating",
+                "ratingValue": "5",       // Ta note moyenne (ex: 5)
+                "reviewCount": "3",      // Le nombre TOTAL d'avis que tu as
+                "bestRating": "5",
+                "worstRating": "1"
+              }
+            }),
+          }}
+        />
+
         <AnimatePresence>
           {isQuoteOpen && <QuoteCalculator onClose={() => setIsQuoteOpen(false)} />}
         </AnimatePresence>

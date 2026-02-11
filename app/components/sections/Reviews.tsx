@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Star, MapPin } from "lucide-react";
 import { reviews } from "@/app/data/content";
 import { ReviewCard } from "./ReviewCard";
+import { useState } from "react";
 
 interface ReviewsProps {
   cursorEnter: () => void;
@@ -11,6 +12,7 @@ interface ReviewsProps {
 }
 
 export function Reviews({ cursorEnter, cursorLeave }: ReviewsProps) {
+  const [expanded, setExpanded] = useState(() => reviews.map(() => false));
   return (
     <section id="avis" className="py-20 px-6 bg-neutral-950 border-t border-white/5 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none">
@@ -28,9 +30,19 @@ export function Reviews({ cursorEnter, cursorLeave }: ReviewsProps) {
             ))}
           </div>
         </div>
-        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto mb-12">
+        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mb-12">
           {reviews.map((review, index) => (
-            <ReviewCard key={index} review={review} index={index} />
+              <ReviewCard
+                key={index}
+                review={review}
+                index={index}
+                isExpanded={expanded[index]}
+                onToggle={() => setExpanded(expanded => {
+                  const arr = [...expanded];
+                  arr[index] = !arr[index];
+                  return arr;
+                })}
+              />
           ))}
         </div>
         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center max-w-2xl mx-auto">

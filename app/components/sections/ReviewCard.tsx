@@ -24,8 +24,13 @@ const getRelativeDate = (date: Date): string => {
   return `Il y a ${diffMonths} mois`;
 };
 
-export function ReviewCard({ review, index }: { review: (typeof reviews)[number]; index: number }) {
-  const [isExpanded, setIsExpanded] = useState(false);
+// Ancienne version supprimée, voir ci-dessous la version correcte avec isExpanded et onToggle.
+export function ReviewCard({ review, index, isExpanded, onToggle }: {
+  review: (typeof reviews)[number];
+  index: number;
+  isExpanded: boolean;
+  onToggle: () => void;
+}) {
   const shouldShowMore = review.text.length > 200;
 
   return (
@@ -49,7 +54,7 @@ export function ReviewCard({ review, index }: { review: (typeof reviews)[number]
           </div>
 
           {shouldShowMore && (
-            <button onClick={() => setIsExpanded(!isExpanded)} className="text-indigo-400 hover:text-indigo-300 text-sm font-semibold mb-6 transition-colors">
+            <button onClick={onToggle} className="text-indigo-400 hover:text-indigo-300 text-sm font-semibold mb-6 transition-colors">
               {isExpanded ? "Afficher moins" : "Afficher plus"}
             </button>
           )}

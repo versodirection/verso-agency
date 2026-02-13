@@ -105,15 +105,6 @@ export default function MentionsLegales() {
                   <p>SIRET : 100216969</p>
               </div>
 
-              <div>
-                  <p><strong className="text-white">Membre 4 :</strong> M. Regesh Rajakanthan</p>
-                  <p>Adresse : 8 rue Augustin Dassier, 31200, Toulouse</p>
-                  <p>SIRET : En cours d'immatriculation</p>
-              </div>
-
-
-    
-
               <hr className="border-white/10" />
 
               <div>

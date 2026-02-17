@@ -10,34 +10,34 @@ import {
   Search, Newspaper, Calendar, Mail 
 } from "lucide-react";
 
-// 🛠️ CONFIGURATION PRIX (Ajustés pour être cohérents avec les Packs)
+// 🛠️ CONFIGURATION PRIX
 const questions = [
   {
     id: "type",
     title: "Quel type de projet ?",
     options: [
-      { label: "Site Vitrine (Présentation)", value: 980, icon: <Layout className="w-6 h-6" /> }, // Aligné sur Pack Starter
-      { label: "E-Commerce (Shopify)", value: 2900, icon: <ShoppingBag className="w-6 h-6" /> }, // Plus premium
-      { label: "Application Web / SaaS", value: 5500, icon: <Rocket className="w-6 h-6" /> },
-      { label: "Refonte de site existant", value: 1500, icon: <RefreshCcw className="w-6 h-6" /> },
+      { label: "Site Vitrine (Présentation)", value: 1200, icon: <Layout className="w-6 h-6" /> },      // Aligné Starter
+      { label: "E-Commerce (Shopify)",        value: 4500, icon: <ShoppingBag className="w-6 h-6" /> }, // Réaliste marché
+      { label: "Application Web / SaaS",      value: 7500, icon: <Rocket className="w-6 h-6" /> },      // Complexité réelle
+      { label: "Refonte de site existant",    value: 1800, icon: <RefreshCcw className="w-6 h-6" /> },  // Audit + travail existant
     ]
   },
   {
     id: "pages",
     title: "Volume de pages",
     options: [
-      { label: "Site One-Page (1 page)", value: 0, icon: <File className="w-6 h-6" /> },
-      { label: "Petit Site (2 à 5 pages)", value: 500, icon: <Layers className="w-6 h-6" /> }, // Augmenté pour valoriser le Pack Pro
-      { label: "Site Complet (5 à 10 pages)", value: 900, icon: <Library className="w-6 h-6" /> },
-      { label: "Gros Site (10+ pages)", value: 1800, icon: <Globe className="w-6 h-6" /> },
+      { label: "Site One-Page (1 page)",       value: 0,    icon: <File className="w-6 h-6" /> },
+      { label: "Petit Site (2 à 5 pages)",     value: 600,  icon: <Layers className="w-6 h-6" /> },
+      { label: "Site Complet (5 à 10 pages)",  value: 1200, icon: <Library className="w-6 h-6" /> },
+      { label: "Gros Site (10+ pages)",        value: 2200, icon: <Globe className="w-6 h-6" /> },
     ]
   },
   {
     id: "design",
     title: "Niveau de Design & Animations",
     options: [
-      { label: "Standard (Propre & Efficace)", value: 0, icon: <Zap className="w-6 h-6" /> },
-      { label: "Premium (Animations avancées)", value: 800, icon: <Palette className="w-6 h-6" /> },
+      { label: "Standard (Propre & Efficace)",   value: 0,    icon: <Zap className="w-6 h-6" /> },
+      { label: "Premium (Animations avancées)",  value: 1000, icon: <Palette className="w-6 h-6" /> },
     ]
   },
   {
@@ -45,10 +45,10 @@ const questions = [
     title: "Fonctionnalités bonus (Optionnel)",
     multi: true,
     options: [
-      { label: "Rédaction SEO & Textes", value: 600, icon: <Search className="w-6 h-6" /> },
-      { label: "Module Blog / Actualités", value: 600, icon: <Newspaper className="w-6 h-6" /> },
-      { label: "Système de Réservation", value: 500, icon: <Calendar className="w-6 h-6" /> },
-      { label: "Newsletter / Capture Email", value: 300, icon: <Mail className="w-6 h-6" /> },
+      { label: "Rédaction SEO & Textes",      value: 700, icon: <Search className="w-6 h-6" /> },
+      { label: "Module Blog / Actualités",    value: 600, icon: <Newspaper className="w-6 h-6" /> },
+      { label: "Système de Réservation",      value: 600, icon: <Calendar className="w-6 h-6" /> },
+      { label: "Newsletter / Capture Email",  value: 350, icon: <Mail className="w-6 h-6" /> },
     ]
   }
 ];
@@ -211,7 +211,7 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
                                     
                                     <div className="flex flex-col">
                                         <span className="font-bold text-sm">{option.label}</span>
-                                        <span className="text-xs opacity-60">{option.value === 0 ? "Inclus" : `+${option.value}€`}</span>
+                                        <span className="text-xs opacity-60">{option.value === 0 ? "Inclus" : `+${option.value.toLocaleString('fr-FR')}€`}</span>
                                     </div>
                                     {isSelected && <Check className="ml-auto" size={16}/>}
                                 </button>
@@ -234,7 +234,7 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
                         <>
                             <div className="bg-indigo-500/10 border border-indigo-500/20 p-6 rounded-2xl mb-6">
                                 <p className="text-indigo-300 text-sm font-bold uppercase tracking-widest mb-2">Estimation Totale</p>
-                                <div className="text-4xl font-black text-white">{total}€</div>
+                                <div className="text-4xl font-black text-white">{total.toLocaleString('fr-FR')}€</div>
                                 <p className="text-xs text-neutral-500 mt-2">*Prix indicatif, à affiner ensemble.</p>
                             </div>
                             
@@ -258,7 +258,7 @@ export default function QuoteCalculator({ onClose }: { onClose: () => void }) {
         {/* FOOTER */}
         {!isLastStep && (
             <div className="p-4 border-t border-white/5 flex justify-between items-center bg-neutral-900">
-                <div className="text-white font-bold">{total}€</div>
+                <div className="text-white font-bold">{total.toLocaleString('fr-FR')}€</div>
                 <div className="flex gap-2">
                     {step > 0 && (
                         <button onClick={() => setStep(step - 1)} className="px-4 py-2 rounded-lg bg-white/5 hover:bg-white/10 text-white flex items-center gap-2 text-xs font-bold">Retour</button>

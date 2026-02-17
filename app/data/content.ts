@@ -111,17 +111,17 @@ export const demos = [
 export const pricing = [
   {
     title: "Starter",
-    price: "980€",
+    price: "1 200€",
     description: "L'essentiel pour démarrer proprement.",
     features: ["Site One-Page", "Design Responsive", "Formulaire de contact", "Optimisation Mobile", "Hébergement inclus"],
     highlight: false
   },
   {
     title: "Pro",
-    price: "2500€",
+    price: "3 200€",
     description: "Pour les entreprises qui veulent convaincre.",
     features: ["Site Multi-pages (5 max)", "Animations fluides", "Blog / Actualités", "SEO Avancé", "Support prioritaire"],
-    highlight: true 
+    highlight: true
   },
   {
     title: "Sur Mesure",

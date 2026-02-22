@@ -44,6 +44,20 @@ export const realisations = [
     tech: ["Next.js 14", "Tailwind CSS", "Framer Motion", "TypeScript", "Brevo API"]
   },
   {
+  title: "Christian Glace",
+  category: "Portfolio d'Artiste",
+  image: "/projects/christianglace.png", // À adapter avec le bon chemin
+  description: "Portfolio sur mesure conçu pour un sculpteur sur bois contemporain. L'interface minimaliste et épurée efface la technique au profit de l'art, offrant une mise en valeur absolue des œuvres et des textures.",
+  tech: ["Next.js", "Sanity CMS", "TypeScript", "Tailwind CSS"],
+  liveUrl: "https://christianglace.com", // J'ai remplacé demoRequest par liveUrl vu que le site est public !
+  details: [
+    "Architecture ultra-rapide (Next.js App Router) et déploiement continu sur Vercel",
+    "Intégration d'un CMS Headless (Sanity) pour la gestion autonome des galeries par l'artiste",
+    "Optimisation SEO avancée (Open Graph, métadonnées dynamiques) et gestion fine du cache",
+    "Design responsive centré sur l'expérience visuelle et la typographie (Cormorant Garamond)"
+  ]
+},
+  {
     title: "Najo Music",
     category: "Application Privée",
     image: "/projects/najomusic.png",

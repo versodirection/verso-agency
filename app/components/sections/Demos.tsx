@@ -9,7 +9,7 @@ const demoTemplates = [
     title: "Cabinet d'avocats",
     category: "Legal",
     image: "/demos/demo-lawyer.png", // Add your screenshot here
-    link: "https://vm-o98u85558kj9hwwq3o4cjv.vusercontent.net",
+    link: "https://vm-t0jxnsw486vrpmx2wnv0t6.vusercontent.net",
   },
   {
     id: 2,
@@ -23,7 +23,7 @@ const demoTemplates = [
     title: "Boulangerie-Pâtisserie",
     category: "Commerce",
     image: "/demos/demo-bakery.png", // Add your screenshot here
-    link: "https://vm-px50iq0mmlgxfdy3wxock1.vusercontent.net/",
+    link: "https://vm-un45y0tvi8qgzfcftwtw9s.vusercontent.net",
   },
   {
     id: 4,

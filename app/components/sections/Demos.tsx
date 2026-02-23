@@ -30,7 +30,7 @@ const demoTemplates = [
     title: "Plombier expert",
     category: "Service",
     image: "/demos/demo-plombier.png", // Add your screenshot here
-    link: "https://vm-v7xzh1bq4kgxu5bdmpdslj.vusercontent.net", // Replace with your actual link
+    link: "https://vm-tec7gbnwmm1myac5hg0z0r.vusercontent.net", // Replace with your actual link
   },
 ];
 import { MaskText } from "../ui/MaskText";

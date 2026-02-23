@@ -61,14 +61,15 @@ export default function MentionsLegales() {
         </motion.div>
 
         <nav className="fixed top-0 w-full z-50 bg-black/80 backdrop-blur-md border-b border-white/10 h-20 flex items-center px-6">
-          <Link 
-              href="/" 
+          <a
+              href="/"
               className="flex items-center gap-2 text-sm font-medium text-neutral-400 hover:text-white transition"
               onMouseEnter={cursorEnter}
               onMouseLeave={cursorLeave}
+              onClick={() => { try { sessionStorage.setItem("verso-skip-preloader", "true"); } catch {} }}
           >
             <ArrowLeft size={16} /> Retour à l'accueil
-          </Link>
+          </a>
         </nav>
 
         <div className="max-w-3xl mx-auto space-y-12">
@@ -145,6 +146,11 @@ export default function MentionsLegales() {
             </p>
             <p className="text-neutral-400 leading-relaxed mt-4">
               <strong>Formulaire :</strong> Les informations envoyées via le formulaire de contact (Nom, Email) ne sont utilisées que pour répondre à votre demande commerciale. Elles ne sont jamais revendues à des tiers.
+            </p>
+            <p className="text-neutral-400 leading-relaxed mt-4">
+              Ce site est protégé par reCAPTCHA v3 de Google. <br />
+              <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="underline text-indigo-400">Politique de confidentialité</a> et
+              <a href="https://policies.google.com/terms" target="_blank" rel="noopener noreferrer" className="underline text-indigo-400 ml-1">Conditions d'utilisation</a> de Google s'appliquent.
             </p>
           </section>
 

@@ -200,11 +200,15 @@ export default function RestaurantDemo() {
       </motion.div>
 
       {/* Nav back */}
-      <Link href="/#demos" className="fixed top-8 left-8 z-50 group">
+      <a
+        href="/#demos"
+        className="fixed top-8 left-8 z-50 group"
+        onClick={() => { try { sessionStorage.setItem("verso-skip-preloader", "true"); } catch {} }}
+      >
         <div className="bg-black/40 backdrop-blur-md border border-white/10 text-white px-6 py-2 rounded-full text-xs font-sans font-bold group-hover:bg-[#d4af37] group-hover:text-black transition-all flex items-center gap-2">
           <ArrowLeft size={14} /> VERSO.
         </div>
-      </Link>
+      </a>
 
       {/* ─── Hero ─── */}
       <section className="relative h-screen flex flex-col justify-center items-center text-center overflow-hidden">

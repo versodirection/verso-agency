@@ -178,10 +178,14 @@ export default function RealEstateDemo() {
             exit={{ y: "-100%", transition: { duration: 1, ease: [0.76, 0, 0.24, 1] } }}
             className="fixed inset-0 z-[300] bg-[#050505] flex flex-col justify-between p-8 md:p-20"
           >
-            <Link href="/#demos" className="absolute top-8 left-8 flex items-center gap-2 text-white/40 hover:text-white transition group">
+            <a
+              href="/#demos"
+              className="absolute top-8 left-8 flex items-center gap-2 text-white/40 hover:text-white transition group"
+              onClick={() => { try { sessionStorage.setItem("verso-skip-preloader", "true"); } catch {} }}
+            >
               <div className="p-2 border border-white/20 rounded-full group-hover:border-white"><ArrowLeft size={16} /></div>
               <span className="text-xs font-bold uppercase tracking-widest">VERSO<span className="text-indigo-500">.</span></span>
-            </Link>
+            </a>
             <div className="flex flex-col items-center justify-center text-center h-full">
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
@@ -241,9 +245,13 @@ export default function RealEstateDemo() {
       {/* ─── Header ─── */}
       <header className="absolute top-0 left-0 w-full z-40 p-8 flex justify-between items-center pointer-events-none">
         <div className="pointer-events-auto flex items-center gap-6">
-          <Link href="/#demos" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition backdrop-blur-md">
+          <a
+            href="/#demos"
+            className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center hover:bg-white hover:text-black transition backdrop-blur-md"
+            onClick={() => { try { sessionStorage.setItem("verso-skip-preloader", "true"); } catch {} }}
+          >
             <ArrowLeft size={16} />
-          </Link>
+          </a>
           {activeView === "collection" && (
             <div className="hidden md:flex gap-2">
               {filters.map(f => (

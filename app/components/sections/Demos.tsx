@@ -25,7 +25,15 @@ export function Demos({ showAnimations, cursorEnter, cursorLeave }: DemosProps) 
         <div className="grid md:grid-cols-3 gap-8 2xl:gap-16">
           {demos.map((demo, index) => (
             <TiltCard key={index} className="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10">
-              <Link href={demo.link} className="block w-full h-full cursor-none" onMouseEnter={cursorEnter} onMouseLeave={cursorLeave}>
+              <Link
+                href={demo.link}
+                className="block w-full h-full cursor-none"
+                onMouseEnter={cursorEnter}
+                onMouseLeave={cursorLeave}
+                onClick={() => {
+                  try { sessionStorage.setItem("verso-skip-preloader", "true"); } catch {}
+                }}
+              >
                 <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
                   <Image src={demo.image} alt={`Projet ${demo.title} - ${demo.category}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
                 </div>

@@ -151,9 +151,13 @@ export default function FashionDemo() {
 
       {/* ─── Header ─── */}
       <header className="fixed top-0 w-full z-40 px-6 py-6 flex justify-between items-center mix-blend-difference text-[#EBE9E4]">
-        <Link href="/#demos" className="text-sm font-bold uppercase tracking-widest hover:opacity-50 flex items-center gap-2">
+        <a
+          href="/#demos"
+          className="text-sm font-bold uppercase tracking-widest hover:opacity-50 flex items-center gap-2"
+          onClick={() => { try { sessionStorage.setItem("verso-skip-preloader", "true"); } catch {} }}
+        >
           <ArrowRight size={16} className="rotate-180" /> VERSO.
-        </Link>
+        </a>
         <h1
           className="text-3xl font-black uppercase tracking-tighter cursor-pointer"
           onClick={() => { setActiveCategory("ALL"); setSearchQuery(""); }}

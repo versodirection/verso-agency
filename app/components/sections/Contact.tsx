@@ -1,4 +1,7 @@
+
 "use client";
+
+import React from "react";
 
 import { Check, Mail, Phone, MapPin, Loader2 } from "lucide-react";
 import { siteConfig } from "@/app/data/content";
@@ -16,7 +19,56 @@ interface ContactProps {
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
 }
 
+// Déclaration TypeScript pour window.grecaptcha
+declare global {
+  interface Window {
+    grecaptcha?: {
+      ready: (cb: () => void) => void;
+      execute: (siteKey: string, options: { action: string }) => Promise<string>;
+    };
+  }
+}
+
 export function Contact({ showAnimations, cursorEnter, cursorLeave, formMessage, setFormMessage, formStatus, onSubmit }: ContactProps) {
+  // Ajout du script reCAPTCHA v3 invisible côté client
+  React.useEffect(() => {
+    if (typeof window !== "undefined" && !document.getElementById("recaptcha-script")) {
+      const script = document.createElement("script");
+      script.src = "https://www.google.com/recaptcha/api.js?render=6Lds6XQsAAAAAPAKwost5mnr73sa6ZXDKrii2pz0";
+      script.async = true;
+      script.defer = true;
+      script.id = "recaptcha-script";
+      document.body.appendChild(script);
+    }
+  }, []);
+
+  // Nouvelle fonction pour gérer la soumission avec reCAPTCHA v3
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (typeof window !== "undefined" && window.grecaptcha) {
+      window.grecaptcha.ready(() => {
+        window.grecaptcha?.execute("6Lds6XQsAAAAAPAKwost5mnr73sa6ZXDKrii2pz0", { action: "submit" })
+          .then((token: string) => {
+            // On transmet le token au backend via un champ caché
+            const form = e.target as HTMLFormElement;
+            let input = form.querySelector('input[name="g-recaptcha-response"]') as HTMLInputElement;
+            if (!input) {
+              input = document.createElement('input');
+              input.type = 'hidden';
+              input.name = 'g-recaptcha-response';
+              form.appendChild(input);
+            }
+            input.value = token;
+            onSubmit(e);
+          })
+          .catch(() => {
+            onSubmit(e);
+          });
+      });
+    } else {
+      onSubmit(e);
+    }
+  };
   return (
     <section id="contact" className="py-20 px-6">
       <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto grid md:grid-cols-2 gap-12 items-center">
@@ -59,7 +111,7 @@ export function Contact({ showAnimations, cursorEnter, cursorLeave, formMessage,
         </div>
 
         <TiltCard className="bg-neutral-900 p-8 md:p-12 rounded-3xl border border-white/5">
-          <form onSubmit={onSubmit} className="space-y-6" onMouseEnter={cursorEnter} onMouseLeave={cursorLeave}>
+          <form onSubmit={handleSubmit} className="space-y-6" onMouseEnter={cursorEnter} onMouseLeave={cursorLeave}>
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-2">
                 <label htmlFor="contact-name" className="text-sm font-medium text-neutral-400">Prénom</label>
@@ -86,6 +138,7 @@ export function Contact({ showAnimations, cursorEnter, cursorLeave, formMessage,
                 placeholder="Parlez-nous de votre projet..."
                 required
               />
+            {/* Google reCAPTCHA v3 invisible : le token est généré dynamiquement */}
             </div>
 
             <Magnetic>

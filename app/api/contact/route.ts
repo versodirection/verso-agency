@@ -9,11 +9,38 @@ const OWNER_NAME = "Verso Agency";
 
 export async function POST(req: Request) {
   try {
-    const { name, lastname, email, message } = await req.json();
+    const body = await req.json();
+    const { name, lastname, email, message, ["g-recaptcha-response"]: recaptchaToken } = body;
 
     if (!name || !email || !message) {
       return NextResponse.json(
         { error: "Champs requis manquants." },
+        { status: 400 }
+      );
+    }
+    // Vérification du token reCAPTCHA v3
+    if (!recaptchaToken) {
+      return NextResponse.json(
+        { error: "Captcha manquant." },
+        { status: 400 }
+      );
+    }
+    const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
+    if (!recaptchaSecret) {
+      return NextResponse.json(
+        { error: "Clé secrète reCAPTCHA manquante côté serveur." },
+        { status: 500 }
+      );
+    }
+    const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: `secret=${recaptchaSecret}&response=${recaptchaToken}`,
+    });
+    const recaptchaData = await recaptchaRes.json();
+    if (!recaptchaData.success || recaptchaData.score < 0.5) {
+      return NextResponse.json(
+        { error: "Échec de la vérification reCAPTCHA." },
         { status: 400 }
       );
     }

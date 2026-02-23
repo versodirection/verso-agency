@@ -19,7 +19,7 @@ import {
 
 export default function Home() {
   // --- State ---
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [showAnimations, setShowAnimations] = useState(false);
   const [cursorVariant, setCursorVariant] = useState("default");
   const [menuOpen, setMenuOpen] = useState(false);
@@ -30,13 +30,20 @@ export default function Home() {
   // --- Intro check ---
   useEffect(() => {
     try {
+      const skipPreloader = sessionStorage.getItem("verso-skip-preloader");
+      if (skipPreloader) {
+        sessionStorage.removeItem("verso-skip-preloader");
+        setLoading(false);
+        return;
+      }
       const hasSeen = sessionStorage.getItem("verso-intro-seen");
       if (!hasSeen) {
-        setLoading(true);
         setShowAnimations(true);
+      } else {
+        setLoading(false);
       }
     } catch {
-      // sessionStorage unavailable (private browsing etc.)
+      setLoading(false);
     }
   }, []);
 

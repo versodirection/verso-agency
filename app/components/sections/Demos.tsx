@@ -2,7 +2,37 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { demos } from "@/app/data/content";
+// Industry-specific demo templates
+const demoTemplates = [
+  {
+    id: 1,
+    title: "Cabinet d'avocats",
+    category: "Legal",
+    image: "/demos/demo-lawyer.png", // Add your screenshot here
+    link: "https://vm-o98u85558kj9hwwq3o4cjv.vusercontent.net",
+  },
+  {
+    id: 2,
+    title: "Salon de Coiffure",
+    category: "Portfolio",
+    image: "/demos/demo-barber.png", // Add your screenshot here
+    link: "https://vm-qdr04fbq5d1s7vdzc3hvyd.vusercontent.net/",
+  },
+  {
+    id: 3,
+    title: "Boulangerie-Pâtisserie",
+    category: "Commerce",
+    image: "/demos/demo-bakery.png", // Add your screenshot here
+    link: "https://vm-px50iq0mmlgxfdy3wxock1.vusercontent.net/",
+  },
+  {
+    id: 4,
+    title: "Plombier expert",
+    category: "Service",
+    image: "/demos/demo-plombier.png", // Add your screenshot here
+    link: "https://vm-v7xzh1bq4kgxu5bdmpdslj.vusercontent.net", // Replace with your actual link
+  },
+];
 import { MaskText } from "../ui/MaskText";
 import { TiltCard } from "../ui/TiltCard";
 
@@ -22,26 +52,36 @@ export function Demos({ showAnimations, cursorEnter, cursorLeave }: DemosProps) 
           </MaskText>
           <p className="text-neutral-400 text-xl max-w-xl">Des interfaces immersives qui marquent les esprits.</p>
         </div>
-        <div className="grid md:grid-cols-3 gap-8 2xl:gap-16">
-          {demos.map((demo, index) => (
-            <TiltCard key={index} className="group relative aspect-[4/3] rounded-2xl overflow-hidden border border-white/10">
-              <Link
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 2xl:gap-16">
+          {demoTemplates.map((demo) => (
+            <TiltCard
+              key={demo.id}
+              className="group relative aspect-[16/9] md:aspect-[16/7] rounded-2xl overflow-hidden border border-white/10 bg-transparent shadow-xl transition-transform duration-300"
+            >
+              <a
                 href={demo.link}
-                className="block w-full h-full cursor-none"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full h-full cursor-pointer"
                 onMouseEnter={cursorEnter}
                 onMouseLeave={cursorLeave}
                 onClick={() => {
                   try { sessionStorage.setItem("verso-skip-preloader", "true"); } catch {}
                 }}
               >
-                <div className="absolute inset-0 transition-transform duration-700 group-hover:scale-110">
-                  <Image src={demo.image} alt={`Projet ${demo.title} - ${demo.category}`} fill className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />
+                <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-105">
+                  <Image src={demo.image} alt={`Projet ${demo.title} - ${demo.category}`} fill className="object-contain transition duration-300 group-hover:brightness-75" sizes="(max-width: 768px) 100vw, 50vw" style={{background: "#18181b"}} />
                 </div>
-                <div className="absolute bottom-0 left-0 p-8 w-full">
+                {/* Gradient overlay for text readability */}
+                <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10" />
+                <div className="absolute bottom-0 left-0 p-8 w-full z-20 pointer-events-none">
                   <span className="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2 block">{demo.category}</span>
                   <h3 className="text-2xl font-bold text-white group-hover:translate-x-2 transition-transform">{demo.title}</h3>
                 </div>
-              </Link>
+                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
+                  <span className="bg-white/10 text-white px-6 py-3 rounded-full font-semibold text-lg border border-white/20 backdrop-blur-sm shadow-lg">Voir le site interactif</span>
+                </div>
+              </a>
             </TiltCard>
           ))}
         </div>

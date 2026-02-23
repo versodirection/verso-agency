@@ -18,6 +18,19 @@ interface NavbarProps {
 
 const NAV_ITEMS = ["Services", "Demos", "Avis", "Tarifs"];
 
+const NAV_LINKS = [
+  ...NAV_ITEMS.map((item) => ({
+    label: item,
+    href: `#${getTargetId(item)}`,
+    isAnchor: true,
+  })),
+  {
+    label: "Templates",
+    href: "/templates",
+    isAnchor: false,
+  },
+];
+
 function getTargetId(item: string) {
   return item.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -44,17 +57,29 @@ export function Navbar({ showAnimations, menuOpen, setMenuOpen, scrollTo, handle
           </div>
 
           <div className="hidden md:flex items-center gap-8">
-            {NAV_ITEMS.map((item) => (
-              <button
-                key={item}
-                onClick={() => scrollTo(getTargetId(item))}
-                onMouseEnter={cursorEnter}
-                onMouseLeave={cursorLeave}
-                className="text-sm font-medium hover:text-indigo-400 transition"
-              >
-                {item}
-              </button>
-            ))}
+            {NAV_LINKS.map((item) =>
+              item.isAnchor ? (
+                <button
+                  key={item.label}
+                  onClick={() => scrollTo(getTargetId(item.label))}
+                  onMouseEnter={cursorEnter}
+                  onMouseLeave={cursorLeave}
+                  className="text-sm font-medium hover:text-indigo-400 transition"
+                >
+                  {item.label}
+                </button>
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="text-sm font-medium hover:text-indigo-400 transition"
+                  onMouseEnter={cursorEnter}
+                  onMouseLeave={cursorLeave}
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
             <Magnetic>
               <button
                 onClick={() => scrollTo("contact")}
@@ -88,19 +113,26 @@ export function Navbar({ showAnimations, menuOpen, setMenuOpen, scrollTo, handle
             className="fixed inset-0 bg-black z-[55] flex flex-col items-center justify-center gap-8 md:hidden"
           >
             <Grain />
-            {NAV_ITEMS.map((item) => {
-              const targetId = getTargetId(item);
-              return (
+            {NAV_LINKS.map((item) =>
+              item.isAnchor ? (
                 <Link
-                  key={item}
-                  href={`#${targetId}`}
-                  onClick={(e) => handleScroll(e, targetId)}
+                  key={item.label}
+                  href={item.href}
+                  onClick={(e) => handleScroll(e, getTargetId(item.label))}
                   className="text-4xl font-black uppercase tracking-tighter text-neutral-400 hover:text-white transition-all duration-300"
                 >
-                  {item}
+                  {item.label}
                 </Link>
-              );
-            })}
+              ) : (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  className="text-4xl font-black uppercase tracking-tighter text-neutral-400 hover:text-white transition-all duration-300"
+                >
+                  {item.label}
+                </Link>
+              )
+            )}
             <div className="w-12 h-1 bg-indigo-500 rounded-full my-4" />
             <button onClick={() => scrollTo("contact")} className="text-xl font-bold bg-white text-black px-8 py-4 rounded-full">
               Démarrer un projet

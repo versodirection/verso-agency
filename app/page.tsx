@@ -29,12 +29,21 @@ export default function Home() {
 
   // --- Intro check ---
   useEffect(() => {
+    // Toujours afficher le contenu si on revient sur la page d'accueil
     try {
       const skipPreloader = sessionStorage.getItem("verso-skip-preloader");
       if (skipPreloader) {
         sessionStorage.removeItem("verso-skip-preloader");
         setLoading(false);
         return;
+      }
+      // Si navigation interne ou retour, on ne montre pas le preloader
+      if (performance && performance.getEntriesByType) {
+        const navEntries = performance.getEntriesByType("navigation");
+        if (navEntries.length > 0 && navEntries[0].type !== "reload") {
+          setLoading(false);
+          return;
+        }
       }
       const hasSeen = sessionStorage.getItem("verso-intro-seen");
       if (!hasSeen) {

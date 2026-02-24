@@ -71,17 +71,17 @@ export const realisations = [
 export const reviews = [
   {
     author: "Fred Diaz.",
-    role: "Création de Najo-Music",
+    role: "Professeur de musique",
     text: "J'ai fait appel à VERSO pour un site de musique. Étant musicien ma demande était assez complexe. Il me fallait un site \"outil\" me permettant de facilement travailler sur mes morceaux. Ils ont été hyper réactifs et leurs idées ont dépassé les miennes. Du coup il est encore mieux que ce à quoi je m'attendais. Un grand merci à cette équipe jeune et dynamique. Je recommande grandement!",
     stars: 5,
     reviewDate: new Date(2026, 0, 25) // 25 janvier 2026
   },
   {
-    author: "Victor M.",
-    role: "Prestation privée",
-    text: "Verso Agency montre une expertise dans la création des sites webs, avec un look élégant et moderne, qui reste dans la tendance actuelle ! Je recommande, pour tous les budgets !",
+    author: "Christian Glace.",
+    role: "Sculpteur sur bois Toulousain",
+    text: "Très bon contact, sympathique, ouvert, à l'écoute, patient tout en étant très réactif, s'adapte aux demandes tout en étant créatif, efficace, très bonne maîtrise de l'outil pour un excellent résultat. Valeur sûre.",
     stars: 5,
-    reviewDate: new Date(2026, 1, 5) // 5 février 2026
+    reviewDate: new Date(2026, 1, 24) // 24 février 2026
   }
   ,{
     author: "Christian Baladou",

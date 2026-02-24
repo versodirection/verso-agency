@@ -6,32 +6,26 @@ import Image from "next/image";
 const demoTemplates = [
   {
     id: 1,
-    title: "Cabinet d'avocats",
-    category: "Legal",
-    image: "/demos/demo-lawyer.png", // Add your screenshot here
-    link: "https://vm-t0jxnsw486vrpmx2wnv0t6.vusercontent.net",
+    title: "Fashion Store",
+    category: "Mode",
+    image: "/demos/demo-fashion.png",
+    link: "/demo/fashion",
   },
   {
     id: 2,
-    title: "Salon de Coiffure",
-    category: "Portfolio",
-    image: "/demos/demo-barber.png", // Add your screenshot here
-    link: "https://vm-qdr04fbq5d1s7vdzc3hvyd.vusercontent.net/",
+    title: "Agence Immobilière",
+    category: "Immobilier",
+    image: "/demos/demo-immo.png",
+    link: "/demo/immo",
   },
   {
     id: 3,
-    title: "Boulangerie-Pâtisserie",
-    category: "Commerce",
-    image: "/demos/demo-bakery.png", // Add your screenshot here
-    link: "https://vm-un45y0tvi8qgzfcftwtw9s.vusercontent.net",
+    title: "Restaurant Chic",
+    category: "Restauration",
+    image: "/demos/demo-restaurant.png",
+    link: "/demo/restaurant",
   },
-  {
-    id: 4,
-    title: "Plombier expert",
-    category: "Service",
-    image: "/demos/demo-plombier.png", // Add your screenshot here
-    link: "https://vm-tec7gbnwmm1myac5hg0z0r.vusercontent.net", // Replace with your actual link
-  },
+  // 3 démos originales uniquement
 ];
 import { MaskText } from "../ui/MaskText";
 import { TiltCard } from "../ui/TiltCard";
@@ -52,7 +46,7 @@ export function Demos({ showAnimations, cursorEnter, cursorLeave }: DemosProps) 
           </MaskText>
           <p className="text-neutral-400 text-xl max-w-xl">Des interfaces immersives qui marquent les esprits.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 2xl:gap-16">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 2xl:gap-16">
           {demoTemplates.map((demo) => (
             <TiltCard
               key={demo.id}
@@ -70,16 +64,13 @@ export function Demos({ showAnimations, cursorEnter, cursorLeave }: DemosProps) 
                 }}
               >
                 <div className="absolute inset-0 z-0 transition-transform duration-700 group-hover:scale-105">
-                  <Image src={demo.image} alt={`Projet ${demo.title} - ${demo.category}`} fill className="object-contain transition duration-300 group-hover:brightness-75" sizes="(max-width: 768px) 100vw, 50vw" style={{background: "#18181b"}} />
+                  <Image src={demo.image} alt={`Projet ${demo.title} - ${demo.category}`} fill className="object-cover transition duration-300 group-hover:brightness-75" sizes="(max-width: 768px) 100vw, 50vw" style={{background: "#18181b"}} />
                 </div>
                 {/* Gradient overlay for text readability */}
                 <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-black/80 via-black/40 to-transparent z-10" />
                 <div className="absolute bottom-0 left-0 p-8 w-full z-20 pointer-events-none">
                   <span className="text-indigo-400 text-xs font-bold uppercase tracking-wider mb-2 block">{demo.category}</span>
                   <h3 className="text-2xl font-bold text-white group-hover:translate-x-2 transition-transform">{demo.title}</h3>
-                </div>
-                <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-                  <span className="bg-white/10 text-white px-6 py-3 rounded-full font-semibold text-lg border border-white/20 backdrop-blur-sm shadow-lg">Voir le site interactif</span>
                 </div>
               </a>
             </TiltCard>

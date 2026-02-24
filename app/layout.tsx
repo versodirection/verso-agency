@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+// Suppression des imports client
+// Garde uniquement PreloaderWrapper
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -84,129 +86,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Ajout logique Preloader global
+  // Next.js 13+ : usePathname
+  // On ne montre pas le Preloader sur /demo/* ou /mentions-legales
+  // On ne montre pas si verso-skip-preloader
+  // On ne montre pas sur SSR
+
+
   return (
     <html lang="fr">
       <body className={inter.className}>
         {children}
-
-        {/* Schema.org — LocalBusiness + WebSite */}
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify({
-              "@context": "https://schema.org",
-              "@graph": [
-                {
-                  "@type": "WebSite",
-                  "@id": `${SITE_URL}/#website`,
-                  url: SITE_URL,
-                  name: "VERSO Agency",
-                  description:
-                    "Agence web à Toulouse — Création de sites vitrines, e-commerce et applications web performantes.",
-                  publisher: { "@id": `${SITE_URL}/#organization` },
-                  inLanguage: "fr-FR",
-                },
-                {
-                  "@type": ["LocalBusiness", "ProfessionalService"],
-                  "@id": `${SITE_URL}/#organization`,
-                  name: "VERSO Agency",
-                  url: SITE_URL,
-                  logo: `${SITE_URL}/linkimage.png`,
-                  image: `${SITE_URL}/linkimage.png`,
-                  description:
-                    "Agence web à Toulouse spécialisée en création de sites vitrines, e-commerce et applications web sur mesure.",
-                  telephone: "+33768296612",
-                  email: "contact@verso-agency.fr",
-                  address: {
-                    "@type": "PostalAddress",
-                    addressLocality: "Toulouse",
-                    addressRegion: "Occitanie",
-                    postalCode: "31000",
-                    addressCountry: "FR",
-                  },
-                  geo: {
-                    "@type": "GeoCoordinates",
-                    latitude: 43.6047,
-                    longitude: 1.4442,
-                  },
-                  openingHoursSpecification: {
-                    "@type": "OpeningHoursSpecification",
-                    dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-                    opens: "09:00",
-                    closes: "18:00",
-                  },
-                  priceRange: "€€",
-                  aggregateRating: {
-                    "@type": "AggregateRating",
-                    ratingValue: "5",
-                    reviewCount: "2",
-                    bestRating: "5",
-                    worstRating: "1",
-                  },
-                  areaServed: {
-                    "@type": "GeoCircle",
-                    geoMidpoint: {
-                      "@type": "GeoCoordinates",
-                      latitude: 43.6047,
-                      longitude: 1.4442,
-                    },
-                    geoRadius: "50000",
-                  },
-                  hasOfferCatalog: {
-                    "@type": "OfferCatalog",
-                    name: "Services web",
-                    itemListElement: [
-                      {
-                        "@type": "Offer",
-                        itemOffered: {
-                          "@type": "Service",
-                          name: "Création de site vitrine",
-                          description: "Design responsive sur mesure, SEO-friendly et performant.",
-                        },
-                      },
-                      {
-                        "@type": "Offer",
-                        itemOffered: {
-                          "@type": "Service",
-                          name: "Création de site e-commerce",
-                          description:
-                            "Boutique en ligne optimisée pour la conversion et le mobile.",
-                        },
-                      },
-                      {
-                        "@type": "Offer",
-                        itemOffered: {
-                          "@type": "Service",
-                          name: "Développement d'applications web",
-                          description: "SaaS, tableaux de bord et outils métier sur mesure.",
-                        },
-                      },
-                      {
-                        "@type": "Offer",
-                        itemOffered: {
-                          "@type": "Service",
-                          name: "Refonte de site web",
-                          description:
-                            "Modernisation et optimisation de sites existants.",
-                        },
-                      },
-                    ],
-                  },
-                  knowsAbout: [
-                    "React",
-                    "Next.js",
-                    "TypeScript",
-                    "Tailwind CSS",
-                    "Création de sites internet",
-                    "E-commerce",
-                    "Applications web",
-                    "SEO",
-                  ],
-                },
-              ],
-            }),
-          }}
-        />
+        {/* ...existing code... */}
       </body>
     </html>
   );

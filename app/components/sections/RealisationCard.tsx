@@ -31,7 +31,7 @@ export function RealisationCard({ project }: { project: (typeof realisations)[nu
         setTimeout(() => { setDemoOpen(false); setDemoStatus("idle"); setDemoEmail(""); }, 3000);
       } else {
         setDemoStatus("error");
-      }
+      } 
     } catch {
       setDemoStatus("error");
     }

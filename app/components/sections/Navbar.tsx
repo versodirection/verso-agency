@@ -24,11 +24,6 @@ const NAV_LINKS = [
     href: `#${getTargetId(item)}`,
     isAnchor: true,
   })),
-  {
-    label: "Templates",
-    href: "/templates",
-    isAnchor: false,
-  },
 ];
 
 function getTargetId(item: string) {

@@ -58,8 +58,8 @@ export function Hero({ showAnimations, scrollTo, cursorEnter, cursorLeave }: Her
             onMouseEnter={cursorEnter}
             onMouseLeave={cursorLeave}
           >
-            L&apos;ingénierie web <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">sans compromis.</span>
+            Le web sur mesure, <br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">tout simplement.</span>
           </h1>
         </MaskText>
 

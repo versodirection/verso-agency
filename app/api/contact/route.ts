@@ -10,45 +10,12 @@ const OWNER_NAME = "Verso Agency";
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    // On ajoute 'subject' pour bien différencier les mails classiques des Démos
-    const { name, lastname, email, message, subject, ["g-recaptcha-response"]: recaptchaToken } = body;
-
+    const { name, lastname, email, message, subject } = body;
     if (!name || !email || !message) {
       return NextResponse.json({ error: "Champs requis manquants." }, { status: 400 });
     }
-
-    // Si le message vient du grand formulaire (donc possède un jeton Captcha)
-    if (recaptchaToken) {
-      const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
-      if (!recaptchaSecret) {
-        console.error("Clé reCAPTCHA manquante sur Vercel !");
-        return NextResponse.json({ error: "Configuration serveur incomplète." }, { status: 500 });
-      }
-      const recaptchaRes = await fetch("https://www.google.com/recaptcha/api/siteverify", {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: `secret=${recaptchaSecret}&response=${recaptchaToken}`,
-      });
-      
-      const recaptchaData = await recaptchaRes.json();
-      
-      // Si Google rejette, on laisse passer UNIQUEMENT si on est en localhost
-      if (!recaptchaData.success || recaptchaData.score < 0.5) {
-        console.error("Erreur Google Captcha :", recaptchaData);
-        if (process.env.NODE_ENV !== "development") {
-          return NextResponse.json({ error: "Échec de la vérification reCAPTCHA." }, { status: 400 });
-        }
-      }
-    } else {
-      // S'il n'y a pas de Captcha, on l'accepte si c'est une démo OU si on est en local
-      if (!subject?.includes("démo") && process.env.NODE_ENV !== "development") {
-        return NextResponse.json({ error: "Captcha manquant." }, { status: 400 });
-      }
-    }
-
     const fullName = `${name}${lastname ? ` ${lastname}` : ""}`;
     const finalSubject = subject || `💬 Nouveau message de ${fullName}`;
-
     const now = new Date().toLocaleDateString("fr-FR", {
       weekday: "long",
       year: "numeric",

@@ -64,7 +64,7 @@ export function Hero({ showAnimations, scrollTo, cursorEnter, cursorLeave }: Her
         </MaskText>
 
         <p className="text-lg md:text-xl text-neutral-300 max-w-2xl mx-auto mb-10 leading-relaxed mix-blend-screen">
-          {siteConfig.description} Nous créons des expériences digitales ultra-performantes qui captivent vos utilisateurs et convertissent instantanément.
+          {siteConfig.description} nous créons des outils digitaux simples et efficaces pour faire grandir votre activité sur internet.
         </p>
 
         <div className="flex flex-col md:flex-row gap-4 justify-center items-center">

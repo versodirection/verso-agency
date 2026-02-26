@@ -3,7 +3,7 @@ import { Code, Rocket, Palette, Smartphone } from "lucide-react";
 
 export const siteConfig = {
   name: "VERSO AGENCY",
-  description: "Nous créons le futur du web pour des entreprises ambitieuses.",
+  description: "Des sites web beaux, performants et utiles. Pas de jargon ni de fausses promesses :",
   email: "contact@verso-agency.fr",
   phone: "+33 7 68 29 66 12",
   address: "Toulouse, France",

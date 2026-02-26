@@ -39,7 +39,7 @@ export default function Home() {
       }
       // Si navigation interne ou retour, on ne montre pas le preloader
       if (performance && performance.getEntriesByType) {
-        const navEntries = performance.getEntriesByType("navigation");
+        const navEntries = performance.getEntriesByType("navigation") as PerformanceNavigationTiming[];
         if (navEntries.length > 0 && navEntries[0].type !== "reload") {
           setLoading(false);
           return;

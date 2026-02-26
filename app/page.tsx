@@ -99,7 +99,15 @@ export default function Home() {
       e.preventDefault();
       setFormStatus("loading");
 
-      const formData = new FormData(e.currentTarget);
+
+      const form = e.currentTarget;
+      if (!(form instanceof HTMLFormElement)) {
+        setFormStatus("error");
+        setFormMessage("Erreur interne : formulaire invalide.");
+        return;
+      }
+
+      const formData = new FormData(form);
       const data = Object.fromEntries(formData.entries());
 
       try {

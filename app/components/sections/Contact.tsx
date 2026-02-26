@@ -42,32 +42,43 @@ export function Contact({ showAnimations, cursorEnter, cursorLeave, formMessage,
     }
   }, []);
 
-  // Nouvelle fonction pour gérer la soumission avec reCAPTCHA v3
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (typeof window !== "undefined" && window.grecaptcha) {
-      window.grecaptcha.ready(() => {
-        window.grecaptcha?.execute("6Lds6XQsAAAAAPAKwost5mnr73sa6ZXDKrii2pz0", { action: "submit" })
-          .then((token: string) => {
-            // On transmet le token au backend via un champ caché
-            const form = e.target as HTMLFormElement;
-            let input = form.querySelector('input[name="g-recaptcha-response"]') as HTMLInputElement;
-            if (!input) {
-              input = document.createElement('input');
-              input.type = 'hidden';
-              input.name = 'g-recaptcha-response';
-              form.appendChild(input);
-            }
-            input.value = token;
-            onSubmit(e);
-          })
-          .catch(() => {
-            onSubmit(e);
-          });
-      });
-    } else {
-      onSubmit(e);
+    const form = e.currentTarget;
+
+    // On crée un faux événement pour forcer le lancement visuel de "Envoi en cours..."
+    const mockEvent = {
+      preventDefault: () => {},
+      currentTarget: form,
+      target: form, // <--- LA LIGNE MAGIQUE QUI MANQUAIT !
+    } as unknown as React.FormEvent<HTMLFormElement>;
+
+    // Si le script Google est bloqué par un AdBlocker par exemple
+    if (typeof window === "undefined" || !window.grecaptcha) {
+      onSubmit(mockEvent);
+      return;
     }
+
+    // Exécution du test robot
+    window.grecaptcha.ready(async () => {
+      try {
+        const token = await window.grecaptcha!.execute("6Lds6XQsAAAAAPAKwost5mnr73sa6ZXDKrii2pz0", { action: "submit" });
+        let input = form.querySelector('input[name="g-recaptcha-response"]') as HTMLInputElement;
+        if (!input) {
+          input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'g-recaptcha-response';
+          form.appendChild(input);
+        }
+        input.value = token;
+        
+        // On envoie enfin les données !
+        onSubmit(mockEvent);
+      } catch (err) {
+        console.error("Le Captcha a planté, on tente l'envoi quand même :", err);
+        onSubmit(mockEvent);
+      }
+    });
   };
   return (
     <section id="contact" className="py-20 px-6">

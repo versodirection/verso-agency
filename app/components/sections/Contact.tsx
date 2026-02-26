@@ -62,7 +62,7 @@ export function Contact({ showAnimations, cursorEnter, cursorLeave, formMessage,
     // Exécution du test robot
     window.grecaptcha.ready(async () => {
       try {
-        const token = await window.grecaptcha!.execute("6Lds6XQsAAAAAPAKwost5mnr73sa6ZXDKrii2pz0", { action: "submit" });
+        const token = await window.grecaptcha!.execute("6LfdBXgsAAAAAAETc5CM4ZMeMvt8-ScIpCkiWGfo", { action: "submit" });
         let input = form.querySelector('input[name="g-recaptcha-response"]') as HTMLInputElement;
         if (!input) {
           input = document.createElement('input');

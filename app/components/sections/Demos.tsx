@@ -54,8 +54,6 @@ export function Demos({ showAnimations, cursorEnter, cursorLeave }: DemosProps) 
             >
               <a
                 href={demo.link}
-                target="_blank"
-                rel="noopener noreferrer"
                 className="block w-full h-full cursor-pointer"
                 onMouseEnter={cursorEnter}
                 onMouseLeave={cursorLeave}

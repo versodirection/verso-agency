@@ -43,7 +43,7 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "VERSO Agency | L'ingénierie web sans compromis",
+    title: "VERSO Agency | Le web sur mesure, tout simplement.",
     description:
       "Agence web à Toulouse — Sites vitrines, e-commerce et applications web performantes. Devis gratuit.",
     url: SITE_URL,

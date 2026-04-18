@@ -1,17 +1,19 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { ExternalLink, ChevronDown, Key, Loader2 } from "lucide-react";
+import { ArrowUpRight, Key, Loader2 } from "lucide-react";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { realisations } from "@/app/data/content";
 
-export function RealisationCard({ project }: { project: (typeof realisations)[number] }) {
-  const [detailsOpen, setDetailsOpen] = useState(false);
+export function RealisationCard({ project, index }: { project: (typeof realisations)[number]; index: number }) {
   const [demoOpen, setDemoOpen] = useState(false);
   const [demoEmail, setDemoEmail] = useState("");
   const [demoStatus, setDemoStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+
+  const isReversed = index % 2 !== 0;
+  const num = String(index + 1).padStart(2, "0");
 
   const handleDemoRequest = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,90 +33,142 @@ export function RealisationCard({ project }: { project: (typeof realisations)[nu
         setTimeout(() => { setDemoOpen(false); setDemoStatus("idle"); setDemoEmail(""); }, 3000);
       } else {
         setDemoStatus("error");
-      } 
+      }
     } catch {
       setDemoStatus("error");
     }
   };
 
   return (
-    <div className="group relative grid md:grid-cols-2 gap-8 items-start border border-white/10 bg-neutral-900/50 p-6 md:p-12 rounded-3xl hover:border-indigo-500/50 transition-colors">
-      <div className="relative aspect-video rounded-xl overflow-hidden cursor-none">
-        <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-700 group-hover:scale-105" />
+    <motion.div
+      initial={{ opacity: 0, y: 60 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+      className={`group flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} min-h-[500px]`}
+    >
+      {/* IMAGE */}
+      <div className="relative w-full md:w-[55%] aspect-video md:aspect-auto overflow-hidden">
+        <Image
+          src={project.image}
+          alt={project.title}
+          fill
+          className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+          sizes="(max-width: 768px) 100vw, 55vw"
+        />
+        <div className="absolute inset-0 bg-black/25 group-hover:bg-black/10 transition-colors duration-500" />
       </div>
-      <div className="space-y-5">
-        <div>
-          <span className="text-indigo-500 text-sm font-bold uppercase tracking-widest">{project.category}</span>
-          <h3 className="text-4xl md:text-5xl font-bold text-white mt-2">{project.title}</h3>
-        </div>
 
-        {project.tech && (
-          <div className="flex flex-wrap gap-2">
-            {project.tech.map((t, i) => (
-              <span key={i} className="px-3 py-1 text-xs font-semibold rounded-full border border-indigo-500/40 text-indigo-400 bg-indigo-500/10">
-                {t}
-              </span>
-            ))}
-          </div>
-        )}
+      {/* CONTENT */}
+      <div className="relative w-full md:w-[45%] flex flex-col justify-center px-8 py-14 md:px-14 md:py-16 bg-[#070707] overflow-hidden">
+        {/* Ghost number */}
+        <span className="absolute bottom-2 right-4 text-[9rem] md:text-[13rem] font-black text-white/[0.025] leading-none select-none pointer-events-none">
+          {num}
+        </span>
 
-        <p className="text-neutral-300 text-lg leading-relaxed">{project.description}</p>
+        <div className="relative z-10 space-y-7">
+          <span className="block text-[11px] font-bold uppercase tracking-[0.35em] text-indigo-400">
+            {project.category}
+          </span>
 
-        {project.details && (
-          <div>
-            <button onClick={() => setDetailsOpen(!detailsOpen)} className="flex items-center gap-2 text-indigo-400 hover:text-indigo-300 text-sm font-semibold transition-colors">
-              En savoir plus
-              <ChevronDown size={16} className={`transition-transform duration-300 ${detailsOpen ? "rotate-180" : ""}`} />
-            </button>
-            <AnimatePresence>
-              {detailsOpen && (
-                <motion.ul
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="overflow-hidden mt-3 space-y-2 pl-1"
+          <h3 className="text-4xl md:text-5xl xl:text-[3.5rem] font-black text-white leading-[1.0] tracking-tight">
+            {project.title}
+          </h3>
+
+          <p className="text-neutral-400 text-[15px] leading-relaxed max-w-sm">
+            {project.description}
+          </p>
+
+          {project.tech && (
+            <div className="flex flex-wrap gap-2">
+              {project.tech.map((t, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 text-[11px] font-semibold rounded-full border border-white/10 text-neutral-500 tracking-wide"
                 >
-                  {project.details.map((detail, i) => (
-                    <li key={i} className="flex items-start gap-2 text-neutral-300 text-sm">
-                      <span className="text-indigo-500 mt-1">&#9654;</span>
-                      {detail}
-                    </li>
-                  ))}
-                </motion.ul>
-              )}
-            </AnimatePresence>
-          </div>
-        )}
+                  {t}
+                </span>
+              ))}
+            </div>
+          )}
 
-        {project.link ? (
-          <Link href={project.link} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-white font-bold hover:text-indigo-400 transition">
-            Voir le site en ligne <ExternalLink size={18} />
-          </Link>
-        ) : project.demoRequest ? (
-          <div>
-            <button onClick={() => setDemoOpen(!demoOpen)} className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-indigo-500/40 bg-indigo-500/10 text-indigo-400 font-semibold hover:bg-indigo-500/20 hover:text-indigo-300 transition-all text-sm cursor-pointer">
-              <Key size={16} />
-              Demander un accès démo
-            </button>
-            <AnimatePresence>
-              {demoOpen && (
-                <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }} className="overflow-hidden">
-                  <form onSubmit={handleDemoRequest} className="mt-4 flex flex-col sm:flex-row gap-3">
-                    <input type="email" required value={demoEmail} onChange={(e) => setDemoEmail(e.target.value)} placeholder="Votre email" className="flex-1 px-4 py-2.5 rounded-xl bg-neutral-800 border border-white/10 text-white text-sm placeholder:text-neutral-500 focus:outline-none focus:border-indigo-500/50 transition-colors" />
-                    <button type="submit" disabled={demoStatus === "loading" || demoStatus === "success"} className="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500 transition-colors disabled:opacity-50 flex items-center gap-2 justify-center cursor-pointer">
-                      {demoStatus === "loading" && <Loader2 className="animate-spin" size={16} />}
-                      {demoStatus === "success" ? "Demande envoyée ✓" : demoStatus === "loading" ? "Envoi..." : "Envoyer"}
-                    </button>
-                  </form>
-                  {demoStatus === "success" && <p className="text-green-400 text-xs mt-2">Nous reviendrons vers vous avec les accès.</p>}
-                  {demoStatus === "error" && <p className="text-red-400 text-xs mt-2">Une erreur est survenue, réessayez.</p>}
-                </motion.div>
-              )}
-            </AnimatePresence>
+          {project.details && (
+            <ul className="space-y-2">
+              {project.details.slice(0, 2).map((detail, i) => (
+                <li key={i} className="flex items-start gap-2 text-neutral-500 text-sm">
+                  <span className="text-indigo-500 mt-0.5 shrink-0 text-xs">▸</span>
+                  {detail}
+                </li>
+              ))}
+            </ul>
+          )}
+
+          <div className="pt-1">
+            {project.link ? (
+              <Link
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 group/btn"
+              >
+                <span className="text-white font-semibold text-[15px] group-hover/btn:text-indigo-400 transition-colors duration-300">
+                  Voir le projet
+                </span>
+                <span className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover/btn:bg-indigo-600 group-hover/btn:border-indigo-600 transition-all duration-300">
+                  <ArrowUpRight size={18} className="text-white" />
+                </span>
+              </Link>
+            ) : project.demoRequest ? (
+              <div>
+                <button
+                  onClick={() => setDemoOpen(!demoOpen)}
+                  className="inline-flex items-center gap-3 group/btn"
+                >
+                  <span className="text-white font-semibold text-[15px] group-hover/btn:text-indigo-400 transition-colors duration-300">
+                    Accès sur demande
+                  </span>
+                  <span className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center group-hover/btn:bg-indigo-600 group-hover/btn:border-indigo-600 transition-all duration-300">
+                    <Key size={18} className="text-white" />
+                  </span>
+                </button>
+                <AnimatePresence>
+                  {demoOpen && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: "auto", opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      className="overflow-hidden mt-5"
+                    >
+                      <form onSubmit={handleDemoRequest} className="flex flex-col sm:flex-row gap-3">
+                        <input
+                          type="email"
+                          required
+                          value={demoEmail}
+                          onChange={(e) => setDemoEmail(e.target.value)}
+                          placeholder="Votre email"
+                          className="flex-1 px-4 py-2.5 rounded-xl bg-neutral-900 border border-white/10 text-white text-sm placeholder:text-neutral-600 focus:outline-none focus:border-indigo-500/50 transition-colors"
+                        />
+                        <button
+                          type="submit"
+                          disabled={demoStatus === "loading" || demoStatus === "success"}
+                          className="px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-500 transition-colors disabled:opacity-50 flex items-center gap-2 justify-center"
+                        >
+                          {demoStatus === "loading" && <Loader2 className="animate-spin" size={16} />}
+                          {demoStatus === "success" ? "Envoyé ✓" : demoStatus === "loading" ? "Envoi..." : "Envoyer"}
+                        </button>
+                      </form>
+                      {demoStatus === "error" && (
+                        <p className="text-red-400 text-xs mt-2">Une erreur est survenue. Réessayez.</p>
+                      )}
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+            ) : null}
           </div>
-        ) : null}
+        </div>
       </div>
-    </div>
+    </motion.div>
   );
 }

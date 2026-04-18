@@ -22,6 +22,7 @@ interface HeroProps {
 export function Hero({ showAnimations, scrollTo, cursorEnter, cursorLeave }: HeroProps) {
   return (
     <section id="hero" className="relative pt-32 pb-12 px-6 flex flex-col items-center justify-center text-center min-h-screen">
+      {/* 3D Canvas background */}
       <div className="absolute inset-0 z-0 opacity-80 pointer-events-none">
         <CanvasErrorBoundary>
           <Canvas camera={{ position: [0, 0, 6], fov: 45 }}>
@@ -59,7 +60,9 @@ export function Hero({ showAnimations, scrollTo, cursorEnter, cursorLeave }: Her
             onMouseLeave={cursorLeave}
           >
             Le web sur mesure, <br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">tout simplement.</span>
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">
+              tout simplement.
+            </span>
           </h1>
         </MaskText>
 
@@ -91,6 +94,29 @@ export function Hero({ showAnimations, scrollTo, cursorEnter, cursorLeave }: Her
           </Magnetic>
         </div>
       </motion.div>
+
+      {/* Scroll indicator */}
+      <motion.button
+        onClick={() => scrollTo("realisations")}
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: showAnimations ? 2 : 1, duration: 0.8 }}
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 group cursor-pointer"
+        aria-label="Défiler vers le bas"
+        onMouseEnter={cursorEnter}
+        onMouseLeave={cursorLeave}
+      >
+        <span className="text-[10px] font-mono uppercase tracking-[0.3em] text-neutral-500 group-hover:text-neutral-300 transition-colors">
+          Scroll
+        </span>
+        <div className="w-px h-12 bg-gradient-to-b from-neutral-500 to-transparent relative overflow-hidden">
+          <motion.div
+            className="absolute top-0 left-0 w-full h-1/2 bg-indigo-400"
+            animate={{ y: ["0%", "200%"] }}
+            transition={{ duration: 1.4, repeat: Infinity, ease: "easeInOut" }}
+          />
+        </div>
+      </motion.button>
     </section>
   );
 }

@@ -32,9 +32,9 @@ export function Realisations({ showAnimations }: RealisationsProps) {
         </div>
       </div>
 
-      <div className="border-t border-white/5">
+      <div className="border-t border-white/10">
         {realisations.map((project, index) => (
-          <div key={index} className="border-b border-white/5">
+          <div key={index} className="border-b border-white/10">
             <RealisationCard project={project} index={index} />
           </div>
         ))}

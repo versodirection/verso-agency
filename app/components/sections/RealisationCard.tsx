@@ -45,7 +45,7 @@ export function RealisationCard({ project, index }: { project: (typeof realisati
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
       transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
-      className={`group flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} min-h-[500px]`}
+      className={`group flex flex-col ${isReversed ? "md:flex-row-reverse" : "md:flex-row"} min-h-[600px] md:min-h-[660px]`}
     >
       {/* IMAGE */}
       <div className="relative w-full md:w-[55%] aspect-video md:aspect-auto overflow-hidden">
@@ -60,7 +60,7 @@ export function RealisationCard({ project, index }: { project: (typeof realisati
       </div>
 
       {/* CONTENT */}
-      <div className="relative w-full md:w-[45%] flex flex-col justify-center px-8 py-14 md:px-14 md:py-16 bg-[#070707] overflow-hidden">
+      <div className="relative w-full md:w-[45%] flex flex-col justify-center px-8 py-16 md:px-16 md:py-24 bg-[#070707] overflow-hidden">
         {/* Ghost number */}
         <span className="absolute bottom-2 right-4 text-[9rem] md:text-[13rem] font-black text-white/[0.025] leading-none select-none pointer-events-none">
           {num}

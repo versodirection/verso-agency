@@ -46,7 +46,7 @@ export function Navbar({ showAnimations, menuOpen, setMenuOpen, scrollTo, handle
             onMouseEnter={cursorEnter}
             onMouseLeave={cursorLeave}
             role="button"
-            aria-label="Retour en haut de page"
+            aria-label="VERSO. — Retour en haut de page"
           >
             VERSO<span className="text-indigo-500">.</span>
           </div>

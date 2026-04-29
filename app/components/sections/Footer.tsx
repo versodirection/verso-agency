@@ -16,7 +16,7 @@ export function Footer({ scrollTo }: FooterProps) {
 
       {/* CTA final */}
       <div className="border-b border-white/5 py-16 px-6 text-center relative z-10">
-        <p className="text-neutral-500 text-xs font-mono uppercase tracking-[0.3em] mb-4">Prêt à démarrer ?</p>
+        <p className="text-neutral-400 text-xs font-mono uppercase tracking-[0.3em] mb-4">Prêt à démarrer ?</p>
         <button
           onClick={() => scrollTo("contact")}
           className="text-4xl md:text-6xl font-black text-white hover:text-indigo-400 transition-colors duration-300 tracking-tight cursor-pointer"
@@ -32,17 +32,17 @@ export function Footer({ scrollTo }: FooterProps) {
             onClick={() => scrollTo("hero")}
             className="text-2xl font-bold tracking-tighter text-white cursor-pointer hover:opacity-70 transition"
             role="button"
-            aria-label="Retour en haut de page"
+            aria-label="VERSO. — Retour en haut de page"
           >
             VERSO<span className="text-indigo-500">.</span>
           </div>
 
-          <div className="flex items-center gap-2 text-neutral-500 text-sm hover:text-white transition-colors">
+          <div className="flex items-center gap-2 text-neutral-400 text-sm hover:text-white transition-colors">
             <Mail size={14} />
             <a href={`mailto:${siteConfig.email}`}>{siteConfig.email}</a>
           </div>
 
-          <div className="flex items-center gap-4 text-xs text-neutral-600 font-mono uppercase tracking-widest">
+          <div className="flex items-center gap-4 text-xs text-neutral-400 font-mono uppercase tracking-widest">
             <Link href="/mentions-legales" className="hover:text-white transition">
               Mentions Légales
             </Link>

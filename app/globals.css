@@ -1,6 +1,7 @@
+@import "tailwindcss";
+
 /* Masquer le badge Google reCAPTCHA v3 (conforme à la doc Google si mention légale présente) */
 .grecaptcha-badge { visibility: hidden !important; }
-@import "tailwindcss";
 
 :root {
   background: #0a0a0a;

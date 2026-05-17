@@ -14,17 +14,6 @@ export function Footer({ scrollTo }: FooterProps) {
     <footer className="bg-neutral-950 border-t border-white/5 relative overflow-hidden">
       <Grain />
 
-      {/* CTA final */}
-      <div className="border-b border-white/5 py-16 px-6 text-center relative z-10">
-        <p className="text-neutral-400 text-xs font-mono uppercase tracking-[0.3em] mb-4">Prêt à démarrer ?</p>
-        <button
-          onClick={() => scrollTo("contact")}
-          className="text-4xl md:text-6xl font-black text-white hover:text-indigo-400 transition-colors duration-300 tracking-tight cursor-pointer"
-        >
-          Parlons de votre projet →
-        </button>
-      </div>
-
       {/* Bottom bar */}
       <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto px-6 py-8 relative z-10">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">

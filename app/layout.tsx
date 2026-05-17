@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-// Suppression des imports client
-// Garde uniquement PreloaderWrapper
+import type { ReactNode } from "react";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -84,7 +83,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   // Ajout logique Preloader global
   // Next.js 13+ : usePathname

@@ -67,9 +67,17 @@ export function RealisationCard({ project, index }: { project: (typeof realisati
         </span>
 
         <div className="relative z-10 space-y-7">
-          <span className="block text-[11px] font-bold uppercase tracking-[0.35em] text-indigo-400">
-            {project.category}
-          </span>
+          <div className="flex items-center gap-3">
+            <span className="block text-[11px] font-bold uppercase tracking-[0.35em] text-indigo-400">
+              {project.category}
+            </span>
+            {project.lighthouseScore && (
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 text-[10px] font-bold tracking-wide">
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L8.5 9H2l5.5 4.5L5 21l7-4.5L19 21l-2.5-7.5L22 9h-6.5z"/></svg>
+                Lighthouse {project.lighthouseScore}
+              </span>
+            )}
+          </div>
 
           <h3 className="text-4xl md:text-5xl xl:text-[3.5rem] font-black text-white leading-[1.0] tracking-tight">
             {project.title}

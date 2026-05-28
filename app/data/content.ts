@@ -39,18 +39,20 @@ export const realisations = [
     title: "Cours Djembé Toulouse",
     category: "Développement Sur-Mesure",
     image: "/projects/coursdjembetoulouse.png", 
-    description: "Application web ultra-rapide (Score Lighthouse 100%). Stack moderne : Next.js 14, Tailwind CSS, Framer Motion et intégration Newsletter via API.",
+    description: "Application web ultra-rapide. Stack moderne : Next.js 14, Tailwind CSS, Framer Motion et intégration Newsletter via API.",
     link: "https://coursdjembetoulouse.fr/",
+    lighthouseScore: 100,
     tech: ["Next.js 14", "Tailwind CSS", "Framer Motion", "TypeScript", "Brevo API"]
   },
   {
-  title: "Christian Glace",
-  category: "Portfolio d'Artiste",
-  image: "/projects/christianglace.png", // À adapter avec le bon chemin
-  description: "Portfolio sur mesure conçu pour un sculpteur sur bois contemporain. Score Lighthouse 100%. L'interface minimaliste et épurée efface la technique au profit de l'art, offrant une mise en valeur absolue des œuvres et des textures.",
-  tech: ["Next.js", "Sanity CMS", "TypeScript", "Tailwind CSS"],
-  link: "https://christianglace.com", // J'ai remplacé demoRequest par liveUrl vu que le site est public !
-},
+    title: "Christian Glace",
+    category: "Portfolio d'Artiste",
+    image: "/projects/christianglace.png",
+    description: "Portfolio sur mesure conçu pour un sculpteur sur bois contemporain. L'interface minimaliste et épurée efface la technique au profit de l'art, offrant une mise en valeur absolue des œuvres et des textures.",
+    tech: ["Next.js", "Sanity CMS", "TypeScript", "Tailwind CSS"],
+    lighthouseScore: 100,
+    link: "https://christianglace.com",
+  },
   {
     title: "Najo Music",
     category: "Application Privée",

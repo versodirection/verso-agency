@@ -38,7 +38,7 @@ interface DemosProps {
 
 export function Demos({ showAnimations, cursorEnter, cursorLeave }: DemosProps) {
   return (
-    <section id="demos" className="py-24 px-6">
+    <section id="demos" className="py-24 px-6 overflow-hidden">
       <div className="max-w-[90%] 2xl:max-w-[1800px] mx-auto">
         <div className="mb-20">
           <MaskText enabled={showAnimations}>

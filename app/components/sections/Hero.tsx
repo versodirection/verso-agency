@@ -101,7 +101,7 @@ export function Hero({ showAnimations, scrollTo, cursorEnter, cursorLeave }: Her
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: showAnimations ? 2 : 1, duration: 0.8 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 group cursor-pointer"
+        className="absolute bottom-4 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-2 group cursor-pointer"
         aria-label="Scroll — Défiler vers le bas"
         onMouseEnter={cursorEnter}
         onMouseLeave={cursorLeave}

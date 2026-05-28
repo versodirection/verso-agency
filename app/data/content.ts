@@ -47,7 +47,7 @@ export const realisations = [
   title: "Christian Glace",
   category: "Portfolio d'Artiste",
   image: "/projects/christianglace.png", // À adapter avec le bon chemin
-  description: "Portfolio sur mesure conçu pour un sculpteur sur bois contemporain. L'interface minimaliste et épurée efface la technique au profit de l'art, offrant une mise en valeur absolue des œuvres et des textures.",
+  description: "Portfolio sur mesure conçu pour un sculpteur sur bois contemporain. Score Lighthouse 100%. L'interface minimaliste et épurée efface la technique au profit de l'art, offrant une mise en valeur absolue des œuvres et des textures.",
   tech: ["Next.js", "Sanity CMS", "TypeScript", "Tailwind CSS"],
   link: "https://christianglace.com", // J'ai remplacé demoRequest par liveUrl vu que le site est public !
 },
